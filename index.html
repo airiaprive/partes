@@ -11,13 +11,15 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Gestión AiríaPrivé">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#14213d">
+<meta name="theme-color" content="#0a0a0a">
 <script>
   // ============ AJUSTE: pega aquí la dirección de tu Apps Script (acaba en /exec) ============
   const API_URL = 'https://script.google.com/macros/s/AKfycbzMqFPbDirCvfm2HmlepVpNug-XK3Bv1-_isXB_vNKufoEv_NMrrPi_F0jToVw0mtgI/exec';
   // La clave NO va aquí: la app la pide la primera vez y la guarda solo en ese móvil.
   // ==========================================================================================
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root { --tinta:#151515; --suave:#6b6b6b; --linea:#e4e4e4; --fondo:#f6f6f4; --azul:#1f3156; --amarillo:#fff2cc; --amarillo-borde:#e3b341; --amarillo-texto:#7a5200; --verde:#e7f4e4; --verde-texto:#2c6b1f; --rojo:#b3261e; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -207,6 +209,73 @@
   .aviso-sin-parte { background:var(--amarillo); color:var(--amarillo-texto); border:1px solid var(--amarillo-borde); border-radius:12px; padding:11px 13px; font-size:14px; margin:0 0 12px; }
   .pantalla.arrastrando { transition:none; }
   .pantalla.soltando { transition:transform .2s ease; }
+  /* ================= Fase 2 · estilo Airía Privé (negro, marfil y champán) ================= */
+  :root { --tinta:#1a1a1b; --suave:#776f63; --linea:#e7e0d3; --fondo:#f6f2ea; --azul:#0a0a0a; --marino:#0a0a0a; --marino-2:#1a1a1b;
+    --oro:#b89b6a; --oro-claro:#efe6d6; --marfil:#ede6da; --champan:#b89b6a; --champan-osc:#8f7547;
+    --serif:"Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif; --sans:Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  html, body { font-family:var(--sans); background:var(--fondo); color:var(--tinta); }
+  h1, h1.titulo, .portada-t, .tarjeta h2, .hoja h2, #fallo h2 { font-family:var(--serif); font-weight:600; letter-spacing:.2px; }
+  h1.titulo { font-size:36px; line-height:1.05; margin:2px 0 14px; }
+  .tarjeta h2 { font-size:22px; } .hoja h2 { font-size:25px; line-height:1.15; }
+  .marca.oscura { color:var(--champan-osc); font-size:11.5px; letter-spacing:4px; margin:0; }
+  .sec-tit { color:var(--champan-osc); letter-spacing:2.4px; font-size:11.5px; }
+  .tarjeta, .fac, .mov, .fila-alumno, .pap, .socio, .docslot, .tile, .accion-fina { border-color:var(--linea); box-shadow:0 1px 2px rgba(26,26,27,.04); }
+  .boton { border-radius:14px; border-color:var(--linea); font-weight:600; }
+  .boton.principal, .mini.principal { background:var(--negro, #0a0a0a); border-color:#0a0a0a; color:var(--marfil); }
+  .boton.peligro-suave { color:var(--rojo); border-color:#efc9c4; background:#fff; }
+  .mini { border-radius:999px; } .mini.rojo { background:var(--rojo); border-color:var(--rojo); color:#fff; }
+  .campo input:focus, .campo select:focus, .campo textarea:focus, .buscar:focus { outline:none; border-color:var(--champan); box-shadow:0 0 0 3px rgba(184,155,106,.18); }
+  /* portada */
+  .portada { background:radial-gradient(120% 90% at 100% 0%, #24211c 0%, #0a0a0a 55%); border-bottom:1px solid rgba(184,155,106,.35); }
+  .portada::after { border-color:rgba(184,155,106,.28); } .portada::before { border-color:rgba(184,155,106,.18); }
+  .portada-logo { background:var(--marfil); border-radius:18px; }
+  .marca { color:var(--champan); letter-spacing:5px; font-size:11.5px; }
+  .portada-t { font-size:46px; font-weight:600; margin:0 0 2px; color:#fff; }
+  .portada-s { color:rgba(237,230,218,.7); }
+  .portada-iconos button { background:rgba(237,230,218,.08); color:var(--marfil); border:1px solid rgba(184,155,106,.25); }
+  .accion-grande { background:#0a0a0a; border:1px solid rgba(184,155,106,.35); }
+  .accion-grande b { font-family:var(--serif); font-size:22px; font-weight:600; letter-spacing:.2px; }
+  .ag-ico { background:rgba(184,155,106,.14); color:var(--champan); border:1px solid rgba(184,155,106,.3); }
+  .enlace-fila { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; text-align:left; background:#fff; border:1px solid var(--linea); border-radius:14px; padding:13px 14px; font:inherit; color:var(--tinta); cursor:pointer; }
+  .enlace-fila small { display:block; color:var(--suave); font-size:13px; margin-top:2px; }
+  .ag-fl.oscuro { color:var(--champan-osc); margin-left:auto; } .ag-fl.oscuro svg { width:20px; height:20px; display:block; }
+  .accion-fina svg { color:var(--champan-osc); }
+  .tile { min-height:118px; }
+  .tile-ico { background:#0a0a0a; color:var(--champan); border-radius:12px; }
+  .tile-t { font-family:var(--serif); font-size:20px; font-weight:600; line-height:1.1; margin-top:2px; }
+  .pie-marca { color:#b9ad98; font-family:var(--serif); font-size:15px; letter-spacing:3px; }
+  /* listas */
+  .chapa.socio { background:#0a0a0a; color:var(--champan); }
+  .saldo { background:var(--oro-claro); }
+  .segmento { background:#ebe4d7; } .segmento button.activo { color:#0a0a0a; }
+  .chips button.activo, .chips.filtro button.activo { background:#0a0a0a; border-color:#0a0a0a; color:var(--marfil); }
+  .fac-num { font-family:var(--serif); font-size:21px; } .fac-acc button { color:#1a1a1b; }
+  .acciones-pag { display:flex; gap:8px; margin:0 0 14px; } .acciones-pag .boton { margin:0; max-width:none; flex:1; padding:13px 12px; font-size:15.5px; }
+  .ultima { background:#0a0a0a; color:var(--marfil); border-radius:14px; padding:11px 14px; margin:0 0 14px; font-size:14px; }
+  .ultima span { display:block; color:var(--champan); font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:2px; }
+  .ultima b { font-family:var(--serif); font-size:19px; }
+  .nota.gris { color:var(--suave); }
+  .txt-rojo { color:var(--rojo); font-weight:600; } .txt-verde { color:var(--verde-texto); font-weight:600; }
+  .doc-estado { color:var(--rojo); } .doc-estado.si { color:var(--verde-texto); }
+  .mov.sin-parte { border-color:#efb7b1; border-left:5px solid var(--rojo); background:#fff7f6; }
+  .chapa-roja { display:inline-block; background:var(--rojo); color:#fff; font-weight:700; font-size:11.5px; letter-spacing:.6px; text-transform:uppercase; padding:3px 9px; border-radius:999px; margin:2px 0 3px; }
+  .aviso-sin-parte.rojo { background:#fdecea; border-color:#efb7b1; color:#7d1d17; }
+  .espacio { background:#fff; border:1px solid var(--linea); border-radius:14px; padding:12px 14px; }
+  .espacio-barra { height:8px; background:#eee7da; border-radius:99px; overflow:hidden; margin-bottom:8px; }
+  .espacio-barra span { display:block; height:100%; background:var(--champan); border-radius:99px; } .espacio-barra span.lleno { background:var(--rojo); }
+  .espacio-txt { font-size:13.5px; color:var(--suave); }
+  .volver { color:#1a1a1b; border-color:var(--linea); }
+  /* barra de pestañas (tipo Instagram) */
+  .pestanas { position:fixed; left:0; right:0; bottom:0; z-index:40; display:none; justify-content:center; background:rgba(10,10,10,.97);
+    border-top:1px solid rgba(184,155,106,.3); padding:6px 4px calc(env(safe-area-inset-bottom) + 6px); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+  .pestanas.activa { display:flex; }
+  .pestanas button { flex:1; max-width:112px; background:none; border:0; color:#8d867a; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0 4px; font:inherit; font-size:10.5px; font-weight:500; letter-spacing:.3px; cursor:pointer; position:relative; }
+  .pestanas button svg { width:24px; height:24px; }
+  .pestanas button.activo { color:var(--champan); font-weight:700; }
+  .pestanas button.activo::before { content:""; position:absolute; top:-6px; left:30%; right:30%; height:2px; border-radius:2px; background:var(--champan); }
+  .barra { background:rgba(246,242,234,.96); border-top-color:var(--linea); }
+  .aviso { background:#0a0a0a; color:var(--marfil); border:1px solid rgba(184,155,106,.4); }
+  @media (min-width: 900px) { .pantalla { max-width:720px; } .tiles { grid-template-columns:repeat(4, 1fr); } }
 </style>
 </head>
 <body>
@@ -226,42 +295,46 @@
     <div class="portada-logo"><img src="icon-512.png" alt=""></div>
     <div class="marca">Airía Privé</div>
     <h1 class="portada-t">Gestión</h1>
-    <p class="portada-s" id="saludo">Partes de vuelo, horas y clientes</p>
+    <p class="portada-s" id="saludo">Partes de vuelo, horas, clientes y facturas</p>
   </header>
+  <div id="avisoServidor" class="resumen mal" style="display:none"></div>
 
   <div class="seccion">
-    <div class="sec-tit">Partes de vuelo</div>
-    <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
-    <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
+    <div class="sec-tit">Parte de vuelo</div>
+    <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
+    <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
   </div>
 
   <div class="seccion">
-    <div class="sec-tit">Horas de clientes</div>
+    <div class="sec-tit">Accesos rápidos</div>
     <div class="tiles">
-      <button class="tile" onclick="abrirCompra()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tile-t">Añadir horas</span><span class="tile-d">Cuando un cliente paga un bono</span></button>
-      <button class="tile" onclick="abrirConsulta()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg></span><span class="tile-t">Consultar horas</span><span class="tile-d">Saldos, vuelos y descuentos</span></button>
+      <button class="tile" onclick="abrirCompra()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tile-t">Añadir horas</span><span class="tile-d">Cuando un cliente paga un bono</span></button>
+      <button class="tile" onclick="abrirDescontar()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg></span><span class="tile-t">Descontar horas</span><span class="tile-d">Con parte o sin parte</span></button>
+      <button class="tile" onclick="abrirNuevoCliente()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg></span><span class="tile-t">Añadir cliente</span><span class="tile-d">Datos y documentos</span></button>
+      <button class="tile" onclick="abrirNuevaFactura()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg></span><span class="tile-t">Nueva factura</span><span class="tile-d">Cliente, conceptos e IVA</span></button>
     </div>
   </div>
 
-  <div class="seccion">
-    <div class="sec-tit">Clientes</div>
-    <div class="tiles">
-      <button class="tile" onclick="abrirNuevoCliente()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg></span><span class="tile-t">Añadir cliente</span><span class="tile-d">Datos y documentos</span></button>
-      <button class="tile" onclick="abrirClientes()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg></span><span class="tile-t">Consultar clientes</span><span class="tile-d">Ver y modificar fichas</span></button>
-    </div>
-  </div>
-
-  <div class="seccion">
-    <div class="sec-tit">Facturas</div>
-    <div class="tiles">
-      <button class="tile" onclick="abrirNuevaFactura()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg></span><span class="tile-t">Nueva factura</span><span class="tile-d">Cliente, conceptos e IVA</span></button>
-      <button class="tile" onclick="abrirFacturas()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><span class="tile-t">Facturas</span><span class="tile-d">Manuales y mensuales de socios</span></button>
-    </div>
+  <div class="seccion" id="espacioSeccion" style="display:none">
+    <div class="sec-tit">Espacio en Google Drive</div>
+    <div class="espacio"><div class="espacio-barra"><span id="espacioUso"></span></div><div class="espacio-txt" id="espacioTxt"></div></div>
   </div>
 
   <p class="pie-marca">Airía Privé · Gestión</p>
   <input id="camara" type="file" accept="image/*" capture="environment">
   <input id="galeria" type="file" accept="image/*">
+</section>
+
+<!-- Partes de vuelo -->
+<section id="partes" class="pantalla">
+  <div class="marca oscura">Airía Privé</div>
+  <h1 class="titulo">Partes de vuelo</h1>
+  <p class="sub" style="margin-bottom:18px">Haz una foto al parte y la app lo lee, te deja revisarlo y lo guarda en la hoja «Orden cronómetro».</p>
+  <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
+  <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
+  <div class="sec-tit" style="margin-top:26px">Horas de los partes</div>
+  <button class="enlace-fila" onclick="abrirDescontar()"><span><b>Descontar horas de un parte</b><small>Elige el cliente y el parte que todavía no se le ha descontado</small></span><span class="ag-fl oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></button>
+  <p class="pie">Las fotos se guardan en Drive, en Airía Privé › Partes › año › trimestre › mes.</p>
 </section>
 
 <!-- 0. Clave (solo la primera vez) -->
@@ -320,8 +393,9 @@
 
 <!-- 3d. Consultar horas de alumnos -->
 <section id="consulta" class="pantalla">
-  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Horas de clientes</h1>
+  <div class="acciones-pag"><button class="boton principal" id="consultaAnadir" onclick="abrirCompra()">+ Añadir horas</button><button class="boton" id="consultaDescontar" onclick="abrirDescontar()">Descontar horas</button></div>
   <p class="info" id="consultaInfo">Cargando…</p>
   <input id="consultaBuscar" class="buscar" type="search" placeholder="Buscar cliente" autocomplete="off">
   <div id="consultaLista"></div>
@@ -333,6 +407,7 @@
   <button class="volver" onclick="abrirConsulta()">‹ Todos los clientes</button>
   <h1 class="titulo" id="detalleNombre"></h1>
   <div class="saldo" id="detalleSaldo"></div>
+  <div class="acciones-pag"><button class="boton principal" id="detalleAnadir" onclick="abrirCompra(detalleAlumno)">+ Añadir horas</button><button class="boton" id="detalleDescontar" onclick="abrirDescontar(detalleAlumno)">Descontar horas</button></div>
   <div id="detalleOk" class="resumen ok" style="display:none"></div>
   <div id="detalleError" class="resumen mal" style="display:none"></div>
   <p class="info">Cada compra y cada vuelo descontado. Puedes cambiar sus horas o borrarlo; los partes de la hoja no se tocan.</p>
@@ -342,8 +417,9 @@
 <!-- 3f. Foto del parte -->
 <section id="vuelos" class="pantalla">
   <button class="volver" id="vVolver">‹ Volver</button>
-  <h1 class="titulo">Descontar horas</h1>
-  <p class="info">Elige el parte del vuelo que quieres descontar. Solo salen los partes de este cliente que todavía no se le han descontado. Abajo puedes descontar también sin parte.</p>
+  <h1 class="titulo" id="vTitulo">Descontar horas</h1>
+  <div id="vVincularInfo" class="aviso-sin-parte rojo" style="display:none"></div>
+  <p class="info" id="vAyuda">Elige el parte del vuelo que quieres descontar. Solo salen los partes de este cliente que todavía no se le han descontado. Abajo puedes descontar también sin parte.</p>
   <div class="campo" style="margin-bottom:10px"><label for="vCliente">Cliente</label><input id="vCliente" type="text" list="lista-clientes" autocomplete="off" placeholder="Escribe o elige el nombre"></div>
   <div class="saldo" id="vSaldo" style="display:none"></div>
   <div id="vError" class="resumen mal" style="display:none"></div>
@@ -423,8 +499,9 @@
 </section>
 
 <section id="clientes" class="pantalla">
-  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Clientes</h1>
+  <div class="acciones-pag"><button class="boton principal" id="clientesAnadir" onclick="abrirNuevoCliente(() => abrirClientes())">+ Añadir cliente</button></div>
   <p class="info" id="clientesInfo">Cargando…</p>
   <input id="clientesBuscar" class="buscar" type="search" placeholder="Buscar por nombre, DNI o teléfono" autocomplete="off">
   <div id="clientesLista"></div>
@@ -434,8 +511,10 @@
 
 <!-- Facturas -->
 <section id="facturas" class="pantalla">
-  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Facturas</h1>
+  <div class="acciones-pag"><button class="boton principal" id="facturasNueva" onclick="abrirNuevaFactura()">+ Nueva factura</button></div>
+  <div class="ultima" id="facturasUltima" style="display:none"></div>
   <div class="segmento"><button id="segManual" class="activo" onclick="verPestanaFacturas('MANUAL')">Manuales</button><button id="segMensual" onclick="verPestanaFacturas('MENSUAL')">Mensuales</button></div>
   <div id="facturasOk" class="resumen ok" style="display:none"></div>
   <div id="facturasError" class="resumen mal" style="display:none"></div>
@@ -467,7 +546,7 @@
   <div class="tarjeta">
     <h2 style="margin-bottom:12px">Datos de la factura</h2>
     <div class="rejilla">
-      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off"></div>
+      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off"><div class="nota gris" id="facUltima"></div></div>
       <div class="campo"><label for="facFecha">Fecha</label><input id="facFecha" type="date"></div>
       <div class="campo ancho"><label for="facCliente">Cliente</label><select id="facCliente"></select><div class="nota" id="facClienteNota"></div></div>
     </div>
@@ -512,6 +591,7 @@
   <h1 class="titulo">Papelera</h1>
   <p class="info">Las facturas y clientes borrados se guardan aquí 30 días. Después se borran solos, también de Drive.</p>
   <div class="chips filtro" id="papFiltro"></div>
+  <div class="acciones-pag" id="papAcciones"><button class="boton peligro-suave" id="papVaciar" onclick="vaciarPapelera()">Vaciar papelera</button></div>
   <div id="papError" class="resumen mal" style="display:none"></div>
   <div id="papLista"></div>
 </section>
@@ -520,7 +600,7 @@
 <div id="aviso" class="aviso"></div>
 
 <section id="foto" class="pantalla">
-  <button class="volver" onclick="BARRAS.foto[1]()">‹ Volver</button>
+  <button class="volver" onclick="(fotoVolver || (() => abrirDetalle(detalleAlumno)))()">‹ Volver</button>
   <h1 class="titulo" id="fotoTitulo">Parte</h1>
   <p class="info" id="fotoInfo">Cargando la foto…</p>
   <img id="fotoImg" class="foto-parte" alt="Foto del parte" style="display:none">
@@ -544,6 +624,13 @@
   <button class="boton" onclick="volverAlInicio()">Volver al inicio</button>
 </section>
 
+<nav id="pestanas" class="pestanas">
+  <button data-tab="inicio" id="tab-inicio" onclick="irPestana('inicio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Inicio</span></button>
+  <button data-tab="partes" id="tab-partes" onclick="irPestana('partes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg><span>Partes</span></button>
+  <button data-tab="horas" id="tab-horas" onclick="irPestana('horas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Horas</span></button>
+  <button data-tab="clientes" id="tab-clientes" onclick="irPestana('clientes')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg><span>Clientes</span></button>
+  <button data-tab="facturas" id="tab-facturas" onclick="irPestana('facturas')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><span>Facturas</span></button>
+</nav>
 <div id="barra" class="barra">
   <button class="boton secundario" id="barraIzq">Cancelar</button>
   <button class="boton" id="barraMedio" style="display:none"></button>
@@ -556,6 +643,7 @@
 
 <script>
 const DEMO = /[?&]demo/.test(location.search);
+const VERSION_APP = 2;
 const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
 const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
 const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
@@ -593,20 +681,27 @@ const BARRAS = {
   horas:    ['No descontar', () => terminar([]), 'Descontar', () => descontar()],
   compra:   ['Cancelar', () => volverAlInicio(), 'Añadir horas', () => comprar()],
   cliente:  ['Cancelar', () => fichaSalir(), 'Guardar', () => guardarCliente()],
-  facturas: ['Inicio', () => volverAlInicio(), 'Nueva factura', () => abrirNuevaFactura()],
   factura:  ['Cancelar', () => salirFactura(), 'Guardar', () => guardarFactura()],
   ajustes:  ['Cancelar', () => volverAlInicio(), 'Guardar ajustes', () => guardarAjustes()],
-  papelera: ['Inicio', () => volverAlInicio(), 'Vaciar papelera', () => vaciarPapelera()],
-  clientes: ['Inicio', () => volverAlInicio(), 'Añadir cliente', () => abrirNuevoCliente(() => abrirClientes())],
-  consulta: ['Inicio', () => volverAlInicio(), 'Añadir horas', () => abrirCompra(), 'Descontar horas', () => abrirDescontar()],
-  detalle:  ['Volver', () => abrirConsulta(), 'Añadir horas', () => abrirCompra(detalleAlumno), 'Descontar horas', () => abrirDescontar(detalleAlumno)],
-  foto:     ['Volver', () => (fotoVolver || (() => abrirDetalle(detalleAlumno)))(), 'Inicio', () => volverAlInicio()],
 };
 const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>';
+// Pestaña de abajo que se marca en cada pantalla (las pantallas con formulario llevan Cancelar/Guardar en su lugar)
+const PESTANA_DE = { inicio:'inicio', partes:'partes', consulta:'horas', detalle:'horas', vuelos:'horas', foto:'horas', clientes:'clientes', facturas:'facturas', papelera:'inicio', hecho:'' };
+function irPestana(t) {
+  if (t === 'inicio') volverAlInicio();
+  else if (t === 'partes') mostrar('partes');
+  else if (t === 'horas') abrirConsulta();
+  else if (t === 'clientes') abrirClientes();
+  else if (t === 'facturas') abrirFacturas();
+}
 function mostrar(id) {
-  document.querySelectorAll('.pantalla').forEach(s => s.classList.toggle('activa', s.id === id));
+  document.querySelectorAll('.pantalla').forEach(s => { s.classList.toggle('activa', s.id === id); s.style.transform = ''; });
   activarSelectores();
   const b = BARRAS[id];
+  const tab = !b && id in PESTANA_DE;
+  $('pestanas').classList.toggle('activa', tab);
+  document.body.classList.toggle('con-pestanas', tab);
+  if (tab) document.querySelectorAll('#pestanas button').forEach(x => x.classList.toggle('activo', x.dataset.tab === PESTANA_DE[id]));
   $('barra').classList.toggle('activa', !!b);
   if (b) {
     const esInicio = b[0] === 'Inicio';
@@ -671,7 +766,7 @@ async function entrarConClave() {
   const b = $('claveBoton'); b.disabled = true; b.textContent = 'Comprobando…';
   try {
     const cfg = await api({ accion:'config' }, c);
-    guardarClave(c); guardarLocal('partes-config', cfg); rellenarListas(cfg);
+    guardarClave(c); guardarLocal('partes-config', cfg); rellenarListas(cfg); pintarEstadoServidor(cfg);
     $('claveInput').value = ''; mostrar('inicio');
   } catch (e) {
     $('claveError').textContent = /clave incorrecta/i.test(e.message) ? 'Clave incorrecta. Pregunta la clave a quien te pasó la app.' : e.message;
@@ -722,7 +817,20 @@ rellenarListas(leerLocal('partes-config'));
 if (DEMO) $('avisoDemo').style.display = 'block';
 if (SIN_CONFIGURAR) { $('urlActual').textContent = API_URL; mostrar('sinConfigurar'); }
 else if (!DEMO && !leerClave()) mostrar('clave');
-else api({ accion:'config' }).then(cfg => { guardarLocal('partes-config', cfg); rellenarListas(cfg); }).catch(() => {});
+else { mostrar('inicio'); api({ accion:'config' }).then(cfg => { guardarLocal('partes-config', cfg); rellenarListas(cfg); pintarEstadoServidor(cfg); }).catch(() => {}); }
+function pintarEstadoServidor(cfg) {
+  if (!cfg) return;
+  const viejo = !(cfg.version >= VERSION_APP);
+  $('avisoServidor').style.display = viejo ? 'block' : 'none';
+  if (viejo) $('avisoServidor').innerHTML = '<b>Falta actualizar Apps Script.</b> La app es nueva pero el servidor no: pega el Codigo.gs nuevo y en Implementar → Gestionar implementaciones → ✏️ elige <b>Nueva versión</b>.';
+  const e = cfg.espacio;
+  if (e && e.limite > 0) {
+    const pct = Math.min(100, Math.round(e.usado / e.limite * 100)), gb = b => (b / 1e9).toFixed(1).replace('.', ',') + ' GB';
+    $('espacioSeccion').style.display = 'block';
+    $('espacioUso').style.width = pct + '%'; $('espacioUso').className = pct >= 85 ? 'lleno' : '';
+    $('espacioTxt').innerHTML = `${gb(e.usado)} de ${gb(e.limite)} · <b>${pct}%</b>` + (pct >= 85 ? ' — <span class="txt-rojo">queda poco espacio, libera Drive o Gmail</span>' : '');
+  }
+}
 
 // ---------- foto ----------
 async function prepararImagen(archivo, max) {
@@ -993,15 +1101,17 @@ function pintarDetalle(r) {
   $('detalleLista').innerHTML = detalleMovs.length ? detalleMovs.map((m, i) => {
     const mas = m.signo > 0;
     let lineas;
-    if (m.tipo === 'VUELO') lineas = [`Vuelo · parte ${esc(m.numero || '¿?')}`,
+    const sinParte = m.tipo === 'VUELO' && !m.numero;
+    if (sinParte) lineas = [`<span class="chapa-roja">Sin parte</span>`, `<b>Fecha:</b> ${esc(m.fecha || '—')}`];
+    else if (m.tipo === 'VUELO') lineas = [`Vuelo · parte ${esc(m.numero || '¿?')}`,
       `<b>Fecha:</b> ${esc(m.fecha || '—')}`, `<b>Aparato:</b> <span style="white-space:nowrap">${esc(m.matricula || '—')}</span>`,
       `<b>Horómetro:</b> ${m.hi !== null && m.hf !== null ? aTextoNumero(m.hi.toFixed(1)) + ' → ' + aTextoNumero(m.hf.toFixed(1)) : '—'}`];
     else if (m.tipo === 'COMPRA') lineas = [`Compra · pagado el ${esc(m.fecha || '—')}`];
     else lineas = [`Ajuste${m.fecha ? ' · ' + esc(m.fecha) : ''}`];
     if (m.comentario) lineas.push(esc(m.comentario));
-    return `<div class="mov" id="mov${i}">
+    return `<div class="mov${sinParte ? ' sin-parte' : ''}" id="mov${i}">
       <div class="cab"><div><div class="cant ${mas ? 'mas' : 'menos'}">${mas ? '+' : '−'}${tiempo(m.minutos)}</div>${lineas.map(l => `<div class="det">${l}</div>`).join('')}</div>
-        <div class="botones"><button class="mini" onclick="abrirEdicion(${i})">Modificar</button>${m.tipo === 'VUELO' ? `<button class="mini" onclick="verParte(${i})">Ver parte</button>` : ''}</div></div>
+        <div class="botones"><button class="mini" onclick="abrirEdicion(${i})">Modificar</button>${sinParte ? `<button class="mini rojo" onclick="vincularMov(${i})">Vincular a un parte</button>` : (m.tipo === 'VUELO' ? `<button class="mini" onclick="verParte(${i})">Ver parte</button>` : '')}</div></div>
       <div class="editar" id="ed${i}" style="display:none">
         <div class="rejilla">
           <div class="campo"><label for="ed${i}-h">Horas</label><input id="ed${i}-h" type="text" inputmode="numeric" value="${Math.floor(m.minutos / 60)}"></div>
@@ -1032,8 +1142,13 @@ async function verFoto(m) {
   } catch (e) { if (!e.silencioso) $('fotoInfo').textContent = e.message; }
 }
 // ---------- descontar horas más tarde, eligiendo el parte ----------
-let vCliente = '', vPartes = [], vInfo = null, vVolverA = null;
-function abrirDescontar(nombre) {
+let vCliente = '', vPartes = [], vInfo = null, vVolverA = null, vVincular = null;
+function abrirDescontar(nombre, vincular) {
+  vVincular = vincular || null;
+  $('vTitulo').textContent = vincular ? 'Vincular a un parte' : 'Descontar horas';
+  $('vAyuda').style.display = vincular ? 'none' : ''; $('vCliente').disabled = !!vincular;
+  $('vVincularInfo').style.display = vincular ? 'block' : 'none';
+  if (vincular) $('vVincularInfo').innerHTML = `Descuento <b>sin parte</b> de <b>${esc(tiempo(vincular.minutos))}</b>${vincular.fecha ? ' del ' + esc(vincular.fecha) : ''}. Elige el parte de ese vuelo para unirlo.`;
   vVolverA = nombre ? () => abrirDetalle(nombre) : () => abrirConsulta();
   $('vVolver').onclick = () => vVolverA();
   $('vCliente').value = nombre || ''; $('vSaldo').style.display = 'none'; $('vError').style.display = 'none';
@@ -1051,7 +1166,7 @@ async function cargarPartesCliente() {
     $('vSaldo').style.display = 'block'; $('vSaldo').innerHTML = textoSaldo(r);
     $('vInfo').textContent = vPartes.length ? `${vPartes.length} partes sin descontar${vPartes.length >= (r.maximo || 40) ? ' (los más recientes)' : ''}.` : 'No hay partes de este cliente pendientes de descontar.';
     pintarPartesCliente();
-    $('vSinParte').style.display = 'block';
+    $('vSinParte').style.display = vVincular ? 'none' : 'block';
   } catch (e) { if (!e.silencioso) { $('vInfo').textContent = ''; $('vError').style.display = 'block'; $('vError').textContent = e.message; } }
 }
 function abrirSinParte(abrir) {
@@ -1105,13 +1220,33 @@ function pintarPartesCliente() {
     </div>`; }).join('');
   vPartes.forEach((p, i) => [`v${i}-h`, `v${i}-m`].forEach(id => $(id).addEventListener('input', () => cuentaParteCliente(i))));
 }
-function elegirParte(i) { const e = $(`v${i}-el`); e.style.display = e.style.display === 'none' ? 'block' : 'none'; cuentaParteCliente(i); }
+function elegirParte(i) { if (vVincular) return vincularA(i); const e = $(`v${i}-el`); e.style.display = e.style.display === 'none' ? 'block' : 'none'; cuentaParteCliente(i); }
 function cuentaParteCliente(i) {
   const min = leerMinutos(`v${i}-h`, `v${i}-m`), c = $(`v${i}-cuenta`), saldo = vInfo && vInfo.tieneHoras ? vInfo.saldo : 0;
   if (min === null || isNaN(min)) { c.textContent = 'Escribe las horas y minutos a descontar'; c.className = 'cuenta negativa'; return; }
   c.textContent = `${tiempo(saldo)} − ${tiempo(min)} = le quedarán ${tiempo(saldo - min)}`;
   c.className = 'cuenta' + (saldo - min < 0 ? ' negativa' : '');
 }
+function vincularA(i) {
+  const p = vPartes[i], m = vVincular, mp = p.minutos, antes = vVincular.minutos;
+  const hor = p.horometro_inicial !== null && p.horometro_final !== null ? ` (horómetro ${aTextoNumero(p.horometro_inicial.toFixed(1))} → ${aTextoNumero(p.horometro_final.toFixed(1))})` : '';
+  const distinto = mp !== null && mp !== undefined && mp > 0 && mp !== m.minutos;
+  const hacer = minutos => async () => {
+    avisar('Vinculando…', 20000);
+    try {
+      const r = await api({ accion:'vincularParte', id: m.id, numero: p.numero, fecha: p.fecha, matricula: p.matricula, horometro_inicial: p.horometro_inicial, horometro_final: p.horometro_final, foto: p.foto,
+        horas: Math.floor(minutos / 60), minutos: minutos % 60 });
+      $('aviso').style.display = 'none';
+      mostrar('detalle'); pintarDetalle(r);
+      $('detalleOk').style.display = 'block'; $('detalleOk').textContent = `Descuento unido al parte ${p.numero}` + (minutos !== antes ? ` y cambiado a ${tiempo(minutos)}.` : '.');
+    } catch (e) { if (!e.silencioso) { $('aviso').style.display = 'none'; $('vError').style.display = 'block'; $('vError').textContent = e.message; window.scrollTo(0, 0); } }
+  };
+  hoja(`<h2>¿Unir al parte ${esc(p.numero)}?</h2><p class="info" style="margin:8px 0 0">${esc(p.fecha || '')} · ${esc(p.matricula || '')}${hor}.<br><br>` +
+    (distinto ? `Se descontaron <b>${esc(tiempo(m.minutos))}</b> y el parte marca <b>${esc(tiempo(mp))}</b>. ¿Con cuál te quedas?` : `Se quedan los ${esc(tiempo(m.minutos))} descontados.`) + '</p>',
+    distinto ? [{ t: `Usar lo del parte (${tiempo(mp)})`, principal: true, f: hacer(mp) }, { t: `Dejar ${tiempo(m.minutos)}`, f: hacer(m.minutos) }]
+             : [{ t: 'Unir al parte', principal: true, f: hacer(m.minutos) }]);
+}
+function vincularMov(i) { const m = detalleMovs[i]; abrirDescontar(detalleAlumno, m); }
 function verFotoParteCliente(i) { fotoVolver = () => { mostrar('vuelos'); }; verFoto(vPartes[i]); }
 async function descontarParteCliente(i) {
   const p = vPartes[i], min = leerMinutos(`v${i}-h`, `v${i}-m`);
@@ -1208,6 +1343,7 @@ async function guardarCliente() {
     $('fichaOk').style.display = 'block';
     $('fichaOk').textContent = eraNuevo ? 'Cliente añadido.'
       : 'Cambios guardados.' + (r.horasRenombradas ? ' También se ha cambiado el nombre en sus horas.' : '');
+    $('fichaOk').textContent += r.avisoFicha ? ' ' + r.avisoFicha : ' Su ficha PDF y sus fotos están en Drive › Airía Privé › Clientes - documentos › ' + r.nombre + '.';
     window.scrollTo(0, 0);
   } catch (e) {
     if (e.silencioso) return;
@@ -1237,7 +1373,7 @@ async function fichaPdf() {
     const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
     const a = document.createElement('a'); a.href = url; a.download = r.nombre || 'ficha.pdf'; a.target = '_blank'; a.rel = 'noopener';
     document.body.appendChild(a); a.click(); a.remove();
-    $('fichaOk').style.display = 'block'; $('fichaOk').textContent = 'PDF generado. También queda guardado en Drive, en la carpeta "Clientes - fichas PDF".';
+    $('fichaOk').style.display = 'block'; $('fichaOk').textContent = 'Ficha PDF generada. Está en Drive, en Airía Privé › Clientes - documentos › ' + fichaNombre + ', junto a sus fotos.';
   } catch (e) { if (!e.silencioso) { $('clienteError').style.display = 'block'; $('clienteError').textContent = e.message; } }
   finally { b.disabled = false; b.textContent = 'Ficha en PDF'; }
 }
@@ -1270,11 +1406,16 @@ function verPestanaFacturas(t) {
   $('panelManual').style.display = t === 'MANUAL' ? '' : 'none'; $('panelMensual').style.display = t === 'MENSUAL' ? '' : 'none';
   if (t === 'MANUAL') cargarFacturas(); else abrirMensuales();
 }
+function pintarUltima(u) {
+  $('facturasUltima').style.display = u ? 'block' : 'none';
+  if (u) $('facturasUltima').innerHTML = `<span>Última guardada</span><b>N.º ${esc(u.numero)}</b> · ${esc(u.cliente)} · ${esc(u.fecha || '')}`;
+}
 async function cargarFacturas() {
   $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = '';
   try {
     const r = await api({ accion:'facturas', tipo:'MANUAL' });
     listaFacturas = r.facturas || [];
+    pintarUltima(r.ultima);
     $('facturasInfo').textContent = listaFacturas.length ? `${r.total} facturas manuales.` : 'Todavía no hay facturas. Pulsa "Nueva factura".';
     pintarFacturas();
   } catch (e) { if (!e.silencioso) $('facturasInfo').textContent = e.message; }
@@ -1400,10 +1541,11 @@ async function abrirNuevaFactura(volverA) {
   facEditando = null; facNumeroTocado = false; facVolverA = volverA || null;
   $('facTitulo').textContent = 'Nueva factura'; $('facError').style.display = 'none';
   $('facFecha').value = hoyInput(); $('facNumero').value = ''; $('facIrpf').value = ''; $('facVence').value = ''; $('facPago').value = ''; $('facNotas').value = '';
-  pintarLineas([]); marcarIva(21); facClientes = []; pintarClientesFactura('');
+  pintarLineas([]); marcarIva(21); facClientes = []; pintarClientesFactura(''); $('facUltima').textContent = '';
   mostrar('factura');
   try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); facClientes = r.clientes || []; pintarClientesFactura($('facCliente').value);
-    if (!facNumeroTocado) $('facNumero').value = r.numero; marcarIva(r.ivaPct); }
+    if (!facNumeroTocado) $('facNumero').value = r.numero; marcarIva(r.ivaPct);
+    $('facUltima').textContent = r.ultima ? `Última guardada: ${r.ultima.numero} (${r.ultima.cliente})` : ''; }
   catch (e) { if (!e.silencioso) { $('facError').style.display = 'block'; $('facError').textContent = e.message; } }
 }
 $('facNumero').addEventListener('input', () => { facNumeroTocado = true; });
@@ -1420,6 +1562,7 @@ async function editarFactura(id, volverA) {
     facEditando = f; facNumeroTocado = true; facClientes = n.clientes || [];
     $('facTitulo').textContent = 'Factura ' + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
     $('facError').style.display = 'none';
+    $('facUltima').textContent = n.ultima ? `Última guardada: ${n.ultima.numero} (${n.ultima.cliente})` : '';
     $('facNumero').value = f.numero; $('facFecha').value = fechaAInput(f.fecha); pintarClientesFactura(f.cliente);
     $('facIrpf').value = f.irpfPct ? aTextoNumero(f.irpfPct) : ''; $('facVence').value = fechaAInput(f.vencimiento || ''); $('facPago').value = f.formaPago || ''; $('facNotas').value = f.notas || '';
     pintarLineas(f.lineas || []); marcarIva(f.ivaPct);
@@ -1597,7 +1740,7 @@ function pintarClientes() {
   $('clientesLista').innerHTML = listaClientesFichas.filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
     const docs = Object.values(c.docs || {}).filter(Boolean).length;
     const chapa = c.socio === 'Si' ? '<span class="chapa socio">Socio</span>' : '';
-    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · ${docs}/4 documentos</small></span>${chapa}</button>`;
+    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 4 ? 'txt-rojo' : 'txt-verde'}">${docs}/4 documentos</span></small></span>${chapa}</button>`;
   }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
   document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
 }
@@ -1680,12 +1823,12 @@ document.addEventListener('touchcancel', () => { if (toque) { toque.p.style.tran
 // ---------- modo demostración (sin servidor) ----------
 async function demo(c) {
   await new Promise(r => setTimeout(r, c.accion === 'config' ? 0 : 1200));
-  if (c.accion === 'config') return { ok:true, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'config') return { ok:true, version: 2, espacio: { usado: 6.2e9, limite: 15e9 }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
   if (c.accion === 'leer') return { ok:true, partes:[
     { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
     { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
   ]};
-  if (!window.__demoMovs) window.__demoMovs = { 'Mario Ejemplo Ruiz': [{ id:'a', tipo:'COMPRA', signo:1, minutos:600, fecha:'05/11/2026', numero:'', matricula:'', hi:null, hf:null, comentario:'Bono 10 h' }, { id:'b', tipo:'VUELO', signo:-1, minutos:60, fecha:'25/09/2026', numero:'50', matricula:'EC-HF7', hi:476.8, hf:477.8, comentario:'', foto:'demo' }] };
+  if (!window.__demoMovs) window.__demoMovs = { 'Mario Ejemplo Ruiz': [{ id:'a', tipo:'COMPRA', signo:1, minutos:600, fecha:'05/11/2026', numero:'', matricula:'', hi:null, hf:null, comentario:'Bono 10 h' }, { id:'s', tipo:'VUELO', signo:-1, minutos:30, fecha:'30/10/2026', numero:'', matricula:'', hi:null, hf:null, comentario:'Sin parte · vuelo corto' }, { id:'b', tipo:'VUELO', signo:-1, minutos:60, fecha:'25/09/2026', numero:'50', matricula:'EC-HF7', hi:476.8, hf:477.8, comentario:'', foto:'demo' }] };
   const D = window.__demoMovs;
   const res = n => { const ms = D[n] || []; const s = ms.reduce((t, m) => t + m.signo * m.minutos, 0); const c = ms.filter(m => m.tipo === 'COMPRA');
     return { ok:true, alumno:n, tieneHoras: ms.length > 0, saldo:s, compradas:c.reduce((t, m) => t + m.minutos, 0), voladas:ms.filter(m => m.tipo === 'VUELO').reduce((t, m) => t + m.minutos, 0), ultimaCompra:c.length ? c[0].minutos : null, fechaPago:c.length ? c[0].fecha : null, movimientos: ms }; };
@@ -1701,8 +1844,8 @@ async function demo(c) {
   const mesDe = f => { const p = String(f || '').split('/'); return p.length === 3 ? p[2] + '-' + p[1] : '2026-11'; };
   if (c.accion === 'ajustes') return Object.assign({ ok:true }, DF.ajustes);
   if (c.accion === 'guardarAjustes') { Object.assign(DF.ajustes, c.ajustes); return Object.assign({ ok:true }, DF.ajustes); }
-  if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), ivaPct:21, clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
-  if (c.accion === 'facturas') { const l = DF.lista.filter(f => (!c.tipo || f.tipo === c.tipo) && (!c.mes || f.mes === c.mes)).sort((a, b) => b.numero.localeCompare(a.numero)); return { ok:true, facturas:l, total:l.length }; }
+  if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), ivaPct:21, ultima: (u => u ? { numero: u.numero, cliente: u.cliente, fecha: u.fecha } : null)(DF.lista.slice(-1)[0]), clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
+  if (c.accion === 'facturas') { const l = DF.lista.filter(f => (!c.tipo || f.tipo === c.tipo) && (!c.mes || f.mes === c.mes)).sort((a, b) => b.numero.localeCompare(a.numero)); const u = DF.lista.slice(-1)[0]; return { ok:true, facturas:l, total:l.length, ultima: u ? { numero: u.numero, cliente: u.cliente, fecha: u.fecha } : null }; }
   if (c.accion === 'factura') return Object.assign({ ok:true }, DF.lista.find(f => f.id === c.id));
   if (c.accion === 'guardarFactura') { const f = c.factura; const rep = f.numero && DF.lista.find(y => y.numero === f.numero && y.id !== f.id); if (rep) return { ok:false, repetido:true, numeroLibre: sigNum(rep.mes), error: `Ya existe la factura ${rep.numero} (${rep.cliente}, ${rep.fecha}).` }; const base = f.lineas.reduce((s, l) => s + l.cantidad * l.precio, 0); const iva = base * f.ivaPct / 100, irpf = base * (f.irpfPct || 0) / 100;
     let x = DF.lista.find(y => y.id === f.id); if (!x) { x = { id:'d' + Date.now(), tipo:f.tipo || 'MANUAL', mes: f.mes || mesDe(f.fecha) }; DF.lista.push(x); }
@@ -1737,6 +1880,8 @@ async function demo(c) {
     { numero:'52', fecha:'10/10/2026', matricula:'EC-HF7', horometro_inicial:478.4, horometro_final:479.9, horometro:1.5, minutos:90, nombreEnParte:'MARIO EJEMPLO', funcion:'PILOTO', foto:'' } ] });
   if (c.accion === 'foto') { const cv = document.createElement('canvas'); cv.width = 600; cv.height = 420; const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 600, 420); g.fillStyle = '#333'; g.font = '28px sans-serif'; g.fillText('Foto del parte (demostración)', 90, 210); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
   if (c.accion === 'editarMovimiento') { Object.values(D).forEach(ms => ms.forEach(m => { if (m.id === c.id) m.minutos = c.horas * 60 + c.minutos; })); return res(Object.keys(D).find(k => D[k].some(m => m.id === c.id))); }
+  if (c.accion === 'vincularParte') { const k = Object.keys(D).find(k => D[k].some(m => m.id === c.id)); const m = D[k].find(m => m.id === c.id);
+    Object.assign(m, { numero: c.numero, fecha: c.fecha, matricula: c.matricula, hi: c.horometro_inicial, hf: c.horometro_final, minutos: c.horas * 60 + c.minutos, comentario: 'Vinculado al parte ' + c.numero + ' (se descontó sin parte)', foto: c.foto }); return res(k); }
   if (c.accion === 'borrarMovimiento') { const k = Object.keys(D).find(k => D[k].some(m => m.id === c.id)); D[k] = D[k].filter(m => m.id !== c.id); return res(k); }
   if (c.accion === 'comprar') { const r0 = res(c.alumno); (D[c.alumno] = D[c.alumno] || []).unshift({ id:'n' + Date.now(), tipo:'COMPRA', signo:1, minutos:c.horas * 60 + c.minutos, fecha:c.fechaPago, numero:'', matricula:'', hi:null, hf:null, comentario:'' }); return Object.assign(res(c.alumno), { antes: r0.saldo, minutos: c.horas * 60 + c.minutos }); }
   if (c.accion === 'descontar') return { ok:true, hechos: c.items.map(it => { const r0 = res(it.alumno); const m = it.horas * 60 + it.minutos; return { alumno: it.alumno, minutos: m, antes: r0.saldo, saldo: r0.saldo - m }; }) };
