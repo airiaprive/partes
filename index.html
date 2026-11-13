@@ -101,6 +101,7 @@
   .tile-d { font-size:12.5px; color:var(--suave); line-height:1.35; }
   .pie-marca { text-align:center; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#b5b0a6; margin:8px 0 0; }
   .docs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .docslot.grande { grid-column:1 / -1; } .docslot.grande .doc-prev { aspect-ratio:auto; min-height:190px; } .docslot.grande .doc-prev img { max-height:340px; }
   .docslot { border:1px solid var(--linea); border-radius:12px; padding:10px; background:#fff; }
   .doc-prev { height:92px; border-radius:8px; background:var(--fondo); display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:8px; }
   .doc-prev img { width:100%; height:100%; object-fit:cover; }
@@ -308,7 +309,34 @@
   .mh span { display:block; } .mh i { display:block; font-style:normal; font-size:20px; margin:2px 0; } .mh b { display:block; color:#fff; font-size:15px; }
   .mh small { display:block; font-size:10.5px; } .mh em { display:block; font-style:normal; color:#8ec5ff; font-size:10.5px; }
   .m-pie { margin-top:10px; font-size:11.5px; color:rgba(237,230,218,.5); }
-  .m-recargar { background:none; border:0; color:var(--champan); font:inherit; font-size:11.5px; padding:0; text-decoration:underline; cursor:pointer; }
+  .m-pie { display:flex; align-items:center; gap:8px; } .m-pie span { flex:1; }
+  .m-recargar { flex:none; width:34px; height:34px; border-radius:50%; border:1px solid rgba(184,155,106,.4); background:rgba(184,155,106,.12); color:var(--champan); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+  .m-recargar svg { width:17px; height:17px; } .m-recargar.girando svg { animation:g .8s linear infinite; }
+  .m-windy { flex:none; height:34px; border-radius:17px; border:1px solid rgba(184,155,106,.4); background:none; color:var(--marfil); font:inherit; font-size:12.5px; font-weight:600; padding:0 12px; cursor:pointer; }
+  /* facturas v4 */
+  .segmento { background:#e2d9c8; padding:4px; border-radius:14px; }
+  .segmento button { color:#6d6455; font-weight:600; border-radius:11px; }
+  .segmento button.activo { background:#0a0a0a; color:var(--marfil); box-shadow:0 2px 6px rgba(0,0,0,.18); }
+  .segmento.tres button { font-size:14px; padding:10px 4px; }
+  .fac-cli { font-weight:700; font-size:17px; color:#0a0a0a; line-height:1.2; } .fac-det { color:var(--suave); font-size:13.5px; margin-top:2px; } .fac-det b { color:var(--tinta); }
+  .fac.pres { border-left:4px solid var(--champan); }
+  .chip-ultimo { margin-top:8px; display:inline-flex; gap:5px; align-items:center; background:var(--oro-claro); border:1px dashed var(--champan); color:var(--tinta); border-radius:999px; padding:8px 13px; font:inherit; font-size:13.5px; cursor:pointer; text-align:left; }
+  .m-sel { display:flex; justify-content:space-between; align-items:center; margin:2px 0 10px; font-size:13.5px; color:var(--suave); }
+  .socio { display:flex; align-items:flex-start; gap:8px; } .socio-sel { display:flex; align-items:flex-start; gap:10px; flex:1; min-width:0; cursor:pointer; }
+  .socio .n small { display:block; margin-top:3px; } .tipo-socio { display:inline-block; margin-left:6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--champan-osc); }
+  .lapiz { flex:none; width:40px; height:40px; border-radius:12px; border:1px solid var(--linea); background:#fff; color:var(--suave); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .lapiz svg { width:18px; height:18px; } .lapiz.marcado { background:#ffd84d; border-color:#e8b800; color:#5a4500; box-shadow:0 0 0 3px rgba(255,216,77,.35); }
+  .socio.cambiado { border-color:#e8b800; background:#fffbea; } .txt-mod { color:#8a6a00; font-weight:700; }
+  .cuota-fila { background:#fff; border:1px solid var(--linea); border-radius:14px; padding:12px 14px; margin-bottom:8px; }
+  .cuota-cab { display:flex; justify-content:space-between; align-items:center; gap:8px; } .cuota-cab b { font-size:15.5px; }
+  .cuota-cab select { font:inherit; font-size:13px; border:1px solid var(--linea); border-radius:10px; padding:6px 8px; background:var(--fondo); max-width:150px; }
+  .cuota-campos { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:flex-end; }
+  .cuota-campos label { display:flex; flex-direction:column; font-size:12px; color:var(--suave); gap:3px; flex:1 1 120px; }
+  .cuota-campos input { font:inherit; font-size:16px; border:1px solid var(--linea); border-radius:10px; padding:9px 10px; }
+  .cuota-campos input.especial { border-color:var(--champan); background:var(--oro-claro); font-weight:600; }
+  .cuota-total { flex:1 1 100%; font-size:13.5px; color:var(--suave); } .cuota-total b { color:var(--tinta); }
+  .resumen.aviso-amarillo { background:#fff6d6; border:1px solid #f0d478; color:#5a4500; }
+  .fac-acc.siete { flex-wrap:wrap; row-gap:4px; } .fac-acc.siete button { flex:0 0 25%; }
   /* cámaras y accesos a Drive */
   .enlace-fila.oscura { background:#0a0a0a; color:var(--marfil); border-color:rgba(184,155,106,.35); border-radius:18px; padding:14px; justify-content:flex-start; gap:12px; }
   .enlace-fila.oscura small { color:rgba(237,230,218,.6); } .enlace-fila.oscura b { font-family:var(--serif); font-size:21px; font-weight:600; }
@@ -396,6 +424,7 @@
   <h1 class="titulo">Partes de vuelo</h1>
   <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
   <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
+  <button type="button" class="accion-fina" onclick="abrirParteManual()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span>Rellenar un parte a mano</span></button>
   <div class="sec-tit" style="margin-top:26px">Buscar un parte</div>
   <div class="buscador"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pBuscar" type="search" placeholder="Nº de parte, fecha, nombre o matrícula" autocomplete="off" enterkeyhint="search"></div>
   <p class="info" id="pInfo">Los más recientes primero.</p>
@@ -525,9 +554,10 @@
       <div class="campo"><label for="nCif">DNI / CIF</label><input id="nCif" type="text" autocomplete="off" autocapitalize="characters"></div>
       <div class="campo"><label for="nTelefono">Teléfono</label><input id="nTelefono" type="tel" autocomplete="off"></div>
       <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
-      <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Si">Socio</option></select></div>
+      <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Autogiro">Socio autogiro</option><option value="Barco">Socio barco</option><option value="Ambos">Socio autogiro y barco</option></select></div>
       <div class="campo"><label for="nTrato">Saludo en los correos</label><select id="nTrato"><option value="">Automático</option><option>Estimado</option><option>Estimada</option><option>Estimados</option></select><div class="nota gris" id="nTratoAuto"></div></div>
-      <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota de socio (€)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="199"></div>
+      <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota autogiro (€ sin IVA)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
+      <div class="campo" id="nCuotaBarcoCampo" style="display:none"><label for="nCuotaBarco">Cuota barco (€ sin IVA)</label><input id="nCuotaBarco" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
     </div>
   </div>
   <div class="tarjeta">
@@ -542,8 +572,12 @@
   </div>
   <div class="tarjeta">
     <h2 style="margin-bottom:4px">Documentos</h2>
-    <p class="info">Fotos del DNI, la licencia y el certificado médico. Se guardan en Drive al pulsar Guardar.</p>
+    <p class="info">Ficha de alumno piloto, DNI, licencia y certificado médico. Se guardan en Drive, en la carpeta del cliente, al pulsar Guardar.</p>
     <div class="docs">
+      <div class="docslot grande"><div class="doc-prev"><img id="docimg-fichaAlumno" alt="" style="display:none"><span class="doc-estado" id="docest-fichaAlumno">Sin foto</span></div>
+        <div class="doc-nombre">Ficha de alumno piloto</div>
+        <div class="doc-botones"><label class="mini" for="docin-fichaAlumno">Subir foto</label><button type="button" class="mini" id="docver-fichaAlumno" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-fichaAlumno" style="display:none">Quitar</button></div>
+        <input type="file" accept="image/*" id="docin-fichaAlumno"></div>
       <div class="docslot"><div class="doc-prev"><img id="docimg-dniDelante" alt="" style="display:none"><span class="doc-estado" id="docest-dniDelante">Sin foto</span></div>
         <div class="doc-nombre">DNI delante</div>
         <div class="doc-botones"><label class="mini" for="docin-dniDelante">Subir foto</label><button type="button" class="mini" id="docver-dniDelante" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-dniDelante" style="display:none">Quitar</button></div>
@@ -583,9 +617,9 @@
 <section id="facturas" class="pantalla">
   <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Facturas</h1>
-  <div class="acciones-pag"><button class="boton principal" id="facturasNueva" onclick="abrirNuevaFactura()">+ Nueva factura</button></div>
+  <div class="segmento tres"><button id="segManual" class="activo" onclick="verPestanaFacturas('MANUAL')">Manuales</button><button id="segMensual" onclick="verPestanaFacturas('MENSUAL')">Mensuales</button><button id="segPresupuesto" onclick="verPestanaFacturas('PRESUPUESTO')">Presupuestos</button></div>
+  <div class="acciones-pag" id="facturasAcciones"><button class="boton principal" id="facturasNueva" onclick="nuevoSegunPestana()">+ Nueva factura</button></div>
   <div class="ultima" id="facturasUltima" style="display:none"></div>
-  <div class="segmento"><button id="segManual" class="activo" onclick="verPestanaFacturas('MANUAL')">Manuales</button><button id="segMensual" onclick="verPestanaFacturas('MENSUAL')">Mensuales</button></div>
   <div id="facturasOk" class="resumen ok" style="display:none"></div>
   <div id="facturasError" class="resumen mal" style="display:none"></div>
   <div id="panelManual">
@@ -601,6 +635,8 @@
         <div class="campo ancho"><p class="info" id="mInfo" style="margin:4px 0 0"></p></div>
       </div>
     </div>
+    <button type="button" class="enlace-fila" style="margin-bottom:12px" onclick="abrirCuotas(() => { mostrar('facturas'); cargarMensuales(); })"><span><b>Cuotas y precios de socios</b><small>Cambiar lo que paga cada socio y el IVA</small></span><span class="ag-fl oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></button>
+    <div class="m-sel"><span id="mSelInfo"></span><button type="button" class="mini" id="mSelTodo" onclick="seleccionarTodosMensuales()">Deseleccionar todo</button></div>
     <div id="mSocios"></div>
     <button class="boton principal" id="mGenerar" style="max-width:none;margin:6px 0 18px" onclick="generarMensuales()">Generar facturas</button>
     <div class="sec-tit" id="mHechasTit" style="display:none">Facturas de este mes</div>
@@ -615,11 +651,12 @@
   <div class="num-grande" id="facNumGrande"></div>
   <div id="facError" class="resumen mal" style="display:none"></div>
   <div class="tarjeta">
-    <h2 style="margin-bottom:12px">Datos de la factura</h2>
+    <h2 style="margin-bottom:12px" id="facDatosTit">Datos de la factura</h2>
     <div class="rejilla">
-      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off" placeholder="Calculando…"><div class="nota gris" id="facUltima"></div></div>
+      <div class="campo" id="facNumeroCampo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off" placeholder="Calculando…"><div class="nota gris" id="facUltima"></div></div>
       <div class="campo"><label for="facFecha">Fecha</label><input id="facFecha" type="date"></div>
-      <div class="campo ancho"><label for="facCliente">Cliente</label><select id="facCliente"></select><div class="nota" id="facClienteNota"></div></div>
+      <div class="campo ancho"><label for="facCliente">Cliente</label><select id="facCliente"></select><div class="nota" id="facClienteNota"></div>
+        <button type="button" class="chip-ultimo" id="facUltimoCliente" style="display:none"></button></div>
     </div>
   </div>
   <div class="tarjeta">
@@ -633,7 +670,7 @@
     <div class="chips" id="facIvaChips"><button type="button" data-iva="0">0%</button><button type="button" data-iva="4">4%</button><button type="button" data-iva="10">10%</button><button type="button" data-iva="21">21%</button><input id="facIva" type="text" inputmode="decimal" aria-label="IVA personalizado"></div>
     <div class="rejilla" style="margin-top:12px">
       <div class="campo"><label for="facIrpf">Retención IRPF (%)</label><input id="facIrpf" type="text" inputmode="decimal" placeholder="0"></div>
-      <div class="campo"><label for="facVence">Vencimiento</label><input id="facVence" type="date"></div>
+      <div class="campo"><label for="facVence" id="facVenceTxt">Vencimiento</label><input id="facVence" type="date"></div>
       <div class="campo ancho"><label for="facPago">Forma de pago</label><input id="facPago" type="text" list="lista-formas" autocomplete="off" placeholder="Transferencia, tarjeta…"></div>
       <div class="campo ancho"><label for="facNotas">Notas (salen en la factura)</label><textarea id="facNotas" rows="2"></textarea></div>
     </div>
@@ -644,6 +681,26 @@
     <div id="facIrpfFila" style="display:none"><span id="facIrpfTxt">IRPF</span><span id="facIrpfImp">0,00 €</span></div>
     <div class="total"><span>TOTAL</span><span id="facTotal">0,00 €</span></div>
   </div>
+</section>
+
+<!-- Cuotas de socios -->
+<section id="cuotas" class="pantalla">
+  <button class="volver" onclick="salirCuotas()">‹ Volver</button>
+  <h1 class="titulo">Cuotas de socios</h1>
+  <p class="sub" style="margin-bottom:14px">Lo que paga cada socio al mes. Si subes el precio general, cambia para todos los que no tengan un precio especial.</p>
+  <div id="cuError" class="resumen mal" style="display:none"></div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Precios generales</h2>
+    <div class="rejilla">
+      <div class="campo"><label for="cuAuto">Autogiro (€ sin IVA)</label><input id="cuAuto" type="text" inputmode="decimal"><div class="nota gris" id="cuAutoIva"></div></div>
+      <div class="campo"><label for="cuBarco">Barco (€ sin IVA)</label><input id="cuBarco" type="text" inputmode="decimal"><div class="nota gris" id="cuBarcoIva"></div></div>
+      <div class="campo"><label for="cuIva">IVA de las cuotas (%)</label><input id="cuIva" type="text" inputmode="decimal"></div>
+    </div>
+  </div>
+  <div class="sec-tit">Cada socio</div>
+  <p class="info">Deja la casilla vacía para que pague el precio general. Escribe un precio solo si a ese socio le cobras otra cosa.</p>
+  <div class="acciones-pag"><button type="button" class="boton" onclick="cuotasTodosGeneral()">Todos al precio general</button></div>
+  <div id="cuLista"></div>
 </section>
 
 <!-- Ajustes -->
@@ -692,8 +749,10 @@
   <h2>Algo no ha ido bien</h2>
   <p class="sub error" id="falloTexto"></p>
   <button class="boton principal" id="falloReintentar">Reintentar</button>
+  <button class="boton" id="falloManual" style="display:none" onclick="abrirParteManual(true)">Rellenarlo a mano con esta foto</button>
   <button class="boton" onclick="volverAlInicio()">Volver al inicio</button>
 </section>
+<input id="fotoManual" type="file" accept="image/*" style="display:none">
 
 <nav id="pestanas" class="pestanas">
   <button data-tab="inicio" id="tab-inicio" onclick="irPestana('inicio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span>Inicio</span></button>
@@ -714,7 +773,7 @@
 
 <script>
 const DEMO = /[?&]demo/.test(location.search);
-const VERSION_APP = 3;
+const VERSION_APP = 4;
 const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
 const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
 const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
@@ -748,11 +807,12 @@ let imagen = null, tipoImagen = 'image/jpeg', partes = [], matriculas = [];
 // ---------- utilidades ----------
 const $ = id => document.getElementById(id);
 const BARRAS = {
-  revisar: ['Cancelar', () => salirConBorrador('parte', () => volverAlInicio()), 'Guardar', () => guardar()],
+  revisar: ['Cancelar', () => editandoParte ? (editandoParte = null, partes = [], mostrar('partes')) : salirConBorrador('parte', () => volverAlInicio()), 'Guardar', () => guardar()],
   horas:    ['No descontar', () => terminar([]), 'Descontar', () => descontar()],
   compra:   ['Cancelar', () => volverAlInicio(), 'Añadir horas', () => comprar()],
   cliente:  ['Cancelar', () => fichaNombre ? fichaSalir() : salirConBorrador('cliente', fichaSalir), 'Guardar', () => guardarCliente()],
-  factura:  ['Cancelar', () => facEditando ? salirFactura() : salirConBorrador('factura', salirFactura), 'Guardar', () => guardarFactura()],
+  cuotas:   ['Cancelar', () => salirCuotas(), 'Guardar cuotas', () => guardarCuotas()],
+  factura:  ['Cancelar', () => facEditando || facModo === 'MENSUAL' ? salirFactura() : salirConBorrador(facModo === 'PRESUPUESTO' ? 'presupuesto' : 'factura', salirFactura), 'Guardar', () => guardarFactura()],
   ajustes:  ['Cancelar', () => volverAlInicio(), 'Guardar ajustes', () => guardarAjustes()],
 };
 const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>';
@@ -908,7 +968,7 @@ document.querySelectorAll('#atajosDrive .atajo').forEach(b => b.addEventListener
   if (u) abrirEnlace(u); else avisar('Todavía no tengo esa carpeta. Actualiza Apps Script y vuelve a abrir la app.', 5000);
 }));
 function abrirCamaras() {
-  const u = CFG.camaras || 'https://apps.apple.com/es/app/tp-link-tapo/id1472718009';
+  const u = CFG.camaras && !/apps\.apple\.com/.test(CFG.camaras) ? CFG.camaras : 'shortcuts://run-shortcut?name=Tapo';
   if (/^https?:/i.test(u)) abrirEnlace(u); else location.href = u;
 }
 
@@ -955,7 +1015,9 @@ function pintarTiempo(d, viejo) {
       <div><span>Base nubes</span><b>${base === null ? '—' : base + ' ft'}</b><small>aprox. sobre el terreno</small></div>
     </div>
     <div class="m-horas">${horas}</div>
-    <div class="m-pie">${dia.sunrise ? '☀︎ ' + hora(dia.sunrise[0]) + ' – ' + hora(dia.sunset[0]) + ' · ' : ''}${viejo ? 'sin conexión, datos guardados' : 'Open-Meteo, actualizado ' + hora(c.time)} · <button class="m-recargar" onclick="cargarTiempo(true)">Actualizar</button></div>`;
+    <div class="m-pie"><span>${dia.sunrise ? '☀︎ ' + hora(dia.sunrise[0]) + ' – ' + hora(dia.sunset[0]) + ' · ' : ''}${viejo ? 'sin conexión, datos guardados' : 'actualizado ' + hora(c.time)}</span>
+      <button class="m-windy" onclick="abrirEnlace('https://www.windy.com/' + LEMT.lat + '/' + LEMT.lon + '?' + LEMT.lat + ',' + LEMT.lon + ',11')">Windy ↗</button>
+      <button class="m-recargar" aria-label="Actualizar el tiempo" onclick="this.classList.add('girando'); cargarTiempo(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg></button></div>`;
 }
 cargarTiempo();
 
@@ -973,7 +1035,7 @@ async function buscarPartesApp() {
       <div class="det"><b>${esc(p.fecha || '—')}</b> · ${esc(p.matricula || '—')}${p.tipo ? ' · ' + esc(p.tipo) : ''}</div>
       <div class="det">${esc([p.delante, p.detras].filter(Boolean).join(' / ') || '—')}</div>
       <div class="det">Horómetro: ${p.horometro_inicial !== null && p.horometro_final !== null ? aTextoNumero(p.horometro_inicial.toFixed(1)) + ' → ' + aTextoNumero(p.horometro_final.toFixed(1)) + (p.minutos ? ' (' + tiempo(p.minutos) + ')' : '') : '—'}</div></div>
-      <div class="botones">${p.foto ? `<button class="mini" onclick="verFotoBuscada(${i})">Ver parte</button>` : '<span class="info" style="font-size:12px">Sin foto</span>'}</div></div></div>`).join('');
+      <div class="botones">${p.foto ? `<button class="mini" onclick="verFotoBuscada(${i})">Ver parte</button>` : '<span class="info" style="font-size:12px">Sin foto</span>'}<button class="mini" onclick="abrirModificarParte(${i})">${ICO.editar}Modificar</button></div></div></div>`).join('');
   } catch (e) { if (!e.silencioso) $('pInfo').textContent = e.message; }
 }
 function verFotoBuscada(i) { fotoVolver = () => mostrar('partes'); const p = partesEncontrados[i]; verFoto({ foto: p.foto, fecha: p.fecha, matricula: p.matricula, numero: p.numero }); }
@@ -1010,6 +1072,7 @@ $('camara').addEventListener('change', alElegirFoto);
 $('galeria').addEventListener('change', alElegirFoto);
 
 async function leer() {
+  parteManual = false;
   $('leyendoTexto').textContent = 'Leyendo el parte…';
   mostrar('leyendo');
   try {
@@ -1068,13 +1131,61 @@ function pintarRevision() {
     const i = +el.dataset.incluir; partes[i].incluir = el.checked;
     $('tarjeta' + i).classList.toggle('apagada', !el.checked);
   }));
-  document.querySelectorAll('[data-k]').forEach(el => el.addEventListener('input', () => {
+  document.querySelectorAll('[data-k]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
     const div = el.closest('.campo'); if (div) div.classList.remove('aviso');
+    if (['total_horometro', 'tiempo_total_min', 'horometro_inicial'].includes(el.dataset.k)) el.dataset.auto = '';
+    autoCalculos(+el.dataset.p, el.dataset.k);
     clearTimeout(pintarRevision.t); pintarRevision.t = setTimeout(guardarBorradorParte, 800);
   }));
   if (varios) $('guardar').textContent = 'Guardar partes';
 }
 
+// ---------- parte a mano (por si falla la lectura automática) ----------
+let parteManual = false, ayudaManual = null;
+function abrirParteManual(conFoto) {
+  if (!conFoto) imagen = null;
+  editandoParte = null; parteManual = true;
+  partes = [{ datos: { fecha: hoyTexto(), aerodromo_salida: 'LEMT', aerodromo_llegada: 'LEMT', delante_funcion: 'PILOTO' }, avisos: {}, incluir: true }];
+  pintarRevision(); pintarAyudaManual();
+  mostrar('revisar');
+  api({ accion:'ayudaManual' }).then(r => { ayudaManual = r; pintarAyudaManual(); }).catch(() => {});
+}
+function hoyTexto() { const d = new Date(); return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`; }
+function pintarAyudaManual() {
+  if (!parteManual) return;
+  $('resumen').className = 'resumen ok';
+  $('resumen').innerHTML = `<b>Parte a mano.</b> Rellena lo que pone el parte. Al elegir el aparato se pone solo el horómetro inicial, y el total y el tiempo se calculan solos.` +
+    (imagen ? ' <span class="txt-verde">Foto añadida ✓</span>' : ` <label class="mini" for="fotoManual" style="margin-top:6px">Añadir foto del parte (opcional)</label>`);
+  const m = ($('p0-matricula') || {}).value, u = ayudaManual && m && ayudaManual.ultimos[m];
+  const nota = (k, t) => { const c = $('p0-' + k) && $('p0-' + k).closest('.campo'); if (!c) return; let n = c.querySelector('.nota-ayuda'); if (!n) { n = document.createElement('div'); n.className = 'nota gris nota-ayuda'; c.appendChild(n); } n.textContent = t; };
+  nota('numero_parte', u && u.numero ? `Último de ${m}: ${u.numero}` : (ayudaManual && ayudaManual.siguienteNumero ? `Último de la hoja: ${Number(ayudaManual.siguienteNumero) - 1}` : ''));
+  nota('horometro_inicial', u ? `El último parte de ${m}${u.fecha ? ' (' + u.fecha + ')' : ''} terminó en ${aTextoNumero(u.hf)}` : '');
+}
+$('fotoManual').addEventListener('change', async ev => {
+  const archivo = ev.target.files && ev.target.files[0]; ev.target.value = '';
+  if (!archivo) return;
+  try { const dataUrl = await prepararImagen(archivo); imagen = dataUrl.split(',')[1]; tipoImagen = 'image/jpeg'; pintarAyudaManual(); }
+  catch (e) { alerta(e.message); }
+});
+/** Cálculos automáticos mientras se rellena (en la lectura y a mano): total del horómetro y tiempo de vuelo. */
+function autoCalculos(i, k) {
+  const v = id => ($(`p${i}-${id}`) || {}).value || '';
+  const pon = (id, valor) => { const el = $(`p${i}-${id}`); if (!el) return; if (el.value && el.dataset.auto !== '1') return; el.value = valor; el.dataset.auto = '1'; };
+  if (k === 'matricula' && parteManual && ayudaManual) {
+    const u = ayudaManual.ultimos[v('matricula')], hi = $(`p${i}-horometro_inicial`);
+    if (u && hi && (!hi.value || hi.dataset.auto === '1')) { hi.value = aTextoNumero(u.hf); hi.dataset.auto = '1'; }
+    pintarAyudaManual();
+  }
+  if (['horometro_inicial', 'horometro_final', 'matricula'].includes(k)) {
+    const a = numero(v('horometro_inicial')), b = numero(v('horometro_final'));
+    if (a !== null && b !== null && b > a) pon('total_horometro', aTextoNumero(Math.round((b - a) * 10) / 10));
+  }
+  if (['hora_salida', 'hora_regreso'].includes(k)) {
+    const m = t => { const x = /^(\d{1,2}):(\d{2})/.exec(t); return x ? +x[1] * 60 + +x[2] : null; };
+    const a = m(v('hora_salida')), b = m(v('hora_regreso'));
+    if (a !== null && b !== null && b > a) pon('tiempo_total_min', String(b - a));
+  }
+}
 function estadoRevision() {
   return partes.map((p, i) => {
     const d = Object.assign({}, p.datos);
@@ -1083,7 +1194,7 @@ function estadoRevision() {
   });
 }
 function guardarBorradorParte() {
-  if (!partes.length) return;
+  if (!partes.length || editandoParte) return;
   const e = estadoRevision();
   guardarBorrador('parte', `Parte ${e.map(p => p.datos.numero_parte || '¿?').join(' y ')}${e[0].datos.fecha ? ' · ' + e[0].datos.fecha : ''}`, { partes: e, imagen, tipoImagen });
 }
@@ -1101,7 +1212,39 @@ function recoger() {
   }).filter(p => p.incluir).map(p => p.datos);
 }
 
+let editandoParte = null;
+async function abrirModificarParte(i) {
+  parteManual = false;
+  const pe = partesEncontrados[i];
+  avisar('Abriendo el parte…', 20000);
+  try {
+    const r = await api({ accion:'parte', fila: pe.fila });
+    $('aviso').style.display = 'none';
+    editandoParte = { fila: r.fila, original: { numero_parte: r.datos.numero_parte, fecha: r.datos.fecha }, foto: r.datos.foto };
+    partes = [{ datos: r.datos, avisos: {}, incluir: true }]; imagen = null;
+    pintarRevision();
+    $('resumen').className = 'resumen ok';
+    $('resumen').innerHTML = `<b>Modificar parte ${esc(r.datos.numero_parte || '')}</b> (fila ${r.fila} de la hoja). Al guardar se cambia la hoja y, si cambias la fecha o el número, también el nombre y la carpeta de su foto en Drive y sus descuentos de horas.` +
+      (r.datos.foto ? ` <button type="button" class="mini" onclick="verFoto({ foto: editandoParte.foto, numero: '${esc(r.datos.numero_parte || '')}', fecha: '${esc(r.datos.fecha || '')}' })">Ver foto</button>` : '');
+    document.querySelectorAll('#tarjetas .incluir').forEach(e => e.style.display = 'none');
+    mostrar('revisar'); $('guardar').textContent = 'Guardar cambios';
+  } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+async function guardarCambiosParte() {
+  const d = recoger()[0];
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando cambios…';
+  try {
+    const r = await api({ accion:'editarParte', fila: editandoParte.fila, original: editandoParte.original, datos: d });
+    editandoParte = null; partes = [];
+    mostrar('partes'); buscarPartesApp();
+    hoja(`<h2>Parte ${esc(r.datos.numero_parte || '')} modificado</h2><p class="info" style="margin:8px 0 0">Cambiado en la hoja de partes${r.cambios && r.cambios.length ? ':<br>• ' + r.cambios.map(esc).join('<br>• ') : '.'}${r.aviso ? '<br><br><span class="txt-rojo">' + esc(r.aviso) + '</span>' : ''}</p>`, []);
+    $('hojaBotones').lastChild.textContent = 'Entendido';
+  } catch (e) { if (!e.silencioso) alerta(e.message); }
+  finally { btn.disabled = false; if ($('revisar').classList.contains('activa')) btn.textContent = 'Guardar cambios'; }
+}
 async function guardar() {
+  if (editandoParte) return guardarCambiosParte();
+  if (parteManual) { const d = recoger()[0]; if (!d || !d.fecha || !d.matricula) { alerta('Pon al menos la fecha y el aparato.'); return; } }
   const lista = recoger();
   if (!lista.length) { alerta(partes.length > 1 ? 'No hay ningún parte marcado para guardar. Marca la casilla Guardar del parte que quieras guardar.' : 'Este parte no está marcado para guardar porque ya está en la hoja. Si quieres guardarlo igualmente, marca la casilla Guardar arriba a la derecha del parte.'); return; }
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
@@ -1443,8 +1586,9 @@ async function descontarParteCliente(i) {
 }
 
 // ---------- clientes: ficha (añadir y modificar) ----------
-const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', trato:'nTrato' };
-const DOCS = { dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', cuotaBarco:'nCuotaBarco', trato:'nTrato' };
+const NOMBRE_SOCIO = { Si:'Socio autogiro', Autogiro:'Socio autogiro', Barco:'Socio barco', Ambos:'Socio autogiro y barco' };
+const DOCS = { fichaAlumno:'Ficha de alumno piloto', dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
 let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
 
 function pintarDocs() {
@@ -1493,10 +1637,10 @@ function guardarBorradorCliente() {
 ['input', 'change'].forEach(ev => $('cliente').addEventListener(ev, () => { clearTimeout(guardarBorradorCliente.t); guardarBorradorCliente.t = setTimeout(guardarBorradorCliente, 700); }));
 
 function rellenarFicha(c) {
-  Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { const v = c ? c[k] : ''; $(id).value = v === null || v === undefined ? '' : String(v).replace('.', k === 'cuota' ? ',' : '.'); });
+  Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { const v = c ? c[k] : ''; $(id).value = v === null || v === undefined ? '' : String(v).replace('.', k === 'cuota' || k === 'cuotaBarco' ? ',' : '.'); });
   if (!c || !c.pais) $('nPais').value = c ? '' : 'España';
-  $('nSocio').value = c && c.socio === 'Si' ? 'Si' : 'No';
-  $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none';
+  $('nSocio').value = c ? (c.socio === 'Si' ? 'Autogiro' : (['Autogiro', 'Barco', 'Ambos'].includes(c.socio) ? c.socio : 'No')) : 'No';
+  camposCuota();
   $('nTratoAuto').textContent = c && c.tratoAuto && !c.trato ? 'Ahora: ' + c.tratoAuto : '';
   fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
   pintarDocs();
@@ -1529,7 +1673,8 @@ async function abrirFichaCliente(nombre, volverA) {
   catch (e) { if (!e.silencioso) { $('clienteError').style.display = 'block'; $('clienteError').textContent = e.message; } }
 }
 function fichaSalir() { if (fichaVolverA) fichaVolverA(); else volverAlInicio(); }
-$('nSocio').addEventListener('change', () => { $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none'; avisoSinGuardar(); });
+function camposCuota() { const v = $('nSocio').value; $('nCuotaCampo').style.display = v === 'Autogiro' || v === 'Ambos' ? '' : 'none'; $('nCuotaBarcoCampo').style.display = v === 'Barco' || v === 'Ambos' ? '' : 'none'; }
+$('nSocio').addEventListener('change', () => { camposCuota(); avisoSinGuardar(); });
 $('nNombre').addEventListener('input', () => { forzarCliente = false; $('clienteError').style.display = 'none'; avisoSinGuardar(); });
 
 async function guardarCliente() {
@@ -1612,21 +1757,29 @@ async function abrirFacturas(ok) {
 }
 function verPestanaFacturas(t) {
   pestanaFacturas = t;
-  $('segManual').classList.toggle('activo', t === 'MANUAL'); $('segMensual').classList.toggle('activo', t === 'MENSUAL');
-  $('panelManual').style.display = t === 'MANUAL' ? '' : 'none'; $('panelMensual').style.display = t === 'MENSUAL' ? '' : 'none';
-  if (t === 'MANUAL') cargarFacturas(); else abrirMensuales();
+  $('segManual').classList.toggle('activo', t === 'MANUAL'); $('segMensual').classList.toggle('activo', t === 'MENSUAL'); $('segPresupuesto').classList.toggle('activo', t === 'PRESUPUESTO');
+  $('panelManual').style.display = t !== 'MENSUAL' ? '' : 'none'; $('panelMensual').style.display = t === 'MENSUAL' ? '' : 'none';
+  $('facturasNueva').textContent = t === 'PRESUPUESTO' ? '+ Nuevo presupuesto' : '+ Nueva factura';
+  $('facturasAcciones').style.display = t === 'MENSUAL' ? 'none' : '';
+  $('facturasBuscar').placeholder = t === 'PRESUPUESTO' ? 'Buscar presupuesto por número o cliente' : 'Buscar por número o cliente';
+  if (t === 'MENSUAL') { $('facturasUltima').style.display = 'none'; abrirMensuales(); } else cargarFacturas();
 }
+function nuevoSegunPestana() { if (pestanaFacturas === 'PRESUPUESTO') abrirNuevaFactura(null, null, 'PRESUPUESTO'); else abrirNuevaFactura(); }
 function pintarUltima(u) {
   $('facturasUltima').style.display = u ? 'block' : 'none';
   if (u) $('facturasUltima').innerHTML = `<span>Última guardada</span><b>N.º ${esc(u.numero)}</b> · ${esc(u.cliente)} · ${esc(u.fecha || '')}`;
 }
 async function cargarFacturas() {
-  $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = '';
+  $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = ''; listaFacturas = [];
   try {
-    const r = await api({ accion:'facturas', tipo:'MANUAL' });
+    const tipo = pestanaFacturas === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL';
+    const r = await api({ accion:'facturas', tipo });
+    if (pestanaFacturas !== tipo) return;
     listaFacturas = r.facturas || [];
-    pintarUltima(r.ultima);
-    $('facturasInfo').textContent = listaFacturas.length ? `${r.total} facturas manuales.` : 'Todavía no hay facturas. Pulsa "Nueva factura".';
+    if (tipo === 'MANUAL') pintarUltima(r.ultima); else $('facturasUltima').style.display = 'none';
+    $('facturasInfo').textContent = tipo === 'PRESUPUESTO'
+      ? (listaFacturas.length ? `${r.total} presupuestos. Se guardan en Drive › Airía Privé › Presupuestos.` : 'Todavía no hay presupuestos. Pulsa "Nuevo presupuesto".')
+      : (listaFacturas.length ? `${r.total} facturas manuales.` : 'Todavía no hay facturas. Pulsa "Nueva factura".');
     pintarFacturas();
   } catch (e) { if (!e.silencioso) $('facturasInfo').textContent = e.message; }
 }
@@ -1637,16 +1790,19 @@ const ICO = {
   carpeta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
   correo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
   pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  facturar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg>',
   borrar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg>',
 };
 function htmlFactura(f) {
-  return `<div class="fac" id="fac-${esc(f.id)}"><div class="fac-cab"><div><div class="fac-num">N.º ${esc(f.numero)}</div><div class="fac-det">${esc(f.fecha || '')} · ${esc(f.cliente)}</div></div><div class="fac-tot">${euros(f.total)}</div></div>
-    <div class="fac-acc">
+  const pres = f.tipo === 'PRESUPUESTO';
+  return `<div class="fac${pres ? ' pres' : ''}" id="fac-${esc(f.id)}"><div class="fac-cab"><div><div class="fac-cli">${esc(f.cliente)}</div><div class="fac-det">${pres ? 'Presupuesto' : 'Factura'} <b>${esc(f.numero)}</b> · ${esc(f.fecha || '')}</div></div><div class="fac-tot">${euros(f.total)}</div></div>
+    <div class="fac-acc${pres ? ' siete' : ''}">
       <button onclick="accionFactura('ver','${esc(f.id)}')">${ICO.ver}Ver</button>
       <button onclick="editarFactura('${esc(f.id)}')">${ICO.editar}Editar</button>
       <button onclick="accionFactura('carpeta','${esc(f.id)}')">${ICO.carpeta}Carpeta</button>
       <button onclick="accionFactura('correo','${esc(f.id)}')">${ICO.correo}Correo</button>
       <button onclick="accionFactura('pdf','${esc(f.id)}')">${ICO.pdf}PDF</button>
+      ${pres ? `<button onclick="facturarPresupuesto('${esc(f.id)}')">${ICO.facturar}Facturar</button>` : ''}
       <button class="rojo" data-borrar="${esc(f.id)}" onclick="borrarFacturaApp('${esc(f.id)}')">${ICO.borrar}Borrar</button>
     </div></div>`;
 }
@@ -1709,8 +1865,9 @@ async function enviarFactura(p, puedeCompartir) {
 }
 function borrarFacturaApp(id) {
   const f = buscarFacturaLocal(id);
-  hoja(`<h2>¿Borrar la factura ${esc(f.numero || '')}?</h2><p class="info" style="margin:8px 0 0">${esc(f.cliente || '')}${f.total !== undefined ? ' · ' + euros(f.total) : ''}<br><br>Irá a la papelera de la app 30 días y su PDF a la papelera de Drive. Su número queda libre para la siguiente factura.</p>`,
-    [{ t: 'Borrar factura', peligro: true, f: async () => {
+  const qu = f.tipo === 'PRESUPUESTO' ? 'el presupuesto' : 'la factura';
+  hoja(`<h2>¿Borrar ${qu} ${esc(f.numero || '')}?</h2><p class="info" style="margin:8px 0 0">${esc(f.cliente || '')}${f.total !== undefined ? ' · ' + euros(f.total) : ''}<br><br>Irá a la papelera de la app 30 días y su PDF a la papelera de Drive. Su número queda libre.</p>`,
+    [{ t: f.tipo === 'PRESUPUESTO' ? 'Borrar presupuesto' : 'Borrar factura', peligro: true, f: async () => {
       avisar('Borrando la factura…', 20000);
       try { await api({ accion:'borrarFactura', id }); delete pdfCache[id]; avisar('Factura movida a la papelera.'); verPestanaFacturas(pestanaFacturas); }
       catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
@@ -1759,44 +1916,75 @@ function pintarClientesFactura(sel) {
 }
 function notaClienteFactura() {
   const c = facClientes.find(x => x.nombre === $('facCliente').value);
-  $('facClienteNota').textContent = c && c.socio === 'Si' ? 'Socio' + (c.cuota ? ` · cuota ${euros(c.cuota)}` : '') : '';
+  $('facClienteNota').textContent = c && c.socio && c.socio !== 'No' ? NOMBRE_SOCIO[c.socio] + (c.cuota ? ` · cuota ${euros(c.cuota)}` : '') : '';
 }
 $('facCliente').addEventListener('change', notaClienteFactura);
-async function abrirNuevaFactura(volverA, borrador) {
-  if (!borrador && leerBorrador('factura')) {
-    const b = leerBorrador('factura');
-    hoja(`<h2>Tienes una factura sin terminar</h2><p class="info" style="margin:8px 0 0">${esc(b.resumen)}</p>`,
-      [{ t: 'Continuarla', principal: true, f: () => abrirNuevaFactura(volverA, b.datos) }, { t: 'Empezar otra (se descarta)', peligro: true, f: () => { borrarBorrador('factura'); abrirNuevaFactura(volverA, null); } }]);
+let facModo = 'FACTURA', facMensual = null; // FACTURA | PRESUPUESTO | MENSUAL (editar una mensual antes de generarla)
+function prepararFormulario(modo) {
+  facModo = modo;
+  const pres = modo === 'PRESUPUESTO', mens = modo === 'MENSUAL';
+  $('facDatosTit').textContent = pres ? 'Datos del presupuesto' : 'Datos de la factura';
+  $('facVenceTxt').textContent = pres ? 'Válido hasta' : 'Vencimiento';
+  $('facNumeroCampo').style.display = mens ? 'none' : '';
+  $('facCliente').disabled = mens;
+  $('facUltimoCliente').style.display = 'none'; $('facError').className = 'resumen mal';
+  document.querySelector('#factura .volver').textContent = mens ? '‹ Mensuales' : (pres ? '‹ Presupuestos' : '‹ Facturas');
+}
+async function abrirNuevaFactura(volverA, borrador, modo, titulo) {
+  modo = modo || 'FACTURA';
+  const claveB = modo === 'PRESUPUESTO' ? 'presupuesto' : 'factura';
+  if (!borrador && leerBorrador(claveB)) {
+    const b = leerBorrador(claveB);
+    hoja(`<h2>Tienes ${modo === 'PRESUPUESTO' ? 'un presupuesto' : 'una factura'} sin terminar</h2><p class="info" style="margin:8px 0 0">${esc(b.resumen)}</p>`,
+      [{ t: 'Continuar', principal: true, f: () => abrirNuevaFactura(volverA, b.datos, modo) }, { t: 'Empezar de nuevo (se descarta)', peligro: true, f: () => { borrarBorrador(claveB); abrirNuevaFactura(volverA, null, modo); } }]);
     return;
   }
   const d = borrador || {};
   facEditando = null; facNumeroTocado = !!d.numeroTocado; facVolverA = volverA || null;
-  $('facTitulo').textContent = 'Nueva factura'; $('facError').style.display = 'none';
+  prepararFormulario(modo);
+  $('facTitulo').textContent = titulo || (modo === 'PRESUPUESTO' ? 'Nuevo presupuesto' : 'Nueva factura'); $('facError').style.display = 'none';
   $('facFecha').value = d.fecha || hoyInput(); $('facNumero').value = d.numeroTocado ? d.numero : ''; $('facIrpf').value = d.irpf || ''; $('facVence').value = d.vence || ''; $('facPago').value = d.pago || ''; $('facNotas').value = d.notas || '';
   pintarLineas(d.lineas || []); marcarIva(d.iva !== undefined ? d.iva : 21); facClientes = []; pintarClientesFactura(d.cliente || ''); $('facUltima').textContent = '';
   numeroGrande(d.numeroTocado ? d.numero : '');
   mostrar('factura');
   try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); facClientes = r.clientes || []; pintarClientesFactura($('facCliente').value);
-    if (!facNumeroTocado) { $('facNumero').value = r.numero; numeroGrande(r.numero); }
+    const num = modo === 'PRESUPUESTO' ? r.presupuesto : r.numero;
+    if (!facNumeroTocado) { $('facNumero').value = num; numeroGrande(num); }
     if (d.iva === undefined) marcarIva(r.ivaPct);
-    $('facUltima').textContent = r.ultima ? `Última guardada: ${r.ultima.numero} (${r.ultima.cliente})` : ''; }
+    if (modo === 'PRESUPUESTO') $('facUltima').textContent = r.ultimoPresupuesto ? `Último guardado: ${r.ultimoPresupuesto}` : '';
+    else $('facUltima').textContent = r.ultima ? `Última guardada: ${r.ultima.numero} (${r.ultima.cliente})` : '';
+    const u = r.ultima && r.ultima.cliente !== 'hecha con la app anterior' ? r.ultima.cliente : '';
+    if (u && !$('facCliente').value && facClientes.some(c => c.nombre === u)) {
+      $('facUltimoCliente').style.display = 'inline-flex';
+      $('facUltimoCliente').innerHTML = `↺ Mismo cliente que la última factura: <b>${esc(u)}</b>`;
+      $('facUltimoCliente').onclick = () => { pintarClientesFactura(u); $('facCliente').dispatchEvent(new Event('change', { bubbles: true })); $('facUltimoCliente').style.display = 'none'; };
+    } }
   catch (e) { if (!e.silencioso) { numeroGrande($('facNumero').value); $('facError').style.display = 'block'; $('facError').textContent = e.message; } }
+}
+/** Convierte un presupuesto en una factura nueva con los mismos datos. */
+async function facturarPresupuesto(id) {
+  avisar('Abriendo el presupuesto…', 15000);
+  try {
+    const f = await api({ accion:'factura', id });
+    $('aviso').style.display = 'none';
+    await abrirNuevaFactura(null, { cliente: f.cliente, lineas: f.lineas, iva: f.ivaPct, irpf: f.irpfPct ? aTextoNumero(f.irpfPct) : '', pago: f.formaPago || '', notas: f.notas || '' }, 'FACTURA', 'Factura del presupuesto ' + f.numero);
+  } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
 }
 function numeroGrande(n) { $('facNumGrande').innerHTML = n ? `N.º <b>${esc(n)}</b>` : 'Calculando el número…'; }
 function guardarBorradorFactura() {
-  if (facEditando || !$('factura').classList.contains('activa')) return;
+  if (facEditando || facModo === 'MENSUAL' || !$('factura').classList.contains('activa')) return;
   const lineas = leerLineas().filter(l => l.descripcion || l.precio);
   const cliente = $('facCliente').value;
   if (!cliente && !lineas.length) return;
-  guardarBorrador('factura', `${cliente || 'Sin cliente'} · ${lineas.map(l => l.descripcion).filter(Boolean).join(', ') || 'sin conceptos'} · ${$('facTotal').textContent}`,
+  guardarBorrador(facModo === 'PRESUPUESTO' ? 'presupuesto' : 'factura', `${cliente || 'Sin cliente'} · ${lineas.map(l => l.descripcion).filter(Boolean).join(', ') || 'sin conceptos'} · ${$('facTotal').textContent}`,
     { fecha: $('facFecha').value, cliente, lineas, iva: ivaElegido(), irpf: $('facIrpf').value, vence: $('facVence').value, pago: $('facPago').value, notas: $('facNotas').value,
       numero: $('facNumero').value, numeroTocado: facNumeroTocado });
 }
 ['input', 'change'].forEach(ev => $('factura').addEventListener(ev, () => { clearTimeout(guardarBorradorFactura.t); guardarBorradorFactura.t = setTimeout(guardarBorradorFactura, 700); }));
 $('facNumero').addEventListener('input', () => { facNumeroTocado = true; numeroGrande($('facNumero').value.trim()); });
 $('facFecha').addEventListener('change', async () => {
-  if (facEditando || facNumeroTocado) return;
-  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); if (!facNumeroTocado) { $('facNumero').value = r.numero; numeroGrande(r.numero); } } catch (e) {}
+  if (facEditando || facNumeroTocado || facModo === 'MENSUAL') return;
+  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); const n = facModo === 'PRESUPUESTO' ? r.presupuesto : r.numero; if (!facNumeroTocado) { $('facNumero').value = n; numeroGrande(n); } } catch (e) {}
 });
 async function editarFactura(id, volverA) {
   facVolverA = volverA || null;
@@ -1805,9 +1993,10 @@ async function editarFactura(id, volverA) {
     const [f, n] = await Promise.all([api({ accion:'factura', id }), api({ accion:'nuevaFactura' })]);
     $('aviso').style.display = 'none';
     facEditando = f; facNumeroTocado = true; facClientes = n.clientes || [];
-    $('facTitulo').textContent = 'Factura ' + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
+    prepararFormulario(f.tipo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'FACTURA');
+    $('facTitulo').textContent = (f.tipo === 'PRESUPUESTO' ? 'Presupuesto ' : 'Factura ') + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
     $('facError').style.display = 'none';
-    $('facUltima').textContent = n.ultima ? `Última guardada: ${n.ultima.numero} (${n.ultima.cliente})` : '';
+    $('facUltima').textContent = f.tipo === 'PRESUPUESTO' ? '' : (n.ultima ? `Última guardada: ${n.ultima.numero} (${n.ultima.cliente})` : '');
     numeroGrande(f.numero);
     $('facNumero').value = f.numero; $('facFecha').value = fechaAInput(f.fecha); pintarClientesFactura(f.cliente);
     $('facIrpf').value = f.irpfPct ? aTextoNumero(f.irpfPct) : ''; $('facVence').value = fechaAInput(f.vencimiento || ''); $('facPago').value = f.formaPago || ''; $('facNotas').value = f.notas || '';
@@ -1815,7 +2004,7 @@ async function editarFactura(id, volverA) {
     mostrar('factura');
   } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
 }
-function salirFactura() { if (facVolverA) facVolverA(); else abrirFacturas(); }
+function salirFactura() { if (facModo === 'MENSUAL') { facModo = 'FACTURA'; mostrar('facturas'); return; } if (facVolverA) facVolverA(); else abrirFacturas(); }
 async function guardarFactura() {
   const err = t => { $('facError').style.display = 'block'; $('facError').textContent = t; window.scrollTo(0, 0); };
   const cliente = $('facCliente').value, fecha = inputAFecha($('facFecha').value), lineas = leerLineas().filter(l => l.descripcion || l.precio);
@@ -1823,60 +2012,163 @@ async function guardarFactura() {
   if (!fecha) return err('Elige la fecha.');
   if (!lineas.length) return err('Añade al menos un concepto con su precio.');
   if (lineas.some(l => !l.descripcion)) return err('Hay una línea sin descripción.');
-  const f = { id: facEditando ? facEditando.id : undefined, tipo: facEditando ? facEditando.tipo : 'MANUAL', mes: facEditando ? facEditando.mes : undefined,
+  if (facModo === 'MENSUAL') {
+    mensualesCambios[facMensual] = { lineas, ivaPct: ivaElegido(), irpfPct: numero($('facIrpf').value) || 0, fecha, notas: $('facNotas').value.trim(),
+      formaPago: $('facPago').value.trim(), vencimiento: inputAFecha($('facVence').value) || '' };
+    mensualesSel.add(facMensual);
+    facModo = 'FACTURA'; mostrar('facturas'); pintarMensuales();
+    avisar('Cambios guardados para ' + facMensual + '. Se aplicarán al generar.', 3500);
+    return;
+  }
+  const f = { id: facEditando ? facEditando.id : undefined, tipo: facEditando ? facEditando.tipo : (facModo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL'), mes: facEditando ? facEditando.mes : undefined,
     numero: $('facNumero').value.trim(), fecha, cliente, lineas, ivaPct: ivaElegido(), irpfPct: numero($('facIrpf').value) || 0,
     formaPago: $('facPago').value.trim(), vencimiento: inputAFecha($('facVence').value) || '', notas: $('facNotas').value.trim() };
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando y creando PDF…';
   try {
     const r = await api({ accion:'guardarFactura', factura: f });
-    if (!f.id) borrarBorrador('factura');
+    if (!f.id) borrarBorrador(f.tipo === 'PRESUPUESTO' ? 'presupuesto' : 'factura');
     delete pdfCache[r.id];
-    const msg = `Factura ${r.numero} guardada (${euros(r.total)}). El PDF está en su carpeta de Drive.`;
+    const msg = (r.tipo === 'PRESUPUESTO' ? `Presupuesto ${r.numero} guardado` : `Factura ${r.numero} guardada`) + ` (${euros(r.total)}). El PDF está en su carpeta de Drive.`;
     if (facVolverA) { facVolverA(); avisar(msg, 4000); }
-    else { pestanaFacturas = r.tipo === 'MENSUAL' ? 'MENSUAL' : 'MANUAL'; abrirFacturas(msg); }
+    else { pestanaFacturas = r.tipo === 'MENSUAL' ? 'MENSUAL' : (r.tipo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL'); abrirFacturas(msg); }
   } catch (e) {
     if (e.silencioso) return;
     if (e.datos && e.datos.repetido) {
       const libre = e.datos.numeroLibre;
-      hoja(`<h2>Número repetido</h2><p class="info" style="margin:8px 0 0">${esc(e.message)}<br><br>No puede haber dos facturas con el mismo número.${libre ? ` El siguiente libre es <b>${esc(libre)}</b>.` : ''}</p>`,
+      hoja(`<h2>Número repetido</h2><p class="info" style="margin:8px 0 0">${esc(e.message)}<br><br>No puede haber dos con el mismo número.${libre ? ` El siguiente libre es <b>${esc(libre)}</b>.` : ''}</p>`,
         libre ? [{ t: 'Usar el ' + libre + ' y guardar', principal: true, f: () => { $('facNumero').value = libre; guardarFactura(); } }] : []);
       $('hojaBotones').lastChild.textContent = 'Cambiarlo yo';
     } else err(e.message);
   }
-  finally { btn.disabled = false; if ($('factura').classList.contains('activa')) btn.textContent = 'Guardar'; }
+  finally { btn.disabled = false; if ($('factura').classList.contains('activa')) btn.textContent = facModo === 'MENSUAL' ? 'Guardar cambios' : 'Guardar'; }
+}
+
+// ---------- cuotas de socios ----------
+let cuotasDatos = null, cuotasVolver = null;
+const conIva = (v, iva) => v === null || isNaN(v) ? '' : `Con IVA: ${euros(r2(v * (1 + (iva || 0) / 100)))}`;
+async function abrirCuotas(volver) {
+  cuotasVolver = volver || null;
+  mostrar('cuotas'); $('cuError').style.display = 'none'; $('cuLista').innerHTML = '<p class="info">Cargando cuotas…</p>';
+  try {
+    const r = await api({ accion:'cuotas' }); cuotasDatos = r;
+    $('cuAuto').value = r.general.cuotaAutogiro === null ? '' : aTextoNumero(r.general.cuotaAutogiro);
+    $('cuBarco').value = r.general.cuotaBarco === null ? '' : aTextoNumero(r.general.cuotaBarco);
+    $('cuIva').value = aTextoNumero(r.general.ivaCuotas);
+    pintarCuotas();
+  } catch (e) { if (!e.silencioso) { $('cuLista').innerHTML = ''; $('cuError').style.display = 'block'; $('cuError').textContent = e.message; } }
+}
+function pintarCuotas() {
+  const gA = numero($('cuAuto').value), gB = numero($('cuBarco').value), iva = numero($('cuIva').value) ?? 21;
+  $('cuAutoIva').textContent = conIva(gA, iva); $('cuBarcoIva').textContent = conIva(gB, iva);
+  $('cuLista').innerHTML = cuotasDatos.socios.map((s, i) => {
+    const a = s.tipo === 'Autogiro' || s.tipo === 'Ambos', b = s.tipo === 'Barco' || s.tipo === 'Ambos';
+    const v = x => x === null || x === undefined ? '' : aTextoNumero(x);
+    const paga = (a ? (s.cuota ?? gA ?? 0) : 0) + (b ? (s.cuotaBarco ?? gB ?? 0) : 0);
+    return `<div class="cuota-fila"><div class="cuota-cab"><b>${esc(s.nombre)}</b>
+        <select data-cu="${i}" data-k="tipo"><option value="Autogiro"${s.tipo === 'Autogiro' ? ' selected' : ''}>Autogiro</option><option value="Barco"${s.tipo === 'Barco' ? ' selected' : ''}>Barco</option><option value="Ambos"${s.tipo === 'Ambos' ? ' selected' : ''}>Autogiro y barco</option><option value="No">Ya no es socio</option></select></div>
+      <div class="cuota-campos">
+        ${a ? `<label>Autogiro<input data-cu="${i}" data-k="cuota" inputmode="decimal" value="${v(s.cuota)}" placeholder="${gA === null ? '—' : aTextoNumero(gA) + ' (general)'}" class="${s.cuota !== null && s.cuota !== undefined ? 'especial' : ''}"></label>` : ''}
+        ${b ? `<label>Barco<input data-cu="${i}" data-k="cuotaBarco" inputmode="decimal" value="${v(s.cuotaBarco)}" placeholder="${gB === null ? 'falta el precio' : aTextoNumero(gB) + ' (general)'}" class="${s.cuotaBarco !== null && s.cuotaBarco !== undefined ? 'especial' : ''}"></label>` : ''}
+        <div class="cuota-total">${s.tipo === 'No' ? 'Dejará de ser socio' : `${euros(paga)} + IVA = <b>${euros(r2(paga * (1 + iva / 100)))}</b>/mes`}${(a && (s.cuota ?? gA) === null) || (b && (s.cuotaBarco ?? gB) === null) ? ' <span class="txt-rojo">falta precio</span>' : ''}</div>
+      </div></div>`;
+  }).join('') || '<p class="info">No hay socios. Marca a un cliente como socio en su ficha.</p>';
+  $('cuLista').querySelectorAll('[data-cu]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'change', () => {
+    const s = cuotasDatos.socios[+el.dataset.cu];
+    s[el.dataset.k] = el.dataset.k === 'tipo' ? el.value : numero(el.value);
+    pintarCuotas();
+  }));
+}
+['cuAuto', 'cuBarco', 'cuIva'].forEach(id => $(id).addEventListener('change', pintarCuotas));
+function cuotasTodosGeneral() {
+  hoja(`<h2>¿Todos al precio general?</h2><p class="info" style="margin:8px 0 0">Se quitan los precios especiales de todos los socios y pagarán ${$('cuAuto').value ? $('cuAuto').value + ' € (autogiro)' : ''}${$('cuAuto').value && $('cuBarco').value ? ' y ' : ''}${$('cuBarco').value ? $('cuBarco').value + ' € (barco)' : ''} + IVA. No se guarda hasta que pulses Guardar cuotas.</p>`,
+    [{ t: 'Sí, todos al general', principal: true, f: () => { cuotasDatos.socios.forEach(s => { s.cuota = null; s.cuotaBarco = null; }); pintarCuotas(); } }]);
+}
+function salirCuotas() { if (cuotasVolver) cuotasVolver(); else volverAlInicio(); }
+async function guardarCuotas() {
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando cuotas…';
+  try {
+    const r = await api({ accion:'guardarCuotas', general: { cuotaAutogiro: numero($('cuAuto').value), cuotaBarco: numero($('cuBarco').value), ivaCuotas: numero($('cuIva').value) }, socios: cuotasDatos.socios });
+    avisar(`Cuotas guardadas${r.cambiados ? ' · ' + r.cambiados + ' socio' + (r.cambiados > 1 ? 's' : '') + ' cambiado' + (r.cambiados > 1 ? 's' : '') : ''}.`, 3500);
+    salirCuotas();
+  } catch (e) { if (!e.silencioso) { $('cuError').style.display = 'block'; $('cuError').textContent = e.message; window.scrollTo(0, 0); } }
+  finally { btn.disabled = false; if ($('cuotas').classList.contains('activa')) btn.textContent = 'Guardar cuotas'; }
 }
 
 // ---------- facturas mensuales de socios ----------
-let mensualesHechas = [], mensualesInfo = null;
+let mensualesHechas = [], mensualesInfo = null, mensualesSel = new Set(), mensualesCambios = {};
 function abrirMensuales() {
   if (!$('mMes').value) $('mMes').value = mesAnterior();
   cargarMensuales();
 }
-$('mMes').addEventListener('change', () => { $('mFecha').value = ''; cargarMensuales(); });
+$('mMes').addEventListener('change', () => { $('mFecha').value = ''; mensualesCambios = {}; cargarMensuales(); });
 async function cargarMensuales() {
   const mes = $('mMes').value; if (!mes) return;
   $('mInfo').textContent = 'Cargando socios…'; $('mSocios').innerHTML = ''; $('mHechas').innerHTML = ''; $('mHechasTit').style.display = 'none';
   try {
     const r = await api({ accion:'mensuales', mes });
+    if (!mensualesInfo || mensualesInfo.mes !== r.mes) mensualesCambios = {};
     mensualesInfo = r; mensualesHechas = r.facturas || [];
     if (!$('mFecha').value) $('mFecha').value = fechaAInput(r.fechaSugerida);
-    const pendientes = r.socios.filter(s => !s.facturada);
-    $('mInfo').textContent = `${r.socios.length} socios · ${pendientes.length} sin factura de ${r.nombreMes}. Las facturas se guardan en la carpeta de ${r.nombreMes.split(' ')[0]}.`;
-    $('mSocios').innerHTML = r.socios.map((s, i) => s.facturada
-      ? `<div class="socio hecho"><input type="checkbox" disabled checked><div class="n"><b>${esc(s.nombre)}</b><small>Ya tiene la ${esc(s.facturada.numero)} · ${euros(s.facturada.total)}</small></div></div>`
-      : `<label class="socio"><input type="checkbox" data-socio="${i}" ${s.cuota > 0 ? 'checked' : 'disabled'}><div class="n"><b>${esc(s.nombre)}</b><small>${s.cuota > 0 ? 'Cuota ' + euros(s.cuota) + ' + IVA' : 'Sin cuota en su ficha'}</small></div></label>`).join('') || '<p class="info">No hay socios. Marca a un cliente como Socio en su ficha.</p>';
-    document.querySelectorAll('[data-socio]').forEach(c => c.addEventListener('change', textoGenerar));
-    textoGenerar();
+    mensualesSel = new Set(r.socios.filter(s => !s.facturada && (!s.faltaCuota || mensualesCambios[s.nombre])).map(s => s.nombre));
+    pintarMensuales();
     if (mensualesHechas.length) { $('mHechasTit').style.display = ''; $('mHechas').innerHTML = mensualesHechas.map(htmlFactura).join(''); }
   } catch (e) { if (!e.silencioso) $('mInfo').textContent = e.message; }
 }
+const TIPO_SOCIO_CORTO = { Autogiro: 'Autogiro', Barco: 'Barco', Ambos: 'Autogiro + barco', Si: 'Autogiro' };
+function lineasDe(s) { return (mensualesCambios[s.nombre] && mensualesCambios[s.nombre].lineas) || s.lineas || []; }
+function totalMensual(s) {
+  const c = mensualesCambios[s.nombre] || {}, iva = c.ivaPct ?? mensualesInfo.ivaPct ?? 21, irpf = c.irpfPct || 0;
+  const base = r2(lineasDe(s).reduce((t, l) => t + r2((l.cantidad ?? 1) * (Number(l.precio) || 0)), 0));
+  return r2(base + r2(base * iva / 100) - r2(base * irpf / 100));
+}
+function pintarMensuales() {
+  const r = mensualesInfo; if (!r) return;
+  const pendientes = r.socios.filter(s => !s.facturada);
+  $('mInfo').textContent = `${r.socios.length} socios · ${pendientes.length} sin factura de ${r.nombreMes}. Se guardan en la carpeta de ${r.nombreMes.split(' ')[0]}.`;
+  $('mSocios').innerHTML = r.socios.map((s, i) => {
+    if (s.facturada) return `<div class="socio hecho"><input type="checkbox" disabled checked><div class="n"><b>${esc(s.nombre)}</b><small>Ya tiene la ${esc(s.facturada.numero)} · ${euros(s.facturada.total)}</small></div></div>`;
+    const cambiado = !!mensualesCambios[s.nombre], ls = lineasDe(s), falta = !cambiado && s.faltaCuota;
+    return `<div class="socio${cambiado ? ' cambiado' : ''}"><label class="socio-sel"><input type="checkbox" data-socio="${i}" ${mensualesSel.has(s.nombre) ? 'checked' : ''} ${falta ? 'disabled' : ''}>
+      <div class="n"><b>${esc(s.nombre)}</b><span class="tipo-socio">${esc(TIPO_SOCIO_CORTO[s.tipo] || '')}</span>
+      <small>${ls.map(l => esc(l.descripcion) + ' · ' + (Number(l.precio) > 0 ? euros(Number(l.precio) * (l.cantidad ?? 1)) : '<span class="txt-rojo">sin cuota</span>')).join('<br>')}</small>
+      ${falta ? '<small class="txt-rojo">Falta la cuota: ponla en su ficha, en Ajustes o con el lápiz.</small>' : `<small><b>Total ${euros(totalMensual(s))}</b> (IVA incl.)${cambiado ? ' · <span class="txt-mod">modificada</span>' : ''}</small>`}</div></label>
+      <button type="button" class="lapiz${cambiado ? ' marcado' : ''}" aria-label="Modificar la factura de ${esc(s.nombre)}" onclick="abrirEdicionMensual(${i})">${ICO.editar}</button></div>`;
+  }).join('') || '<p class="info">No hay socios. Marca a un cliente como socio en su ficha.</p>';
+  document.querySelectorAll('[data-socio]').forEach(c => c.addEventListener('change', () => {
+    const n = mensualesInfo.socios[+c.dataset.socio].nombre; if (c.checked) mensualesSel.add(n); else mensualesSel.delete(n); textoGenerar(); }));
+  textoGenerar();
+}
+function seleccionarTodosMensuales() {
+  const posibles = mensualesInfo.socios.filter(s => !s.facturada && (!s.faltaCuota || mensualesCambios[s.nombre]));
+  if (mensualesSel.size) mensualesSel.clear(); else posibles.forEach(s => mensualesSel.add(s.nombre));
+  pintarMensuales();
+}
+function abrirEdicionMensual(i) {
+  const s = mensualesInfo.socios[i], c = mensualesCambios[s.nombre] || {};
+  facEditando = null; facVolverA = null; facMensual = s.nombre;
+  prepararFormulario('MENSUAL');
+  $('facTitulo').textContent = 'Mensual de ' + s.nombre;
+  $('facNumGrande').innerHTML = `${esc(mensualesInfo.nombreMes)} · <small>el número se pone al generar</small>`;
+  $('facError').style.display = 'none'; $('facUltima').textContent = '';
+  facClientes = [{ nombre: s.nombre, socio: s.tipo, cuota: s.cuota }]; pintarClientesFactura(s.nombre);
+  $('facFecha').value = c.fecha ? fechaAInput(c.fecha) : $('mFecha').value;
+  $('facIrpf').value = c.irpfPct ? aTextoNumero(c.irpfPct) : ''; $('facVence').value = c.vencimiento ? fechaAInput(c.vencimiento) : ''; $('facPago').value = c.formaPago || ''; $('facNotas').value = c.notas || '';
+  pintarLineas(lineasDe(s).map(l => Object.assign({}, l))); marcarIva(c.ivaPct ?? mensualesInfo.ivaPct ?? 21);
+  mostrar('factura'); $('guardar').textContent = 'Guardar cambios';
+  if (mensualesCambios[s.nombre]) {
+    $('facError').style.display = 'block'; $('facError').className = 'resumen aviso-amarillo';
+    $('facError').innerHTML = 'Ya la habías modificado. <button type="button" class="mini" onclick="delete mensualesCambios[facMensual]; facModo=\'FACTURA\'; mostrar(\'facturas\'); pintarMensuales();">Deshacer cambios</button>';
+  } else $('facError').className = 'resumen mal';
+}
 function textoGenerar() {
-  const n = document.querySelectorAll('[data-socio]:checked').length;
+  const n = mensualesSel.size;
   $('mGenerar').textContent = n ? `Generar ${n} factura${n > 1 ? 's' : ''}` : 'No hay facturas por generar';
   $('mGenerar').disabled = !n;
+  $('mSelTodo').textContent = n ? 'Deseleccionar todo' : 'Seleccionar todo';
+  $('mSelInfo').textContent = `${n} seleccionada${n === 1 ? '' : 's'}` + (Object.keys(mensualesCambios).length ? ` · ${Object.keys(mensualesCambios).length} modificada${Object.keys(mensualesCambios).length > 1 ? 's' : ''}` : '');
 }
 async function generarMensuales() {
-  const clientes = [...document.querySelectorAll('[data-socio]:checked')].map(c => mensualesInfo.socios[+c.dataset.socio].nombre);
+  const clientes = mensualesInfo.socios.filter(s => !s.facturada && mensualesSel.has(s.nombre)).map(s => s.nombre);
   const fecha = inputAFecha($('mFecha').value);
   if (!clientes.length) return;
   if (!fecha) { avisar('Elige la fecha de las facturas.'); return; }
@@ -1887,7 +2179,9 @@ async function generarMensuales() {
   }
   const b = $('mGenerar'); b.disabled = true; b.textContent = `Generando ${clientes.length} facturas…`;
   try {
-    const r = await api({ accion:'generarMensuales', mes: $('mMes').value, fecha, clientes });
+    const cambios = {}; clientes.forEach(n => { if (mensualesCambios[n]) cambios[n] = mensualesCambios[n]; });
+    const r = await api({ accion:'generarMensuales', mes: $('mMes').value, fecha, clientes, cambios });
+    mensualesCambios = {};
     $('facturasOk').style.display = 'block';
     $('facturasOk').textContent = `${r.hechas.length} facturas generadas` + (r.saltadas.length ? `. No generadas: ${r.saltadas.map(s => s.nombre + ' (' + s.motivo + ')').join(', ')}` : '.');
     window.scrollTo(0, 0);
@@ -1901,7 +2195,7 @@ const CAMPOS_AJUSTES = [
   ['Datos fiscales', [['empresaNombre', 'Nombre'], ['empresaCif', 'CIF / NIF'], ['empresaCalle', 'Calle'], ['empresaCp', 'CP', 1], ['empresaCiudad', 'Ciudad', 1], ['empresaProvincia', 'Provincia', 1], ['empresaPais', 'País', 1]]],
   ['Datos de contacto', [['empresaTelefono', 'Teléfono'], ['empresaCorreo', 'Correo']]],
   ['Datos bancarios', [['banco', 'Banco'], ['iban', 'IBAN'], ['swift', 'SWIFT / BIC']]],
-  ['Facturas', [['ivaDefecto', 'IVA por defecto (%)', 1], ['conceptoMensual', 'Concepto de las facturas mensuales ({mes} y {año} se rellenan solos)'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
+  ['Facturas', [['ivaDefecto', 'IVA por defecto de las facturas (%)', 1], ['conceptoMensual', 'Concepto cuota socio autogiro ({mes} y {año} se rellenan solos)'], ['conceptoBarco', 'Concepto cuota socio barco'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
   ['Correo de las facturas', [['correoAsunto', 'Asunto'], ['correoTexto', 'Texto. {saludo} pone Estimado/Estimada/Estimados según la ficha; {nombre}, {concepto}, {numero} y {total} se rellenan solos', 0, 1]]],
   ['Cámaras', [['enlaceCamaras', 'Enlace del botón Cámaras (la app Tapo o un Atajo de iPhone, ver abajo)']]],
 ];
@@ -1912,7 +2206,8 @@ async function abrirAjustes() {
     const a = await api({ accion:'ajustes' });
     $('ajCampos').innerHTML = CAMPOS_AJUSTES.map(([tit, campos]) => `<div class="sec-tit">${tit}</div><div class="tarjeta"><div class="rejilla">` +
       campos.map(([k, t, corto, largo]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label>${largo ? `<textarea id="aj-${k}" rows="9">${esc(String(a[k] || '').replace(/\\n/g, '\n'))}</textarea>` : `<input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}">`}</div>`).join('') + '</div></div>').join('') +
-      `<p class="info">Para que el botón Cámaras abra Tapo directamente: en la app <b>Atajos</b> del iPhone crea un atajo llamado <b>Tapo</b> con la acción «Abrir app → Tapo» y aquí pon <b>shortcuts://run-shortcut?name=Tapo</b>.</p>` +
+      `<button type="button" class="enlace-fila" style="margin:4px 0 14px" onclick="abrirCuotas(abrirAjustes)"><span><b>Cuotas de socios</b><small>Precio general, precio de cada socio e IVA de las cuotas</small></span><span class="ag-fl oscuro">›</span></button>` +
+      `<p class="info"><b>Cámaras:</b> Tapo no deja abrir su app con un enlace, así que se hace con un atajo: en la app <b>Atajos</b> del iPhone pulsa <b>+</b>, añade la acción <b>Abrir app</b>, elige <b>Tapo</b> y llama al atajo exactamente <b>Tapo</b>. Deja aquí <b>shortcuts://run-shortcut?name=Tapo</b>.</p>` +
       `<div class="version">App versión ${VERSION_APP} · Apps Script versión ${CFG.version || 1}${(CFG.version || 1) < VERSION_APP ? ' — <span class="txt-rojo">falta publicar una Nueva versión en Apps Script</span>' : ' ✓'}</div>`;
   } catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
 }
@@ -1989,8 +2284,8 @@ function pintarClientes() {
   const q = quitarAcentosJs($('clientesBuscar').value);
   $('clientesLista').innerHTML = listaClientesFichas.filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
     const docs = Object.values(c.docs || {}).filter(Boolean).length;
-    const chapa = c.socio === 'Si' ? '<span class="chapa socio">Socio</span>' : '';
-    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 4 ? 'txt-rojo' : 'txt-verde'}">${docs}/4 documentos</span></small></span>${chapa}</button>`;
+    const chapa = c.socio && c.socio !== 'No' ? `<span class="chapa socio">${NOMBRE_SOCIO[c.socio] || 'Socio'}</span>` : '';
+    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 5 ? 'txt-rojo' : 'txt-verde'}">${docs}/5 documentos</span></small></span>${chapa}</button>`;
   }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
   document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
 }
@@ -2017,13 +2312,14 @@ function borrarMov(i) {
 function alerta(t) { const r = $('resumen'); r.className = 'resumen mal'; r.textContent = t; window.scrollTo(0, 0); }
 function fallo(msg, reintentar, desdeRevision) {
   $('falloTexto').textContent = msg || 'Error desconocido.';
+  $('falloManual').style.display = imagen && !desdeRevision && reintentar === leer ? '' : 'none';
   $('falloReintentar').onclick = () => { if (desdeRevision) { mostrar('revisar'); reintentar(); } else reintentar(); };
   mostrar('fallo');
 }
-function volverAlInicio() { imagen = null; partes = []; mostrar('inicio'); }
+function volverAlInicio() { imagen = null; partes = []; parteManual = false; mostrar('inicio'); }
 
 // ---------- borradores (solo en este móvil) ----------
-const TIPOS_BORRADOR = { parte: 'Parte de vuelo', factura: 'Factura', cliente: 'Cliente' };
+const TIPOS_BORRADOR = { parte: 'Parte de vuelo', factura: 'Factura', presupuesto: 'Presupuesto', cliente: 'Cliente' };
 function guardarBorrador(tipo, resumen, datos) {
   if (DEMO && !window.__permitirBorradores) return;
   try { localStorage.setItem('borrador-' + tipo, JSON.stringify({ t: Date.now(), resumen, datos })); }
@@ -2033,7 +2329,7 @@ function guardarBorrador(tipo, resumen, datos) {
 function leerBorrador(tipo) { try { return JSON.parse(localStorage.getItem('borrador-' + tipo)); } catch (e) { return null; } }
 /** Al cancelar algo a medias: guardarlo como borrador o descartarlo. */
 function salirConBorrador(tipo, salir) {
-  if (tipo === 'factura') guardarBorradorFactura(); if (tipo === 'cliente') guardarBorradorCliente(); if (tipo === 'parte') guardarBorradorParte();
+  if (tipo === 'factura' || tipo === 'presupuesto') guardarBorradorFactura(); if (tipo === 'cliente') guardarBorradorCliente(); if (tipo === 'parte') guardarBorradorParte();
   const b = leerBorrador(tipo);
   if (!b) return salir();
   hoja(`<h2>¿Guardar como borrador?</h2><p class="info" style="margin:8px 0 0">Se queda solo en este móvil y lo verás en Inicio, en «Sin terminar», para continuarlo cuando quieras.</p>`,
@@ -2058,6 +2354,7 @@ function continuarBorrador(t) {
     pintarRevision(); mostrar('revisar');
     if (!imagen) alerta('Este borrador no tiene la foto (no cabía en el móvil): se guardará el parte sin foto.');
   } else if (t === 'factura') abrirNuevaFactura(null, b.datos);
+  else if (t === 'presupuesto') abrirNuevaFactura(null, b.datos, 'PRESUPUESTO');
   else if (t === 'cliente') abrirNuevoCliente(null, b.datos);
 }
 pintarBorradores();
@@ -2115,11 +2412,16 @@ document.addEventListener('touchcancel', () => { if (toque) { toque.p.style.tran
 // ---------- modo demostración (sin servidor) ----------
 async function demo(c) {
   await new Promise(r => setTimeout(r, c.accion === 'config' ? 0 : 1200));
-  if (c.accion === 'buscarPartes') return { ok:true, partes: [{ numero:'78', fecha:'30/10/2026', matricula:'EC-HF7', delante:'MARIO EJEMPLO', detras:'', tipo:'ESCUELA', horometro_inicial:520.5, horometro_final:521.4, minutos:54, foto:'demo' },
-    { numero:'77', fecha:'29/10/2026', matricula:'EC-HD6', delante:'JUAN PRUEBA', detras:'INSTRUCTOR DEMO', tipo:'PRIVADO', horometro_inicial:310.2, horometro_final:311.0, minutos:48, foto:'' }].filter(p => !c.q || JSON.stringify(p).toLowerCase().includes(c.q.toLowerCase())) };
+  if (c.accion === 'cuotas') { window.__cu = window.__cu || { general: { cuotaAutogiro: 199, cuotaBarco: 60, ivaCuotas: 21 }, socios: [{ nombre:'Lucía Gómez Prieto', tipo:'Ambos', cuota:null, cuotaBarco:null }, { nombre:'Socio Ejemplo Dos', tipo:'Barco', cuota:null, cuotaBarco:null }, { nombre:'Socio Ejemplo Uno', tipo:'Autogiro', cuota:180, cuotaBarco:null }] }; return Object.assign({ ok:true }, JSON.parse(JSON.stringify(window.__cu))); }
+  if (c.accion === 'guardarCuotas') { window.__cu = { general: c.general, socios: c.socios.filter(s => s.tipo !== 'No') }; return { ok:true, cambiados: 1 }; }
+  if (c.accion === 'ayudaManual') return { ok:true, siguienteNumero:'79', ultimos: { 'EC-HF7': { hf:521.4, numero:'78', fecha:'30/10/2026' }, 'EC-HD6': { hf:311.0, numero:'77', fecha:'29/10/2026' } } };
+  if (c.accion === 'parte') return { ok:true, fila: c.fila, datos: { numero_parte:'78', fecha:'30/10/2020', matricula:'EC-HF7', tipo_vuelo:'ESCUELA', delante_nombre:'MARIO EJEMPLO', delante_funcion:'ALUMNO', detras_nombre:'INSTRUCTOR DEMO', detras_funcion:'INSTRUCTOR', autorizado_por:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'10:05', hora_regreso:'11:00', tiempo_total_min:55, total_horometro:0.9, horometro_inicial:520.5, horometro_final:521.4, importe_gasolina:null, total_pagado:null, forma_pago:null, tomas:4, comentarios:null, foto:'demo' } };
+  if (c.accion === 'editarParte') return { ok:true, fila: c.fila, datos: c.datos, cambios: ['foto renombrada: Parte 78 ' + String(c.datos.fecha).replace(/\//g, '-') + '.jpg', 'foto movida a Partes › 2026 › 4T › octubre', 'su descuento de horas también'], aviso: '' };
+  if (c.accion === 'buscarPartes') return { ok:true, partes: [{ fila: 2051, numero:'78', fecha:'30/10/2026', matricula:'EC-HF7', delante:'MARIO EJEMPLO', detras:'', tipo:'ESCUELA', horometro_inicial:520.5, horometro_final:521.4, minutos:54, foto:'demo' },
+    { fila: 2050, numero:'77', fecha:'29/10/2026', matricula:'EC-HD6', delante:'JUAN PRUEBA', detras:'INSTRUCTOR DEMO', tipo:'PRIVADO', horometro_inicial:310.2, horometro_final:311.0, minutos:48, foto:'' }].filter(p => !c.q || JSON.stringify(p).toLowerCase().includes(c.q.toLowerCase())) };
   if (c.accion === 'correoFactura') return { ok:true, para:'cliente@ejemplo.com', asunto:'Factura 2026-11_03 · Airía Privé', cuerpo:'Estimados, Empresa Ejemplo S.L:\n\nTe hago envío de la factura de cesión de espacio de hangar.\n\nUn cordial saludo,\n\nNombre Ejemplo', enlace:'https://mail.google.com/' };
   if (c.accion === 'miniatura') { const cv = document.createElement('canvas'); cv.width = 240; cv.height = 150; const g = cv.getContext('2d'); g.fillStyle = '#dfe7f2'; g.fillRect(0, 0, 240, 150); g.fillStyle = '#334'; g.font = '18px sans-serif'; g.fillText('Foto (demo)', 70, 80); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
-  if (c.accion === 'config') return { ok:true, version: 3, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'config') return { ok:true, version: 4, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
   if (c.accion === 'leer') return { ok:true, partes:[
     { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
     { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
@@ -2140,7 +2442,7 @@ async function demo(c) {
   const mesDe = f => { const p = String(f || '').split('/'); return p.length === 3 ? p[2] + '-' + p[1] : '2026-11'; };
   if (c.accion === 'ajustes') return Object.assign({ ok:true }, DF.ajustes);
   if (c.accion === 'guardarAjustes') { Object.assign(DF.ajustes, c.ajustes); return Object.assign({ ok:true }, DF.ajustes); }
-  if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), ivaPct:21, ultima: (u => u ? { numero: u.numero, cliente: u.cliente, fecha: u.fecha } : null)(DF.lista.slice(-1)[0]), clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
+  if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), presupuesto: 'P-2026-' + String(DF.lista.filter(f => f.tipo === 'PRESUPUESTO').length + 1).padStart(3, '0'), ivaPct:21, ultima: (u => u ? { numero: u.numero, cliente: u.cliente, fecha: u.fecha } : null)(DF.lista.slice(-1)[0]), clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
   if (c.accion === 'facturas') { const l = DF.lista.filter(f => (!c.tipo || f.tipo === c.tipo) && (!c.mes || f.mes === c.mes)).sort((a, b) => b.numero.localeCompare(a.numero)); const u = DF.lista.slice(-1)[0]; return { ok:true, facturas:l, total:l.length, ultima: u ? { numero: u.numero, cliente: u.cliente, fecha: u.fecha } : null }; }
   if (c.accion === 'factura') return Object.assign({ ok:true }, DF.lista.find(f => f.id === c.id));
   if (c.accion === 'guardarFactura') { const f = c.factura; const rep = f.numero && DF.lista.find(y => y.numero === f.numero && y.id !== f.id); if (rep) return { ok:false, repetido:true, numeroLibre: sigNum(rep.mes), error: `Ya existe la factura ${rep.numero} (${rep.cliente}, ${rep.fecha}).` }; const base = f.lineas.reduce((s, l) => s + l.cantidad * l.precio, 0); const iva = base * f.ivaPct / 100, irpf = base * (f.irpfPct || 0) / 100;
@@ -2155,9 +2457,11 @@ async function demo(c) {
   if (c.accion === 'borrarDefinitivo') { DF.papelera = DF.papelera.filter(x => x.id !== c.id); return { ok:true }; }
   if (c.accion === 'vaciarPapelera') { DF.papelera = []; return { ok:true }; }
   if (c.accion === 'mensuales') { const [a, m] = c.mes.split('-').map(Number); const hechas = DF.lista.filter(f => f.tipo === 'MENSUAL' && f.mes === c.mes);
-    const socios = [{ nombre:'Socio Ejemplo Uno', cuota:199 }, { nombre:'Lucía Gómez Prieto', cuota:199 }, { nombre:'Socio Ejemplo Dos', cuota:199 }, { nombre:'Socio Sin Cuota', cuota:null }]
+    const mn = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m - 1] + ' ' + a;
+    const la = { descripcion:'Cuota mensual de socio · ' + mn, cantidad:1, precio:199 }, lb = p => ({ descripcion:'Cuota socio barco · ' + mn, cantidad:1, precio:p });
+    const socios = [{ nombre:'Socio Ejemplo Uno', tipo:'Autogiro', cuota:199, lineas:[la] }, { nombre:'Lucía Gómez Prieto', tipo:'Ambos', cuota:199, lineas:[la, lb(60)] }, { nombre:'Socio Ejemplo Dos', tipo:'Barco', lineas:[lb(60)] }, { nombre:'Socio Sin Cuota', tipo:'Barco', lineas:[lb(null)], faltaCuota:true }]
       .map(s => Object.assign(s, { facturada: (h => h ? { id:h.id, numero:h.numero, total:h.total } : null)(hechas.find(f => f.cliente === s.nombre)) }));
-    const d = new Date(a, m, 1); return { ok:true, mes:c.mes, nombreMes: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m - 1] + ' ' + a, socios, fechaSugerida: `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`, facturas: hechas }; }
+    const d = new Date(a, m, 1); return { ok:true, ivaPct:21, mes:c.mes, nombreMes: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m - 1] + ' ' + a, socios, fechaSugerida: `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`, facturas: hechas }; }
   if (c.accion === 'generarMensuales') { const hechas = c.clientes.map(n => { const x = { id:'m' + Math.random(), tipo:'MENSUAL', mes:c.mes, numero: sigNum(c.mes), fecha:c.fecha, cliente:n, lineas:[{ descripcion:'Cuota mensual de socio', cantidad:1, precio:199, total:199 }], base:199, ivaPct:21, iva:41.79, total:240.79, carpeta:'https://drive.google.com/' }; DF.lista.push(x); return x; }); return { ok:true, hechas, saltadas:[] }; }
   if (!window.__demoFichas) window.__demoFichas = [{ nombre:'Mario Ejemplo Ruiz', cif:'00000000T', telefono:'600 000 001', correo:'', calle:'Calle de Ejemplo 1', cp:'28000', ciudad:'Madrid', provincia:'Madrid', pais:'España', socio:'No', cuota:null, estado:'EN FACTURACIÓN', docs:{ dniDelante:true, dniDetras:false, licencia:true, medico:false } }, { nombre:'Lucía Gómez Prieto', cif:'', telefono:'600 000 002', correo:'', calle:'', cp:'', ciudad:'', provincia:'', pais:'España', socio:'Si', cuota:199, estado:'NUEVO', docs:{} }];
   const F = window.__demoFichas;
@@ -2165,7 +2469,7 @@ async function demo(c) {
   if (c.accion === 'cliente') return Object.assign({ ok:true }, F.find(f => f.nombre === c.nombre) || F[0]);
   if (c.accion === 'guardarCliente') { if (!c.original && !c.forzar && /mario/i.test(c.datos.nombre)) return Promise.reject(new Error('Ya hay un cliente parecido: Mario Ejemplo Ruiz. Si es otra persona, pulsa Guardar otra vez.'));
     let f = F.find(x => x.nombre === c.original); if (!f) { f = { estado:'NUEVO', docs:{} }; F.push(f); }
-    Object.assign(f, c.datos, { cuota: c.datos.socio === 'Si' ? numero(c.datos.cuota) : null }); if (!c.original) f.estado = 'NUEVO';
+    Object.assign(f, c.datos, { cuota: ['Autogiro', 'Ambos'].includes(c.datos.socio) ? numero(c.datos.cuota) : null, cuotaBarco: ['Barco', 'Ambos'].includes(c.datos.socio) ? numero(c.datos.cuotaBarco) : null });
     Object.keys(c.fotos || {}).forEach(k => { f.docs[k] = true; }); (c.borrarFotos || []).forEach(k => { f.docs[k] = false; });
     return Object.assign({ ok:true }, f); }
   if (c.accion === 'docCliente') { const cv = document.createElement('canvas'); cv.width = 600; cv.height = 380; const g = cv.getContext('2d'); g.fillStyle = '#eef'; g.fillRect(0, 0, 600, 380); g.fillStyle = '#333'; g.font = '28px sans-serif'; g.fillText('Documento (demostración)', 120, 190); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
