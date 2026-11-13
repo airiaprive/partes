@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gestión AiríaPrivé</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gestión AiríaPrivé">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#14213d">
+<script>
+  // ============ AJUSTE: pega aquí la dirección de tu Apps Script (acaba en /exec) ============
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzMqFPbDirCvfm2HmlepVpNug-XK3Bv1-_isXB_vNKufoEv_NMrrPi_F0jToVw0mtgI/exec';
+  // La clave NO va aquí: la app la pide la primera vez y la guarda solo en ese móvil.
+  // ==========================================================================================
+</script>
+<style>
+  :root { --tinta:#151515; --suave:#6b6b6b; --linea:#e4e4e4; --fondo:#f6f6f4; --azul:#1f3156; --amarillo:#fff2cc; --amarillo-borde:#e3b341; --amarillo-texto:#7a5200; --verde:#e7f4e4; --verde-texto:#2c6b1f; --rojo:#b3261e; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; background:var(--fondo); color:var(--tinta); font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  .pantalla { display:none; min-height:100vh; min-height:100dvh; padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 110px); max-width:560px; margin:0 auto; }
+  .pantalla.activa { display:block; }
+  .pantalla:not(.activa) { display:none !important; }
+  .pantalla.centro.activa { display:flex; }
+  .centro { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-bottom:40px; }
+  .logo { width:120px; height:120px; border-radius:28px; background:#fff; border:1px solid var(--linea); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .logo img { width:104px; }
+  h1 { font-size:28px; margin:0 0 4px; font-weight:600; }
+  h2 { font-size:18px; margin:0; font-weight:600; }
+  .sub { color:var(--suave); margin:0 0 30px; }
+  .boton { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; max-width:340px; padding:17px 18px; border-radius:14px; font-size:18px; font-weight:600; border:1px solid var(--linea); background:#fff; color:var(--tinta); cursor:pointer; margin:0 auto 12px; }
+  .boton.principal { background:var(--azul); border-color:var(--azul); color:#fff; }
+  .boton svg { width:24px; height:24px; flex:none; }
+  input[type=file] { display:none; }
+  .giro { width:46px; height:46px; border:4px solid var(--linea); border-top-color:var(--azul); border-radius:50%; animation:g 0.9s linear infinite; margin:0 auto 18px; }
+  @keyframes g { to { transform:rotate(360deg); } }
+  .miniatura { max-width:180px; max-height:180px; border-radius:12px; margin-bottom:22px; border:1px solid var(--linea); }
+  .resumen { border-radius:12px; padding:12px 14px; margin:0 0 14px; font-size:15px; }
+  .resumen.ok { background:var(--verde); color:var(--verde-texto); }
+  .resumen.mal { background:var(--amarillo); color:var(--amarillo-texto); }
+  .tarjeta { background:#fff; border:1px solid var(--linea); border-radius:16px; padding:16px; margin-bottom:16px; }
+  .tarjeta.apagada .rejilla, .tarjeta.apagada h2 { opacity:.5; }
+  .cabecera { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+  .incluir { display:flex; align-items:center; gap:6px; font-size:14px; color:var(--suave); }
+  .incluir input { width:20px; height:20px; }
+  .rejilla { display:grid; grid-template-columns:1fr 1fr; gap:10px 10px; }
+  .campo { min-width:0; }
+  .campo.ancho { grid-column:1 / -1; }
+  .campo label { display:block; font-size:12.5px; color:var(--suave); margin:0 0 3px 2px; }
+  .campo input, .campo select, .campo textarea { width:100%; font:inherit; font-size:16px; padding:10px 11px; border:1px solid var(--linea); border-radius:10px; background:#fff; color:var(--tinta); min-height:44px; -webkit-appearance:none; appearance:none; }
+  .campo select { background-image:linear-gradient(45deg,transparent 50%,#888 50%),linear-gradient(135deg,#888 50%,transparent 50%); background-position:calc(100% - 16px) 19px,calc(100% - 11px) 19px; background-size:5px 5px; background-repeat:no-repeat; padding-right:26px; }
+  .campo textarea { min-height:60px; resize:vertical; }
+  .campo.aviso input, .campo.aviso select, .campo.aviso textarea { background:var(--amarillo); border-color:var(--amarillo-borde); }
+  .campo .nota { font-size:12.5px; color:var(--amarillo-texto); margin:3px 2px 0; }
+  .barra { position:fixed; left:0; right:0; bottom:0; background:rgba(255,255,255,.96); border-top:1px solid var(--linea); padding:12px 18px calc(env(safe-area-inset-bottom) + 12px); display:none; gap:10px; justify-content:center; }
+  .barra.activa { display:flex; }
+  .barra .boton { margin:0; flex:1; max-width:270px; }
+  .barra .boton.secundario { flex:0 0 auto; width:auto; padding:17px 18px; font-weight:500; }
+  .barra.tres { gap:8px; padding-left:12px; padding-right:12px; }
+  .barra.tres .boton { font-size:15.5px; padding:15px 8px; }
+  .barra.tres .boton.secundario { padding:15px 12px; }
+  .campo { position:relative; }
+  .sugerencias { position:absolute; left:0; right:0; top:100%; margin-top:4px; z-index:30; background:#fff; border:1px solid var(--linea); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); max-height:300px; overflow-y:auto; display:none; }
+  .sug { display:block; width:100%; text-align:left; padding:13px 14px; border:0; border-bottom:1px solid var(--linea); background:#fff; font:inherit; font-size:16px; color:var(--tinta); cursor:pointer; }
+  .sug:last-child { border-bottom:0; }
+  .sug:active { background:var(--fondo); }
+  .sug-info { padding:10px 14px; color:var(--suave); font-size:13.5px; border-bottom:1px solid var(--linea); }
+  :root { --marino:#14213d; --marino-2:#1f3156; --oro:#c9a96e; --oro-claro:#f3ead9; }
+  .pantalla.inicio { padding-top:0; }
+  .portada { margin:0 -18px 22px; background:var(--marino); color:#fff; padding:calc(env(safe-area-inset-top) + 26px) 24px 30px; border-radius:0 0 26px 26px; position:relative; overflow:hidden; }
+  .portada::after { content:""; position:absolute; right:-60px; top:-60px; width:220px; height:220px; border-radius:50%; border:1px solid rgba(201,169,110,.25); }
+  .portada::before { content:""; position:absolute; right:-20px; top:-20px; width:140px; height:140px; border-radius:50%; border:1px solid rgba(201,169,110,.18); }
+  .portada-logo { width:58px; height:58px; border-radius:16px; background:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .portada-logo img { width:50px; }
+  .marca { font-size:12.5px; letter-spacing:4px; text-transform:uppercase; color:var(--oro); font-weight:600; }
+  .marca.oscura { color:#8a6d3b; margin-bottom:2px; }
+  .portada-t { font-size:34px; font-weight:600; margin:2px 0 4px; letter-spacing:-.3px; }
+  .portada-s { margin:0; color:rgba(255,255,255,.72); font-size:15px; }
+  .seccion { margin:0 0 22px; }
+  .sec-tit { font-size:12.5px; letter-spacing:1.6px; text-transform:uppercase; color:var(--suave); font-weight:600; margin:0 4px 10px; }
+  .accion-grande { display:flex; align-items:center; gap:14px; background:var(--marino-2); color:#fff; border-radius:18px; padding:16px; cursor:pointer; margin-bottom:10px; }
+  .accion-grande b { display:block; font-size:17.5px; }
+  .accion-grande small { display:block; color:rgba(255,255,255,.7); font-size:13px; margin-top:2px; }
+  .ag-ico { flex:none; width:46px; height:46px; border-radius:14px; background:rgba(201,169,110,.18); color:var(--oro); display:flex; align-items:center; justify-content:center; }
+  .ag-ico svg { width:24px; height:24px; }
+  .ag-fl { margin-left:auto; color:rgba(255,255,255,.55); } .ag-fl svg { width:20px; height:20px; display:block; }
+  .accion-fina { display:flex; align-items:center; justify-content:center; gap:8px; padding:13px; border:1px solid var(--linea); background:#fff; border-radius:14px; font-weight:600; font-size:15.5px; cursor:pointer; }
+  .accion-fina svg { width:20px; height:20px; color:var(--marino-2); }
+  .tiles { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .tile { display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:2px; background:#fff; border:1px solid var(--linea); border-radius:16px; padding:14px; font:inherit; color:var(--tinta); cursor:pointer; min-height:122px; }
+  .tile:active, .accion-fina:active { background:var(--fondo); } .accion-grande:active { opacity:.92; }
+  .tile-ico { width:38px; height:38px; border-radius:12px; background:var(--oro-claro); color:#8a6d3b; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
+  .tile-ico svg { width:21px; height:21px; }
+  .tile-t { font-weight:600; font-size:16px; }
+  .tile-d { font-size:12.5px; color:var(--suave); line-height:1.35; }
+  .pie-marca { text-align:center; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#b5b0a6; margin:8px 0 0; }
+  .docs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .docslot { border:1px solid var(--linea); border-radius:12px; padding:10px; background:#fff; }
+  .doc-prev { height:92px; border-radius:8px; background:var(--fondo); display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:8px; }
+  .doc-prev img { width:100%; height:100%; object-fit:cover; }
+  .doc-estado { font-size:12.5px; color:var(--suave); text-align:center; padding:0 6px; }
+  .doc-estado.si { color:var(--verde-texto); font-weight:600; } .doc-estado.nueva { color:#8a6d3b; font-weight:600; }
+  .doc-nombre { font-weight:600; font-size:14px; margin-bottom:6px; }
+  .doc-botones { display:flex; gap:6px; flex-wrap:wrap; } .doc-botones .mini { padding:6px 9px; font-size:13px; }
+  .chapa.nuevo { background:#fbe3e1; color:var(--rojo); } .chapa.socio { background:var(--oro-claro); color:#7a5a20; }
+  .portada-iconos { position:absolute; right:14px; top:calc(env(safe-area-inset-top) + 14px); display:flex; gap:6px; z-index:2; }
+  .portada-iconos button { width:40px; height:40px; border-radius:12px; border:0; background:rgba(255,255,255,.08); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .portada-iconos svg { width:20px; height:20px; }
+  .segmento { display:flex; background:#e9e7e2; border-radius:12px; padding:3px; margin:4px 0 14px; }
+  .segmento button { flex:1; border:0; background:none; font:inherit; font-size:15px; font-weight:600; padding:9px; border-radius:10px; color:var(--suave); cursor:pointer; }
+  .segmento button.activo { background:#fff; color:var(--tinta); box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  .fac { background:#fff; border:1px solid var(--linea); border-radius:14px; padding:12px 14px; margin-bottom:10px; }
+  .fac-cab { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+  .fac-num { font-weight:700; font-size:16px; } .fac-det { font-size:13.5px; color:var(--suave); margin-top:2px; }
+  .fac-tot { font-weight:700; font-size:17px; white-space:nowrap; }
+  .fac-acc { display:flex; justify-content:space-between; margin-top:10px; padding-top:8px; border-top:1px solid var(--linea); }
+  .fac-acc button { flex:1; border:0; background:none; color:var(--marino-2); padding:6px 0; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; font:inherit; font-size:11px; }
+  .fac-acc button svg { width:21px; height:21px; } .fac-acc button.rojo { color:var(--rojo); }
+  .fac-acc button.listo { color:var(--rojo); font-weight:700; }
+  .linea { border-bottom:1px solid var(--linea); padding:0 0 10px; margin:0 0 10px; }
+  .linea textarea { width:100%; font:inherit; font-size:16px; padding:9px 10px; border:1px solid var(--linea); border-radius:10px; min-height:44px; resize:vertical; }
+  .linea-nums { display:grid; grid-template-columns:70px 1fr 1fr 36px; gap:8px; align-items:end; margin-top:6px; }
+  .linea-nums input { width:100%; font:inherit; font-size:16px; padding:9px 10px; border:1px solid var(--linea); border-radius:10px; min-height:44px; }
+  .linea-nums label { font-size:12px; color:var(--suave); display:block; margin:0 0 3px 2px; }
+  .linea-tot { font-weight:600; text-align:right; padding:11px 0; }
+  .linea-quitar { width:36px; height:44px; border:0; background:none; color:var(--rojo); font-size:22px; cursor:pointer; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .chips button { border:1px solid var(--linea); background:#fff; border-radius:999px; padding:8px 13px; font:inherit; font-size:15px; cursor:pointer; }
+  .chips button.activo { background:var(--marino-2); border-color:var(--marino-2); color:#fff; }
+  .chips input { width:76px; font:inherit; font-size:16px; padding:8px 10px; border:1px solid var(--linea); border-radius:999px; text-align:center; }
+  .totales div { display:flex; justify-content:space-between; padding:5px 0; font-size:16px; }
+  .totales .total { border-top:1px solid var(--linea); margin-top:6px; padding-top:10px; font-weight:700; font-size:19px; }
+  .socio { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--linea); border-radius:12px; padding:11px 12px; margin-bottom:8px; }
+  .socio input { width:22px; height:22px; flex:none; } .socio .n { flex:1; } .socio small { display:block; color:var(--suave); font-size:12.5px; }
+  .socio.hecho { opacity:.6; }
+  .hoja { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:flex-end; justify-content:center; z-index:50; }
+  .hoja.activa { display:flex; }
+  .hoja-caja { background:#fff; width:100%; max-width:560px; border-radius:20px 20px 0 0; padding:20px 18px calc(env(safe-area-inset-bottom) + 18px); }
+  .hoja-botones { display:flex; flex-direction:column; gap:8px; margin-top:14px; } .hoja-botones .boton { margin:0; max-width:none; }
+  .aviso { position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom) + 96px); transform:translateX(-50%); background:#1a1a1a; color:#fff; padding:10px 16px; border-radius:12px; font-size:14px; display:none; z-index:60; max-width:88%; text-align:center; }
+  .pap { display:flex; justify-content:space-between; align-items:center; gap:10px; background:#fff; border:1px solid var(--linea); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+  .pap small { display:block; color:var(--suave); font-size:13px; }
+  .vuelo-elegir { margin-top:12px; padding-top:12px; border-top:1px solid var(--linea); }
+  .hecho { width:84px; height:84px; border-radius:50%; background:var(--verde); color:var(--verde-texto); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .hecho svg { width:46px; height:46px; }
+  .error { color:var(--rojo); }
+  .pie { font-size:13px; color:var(--suave); margin-top:26px; }
+  .separador { width:100%; max-width:340px; border-top:1px solid var(--linea); margin:14px auto 16px; }
+  .saldo { background:var(--fondo); border-radius:12px; padding:12px 14px; margin:2px 0 12px; font-size:15px; }
+  .saldo b { font-size:17px; }
+  .cuenta { font-size:20px; font-weight:600; text-align:center; padding:12px; border-radius:12px; background:var(--verde); color:var(--verde-texto); margin-top:6px; }
+  .cuenta.negativa { background:#fbe3e1; color:var(--rojo); }
+  .lineas { text-align:left; max-width:420px; margin:0 auto 24px; font-size:16px; }
+  .lineas div { padding:8px 0; border-bottom:1px solid var(--linea); }
+  h1.titulo { font-size:26px; margin:6px 0 6px; }
+  .guardado { color:var(--verde-texto); font-size:14px; margin:0 0 18px; }
+  .info { font-size:13.5px; color:var(--suave); margin:0 0 10px; }
+  .buscar { width:100%; font:inherit; font-size:16px; padding:12px 14px; border:1px solid var(--linea); border-radius:12px; margin:4px 0 14px; background:#fff; -webkit-appearance:none; }
+  .fila-alumno { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; text-align:left; background:#fff; border:1px solid var(--linea); border-radius:12px; padding:12px 14px; margin-bottom:8px; font:inherit; color:var(--tinta); cursor:pointer; }
+  .fila-alumno small { display:block; color:var(--suave); font-size:13px; margin-top:2px; }
+  .chapa { flex:none; font-weight:600; font-size:15px; padding:6px 10px; border-radius:999px; background:var(--verde); color:var(--verde-texto); white-space:nowrap; }
+  .chapa.poco { background:var(--amarillo); color:var(--amarillo-texto); }
+  .chapa.nada { background:#fbe3e1; color:var(--rojo); }
+  .volver { background:none; border:0; color:var(--azul); font:inherit; font-size:16px; padding:6px 0; margin:0 0 4px; cursor:pointer; }
+  .mov { background:#fff; border:1px solid var(--linea); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+  .mov .cab { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .mov .cant { font-weight:600; font-size:17px; }
+  .mov .cant.mas { color:var(--verde-texto); } .mov .cant.menos { color:var(--rojo); }
+  .mov .det { font-size:13.5px; color:var(--suave); margin-top:2px; }
+  .mini { font:inherit; font-size:14px; padding:7px 12px; border-radius:10px; border:1px solid var(--linea); background:#fff; color:var(--tinta); cursor:pointer; }
+  .mini.peligro { color:var(--rojo); border-color:#f0c4c0; }
+  .mini.principal { background:var(--azul); border-color:var(--azul); color:#fff; }
+  .editar { margin-top:12px; padding-top:12px; border-top:1px solid var(--linea); }
+  .acciones { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .botones { display:flex; flex-direction:column; gap:8px; flex:none; }
+  .mov .det b { font-weight:600; color:var(--tinta); }
+  .foto-parte { width:100%; border-radius:12px; border:1px solid var(--linea); background:#fff; display:block; }
+</style>
+</head>
+<body>
+<div id="avisoDemo" style="display:none;position:sticky;top:0;z-index:5;background:#b3261e;color:#fff;text-align:center;font-weight:600;font-size:14px;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px">MODO DEMOSTRACIÓN · datos inventados · no se guarda nada</div>
+
+<!-- Sin configurar -->
+<section id="sinConfigurar" class="pantalla centro">
+  <h1 style="font-size:24px">Falta configurar la app</h1>
+  <p class="sub">En GitHub, abre <b>index.html</b> con el lápiz y en la <b>línea 17</b> pon la dirección de Apps Script que acaba en <b>/exec</b>, entre las comillas. Después pulsa Commit changes, espera 1 o 2 minutos y vuelve a abrir la app.</p>
+  <p class="pie">Ahora mismo pone: <span id="urlActual" style="word-break:break-all"></span></p>
+</section>
+
+<!-- 1. Inicio -->
+<section id="inicio" class="pantalla inicio activa">
+  <header class="portada">
+    <div class="portada-iconos"><button aria-label="Papelera" onclick="abrirPapelera()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg></button><button aria-label="Ajustes" onclick="abrirAjustes()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+    <div class="portada-logo"><img src="icon-512.png" alt=""></div>
+    <div class="marca">Airía Privé</div>
+    <h1 class="portada-t">Gestión</h1>
+    <p class="portada-s" id="saludo">Partes de vuelo, horas y clientes</p>
+  </header>
+
+  <div class="seccion">
+    <div class="sec-tit">Partes de vuelo</div>
+    <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
+    <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
+  </div>
+
+  <div class="seccion">
+    <div class="sec-tit">Horas de clientes</div>
+    <div class="tiles">
+      <button class="tile" onclick="abrirCompra()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tile-t">Añadir horas</span><span class="tile-d">Cuando un cliente paga un bono</span></button>
+      <button class="tile" onclick="abrirConsulta()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg></span><span class="tile-t">Consultar horas</span><span class="tile-d">Saldos, vuelos y descuentos</span></button>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="sec-tit">Clientes</div>
+    <div class="tiles">
+      <button class="tile" onclick="abrirNuevoCliente()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg></span><span class="tile-t">Añadir cliente</span><span class="tile-d">Datos y documentos</span></button>
+      <button class="tile" onclick="abrirClientes()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg></span><span class="tile-t">Consultar clientes</span><span class="tile-d">Ver y modificar fichas</span></button>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="sec-tit">Facturas</div>
+    <div class="tiles">
+      <button class="tile" onclick="abrirNuevaFactura()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg></span><span class="tile-t">Nueva factura</span><span class="tile-d">Cliente, conceptos e IVA</span></button>
+      <button class="tile" onclick="abrirFacturas()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><span class="tile-t">Facturas</span><span class="tile-d">Manuales y mensuales de socios</span></button>
+    </div>
+  </div>
+
+  <p class="pie-marca">Airía Privé · Gestión</p>
+  <input id="camara" type="file" accept="image/*" capture="environment">
+  <input id="galeria" type="file" accept="image/*">
+</section>
+
+<!-- 0. Clave (solo la primera vez) -->
+<section id="clave" class="pantalla centro">
+  <div class="logo"><img src="icon-512.png" alt=""></div>
+  <div class="marca oscura">Airía Privé</div>
+  <h1>Gestión</h1>
+  <p class="sub">Escribe la clave para empezar. Solo se pide una vez en este móvil.</p>
+  <div class="campo" style="width:100%;max-width:340px;margin:0 auto 14px;text-align:left;">
+    <input id="claveInput" type="password" autocomplete="current-password" autocapitalize="off" placeholder="Clave">
+    <div class="nota error" id="claveError" style="color:var(--rojo)"></div>
+  </div>
+  <button class="boton principal" id="claveBoton" onclick="entrarConClave()">Entrar</button>
+</section>
+
+<!-- 2. Leyendo -->
+<section id="leyendo" class="pantalla centro">
+  <img id="mini" class="miniatura" alt="">
+  <div class="giro"></div>
+  <h2 id="leyendoTexto">Leyendo el parte…</h2>
+  <p class="sub">Tarda unos segundos</p>
+</section>
+
+<!-- 3. Revisar -->
+<section id="revisar" class="pantalla">
+  <div id="resumen" class="resumen"></div>
+  <div id="tarjetas"></div>
+</section>
+
+<!-- 3b. Horas a descontar tras guardar el parte -->
+<section id="horas" class="pantalla">
+  <h1 class="titulo">Horas del cliente</h1>
+  <p class="guardado" id="horasGuardado">✓ Parte guardado en la hoja</p>
+  <div id="horasError" class="resumen mal" style="display:none"></div>
+  <div id="horasTarjetas"></div>
+</section>
+
+<!-- 3c. Añadir horas compradas -->
+<section id="compra" class="pantalla">
+  <h1 class="titulo">Añadir horas</h1>
+  <p class="sub" style="margin-bottom:16px">Cuando un cliente te paga un bono de horas.</p>
+  <div id="compraError" class="resumen mal" style="display:none"></div>
+  <div class="tarjeta">
+    <div class="rejilla">
+      <div class="campo ancho"><label for="cAlumno">Cliente</label><input id="cAlumno" type="text" list="lista-clientes" autocomplete="off" placeholder="Escribe o elige el nombre"></div>
+      <div class="campo ancho"><div id="cSaldo" class="saldo" style="display:none"></div></div>
+      <div class="campo"><label for="cHoras">Horas compradas</label><input id="cHoras" type="text" inputmode="numeric" placeholder="10"></div>
+      <div class="campo"><label for="cMinutos">Minutos</label><input id="cMinutos" type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="campo ancho"><label for="cFecha">Fecha de pago</label><input id="cFecha" type="date"></div>
+      <div class="campo ancho"><label for="cComentario">Comentario (opcional)</label><input id="cComentario" type="text" placeholder="Importe, forma de pago…"></div>
+      <div class="campo ancho"><div id="cCuenta" class="cuenta" style="display:none"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3d. Consultar horas de alumnos -->
+<section id="consulta" class="pantalla">
+  <h1 class="titulo">Horas de clientes</h1>
+  <p class="info" id="consultaInfo">Cargando…</p>
+  <input id="consultaBuscar" class="buscar" type="search" placeholder="Buscar cliente" autocomplete="off">
+  <div id="consultaLista"></div>
+  <p class="pie" id="consultaArchivo"></p>
+</section>
+
+<!-- 3e. Detalle de un alumno -->
+<section id="detalle" class="pantalla">
+  <button class="volver" onclick="abrirConsulta()">‹ Todos los clientes</button>
+  <h1 class="titulo" id="detalleNombre"></h1>
+  <div class="saldo" id="detalleSaldo"></div>
+  <div id="detalleOk" class="resumen ok" style="display:none"></div>
+  <div id="detalleError" class="resumen mal" style="display:none"></div>
+  <p class="info">Cada compra y cada vuelo descontado. Puedes cambiar sus horas o borrarlo; los partes de la hoja no se tocan.</p>
+  <div id="detalleLista"></div>
+</section>
+
+<!-- 3f. Foto del parte -->
+<section id="vuelos" class="pantalla">
+  <button class="volver" id="vVolver">‹ Volver</button>
+  <h1 class="titulo">Descontar horas</h1>
+  <p class="info">Elige el parte del vuelo que quieres descontar. Solo salen los partes de este cliente que todavía no se le han descontado.</p>
+  <div class="campo" style="margin-bottom:10px"><label for="vCliente">Cliente</label><input id="vCliente" type="text" list="lista-clientes" autocomplete="off" placeholder="Escribe o elige el nombre"></div>
+  <div class="saldo" id="vSaldo" style="display:none"></div>
+  <div id="vError" class="resumen mal" style="display:none"></div>
+  <p class="info" id="vInfo"></p>
+  <div id="vLista"></div>
+</section>
+
+<section id="cliente" class="pantalla">
+  <button class="volver" id="fichaVolver">‹ Volver</button>
+  <h1 class="titulo" id="fichaTitulo">Añadir cliente</h1>
+  <p class="sub" id="fichaSub" style="margin-bottom:14px">Solo el nombre es obligatorio. Lo demás puedes rellenarlo ahora o más adelante.</p>
+  <div id="fichaOk" class="resumen ok" style="display:none"></div>
+  <div id="clienteError" class="resumen mal" style="display:none"></div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Datos</h2>
+    <div class="rejilla">
+      <div class="campo ancho"><label for="nNombre">Nombre y apellidos *</label><input id="nNombre" type="text" autocomplete="off" autocapitalize="words"></div>
+      <div class="campo"><label for="nCif">DNI / CIF</label><input id="nCif" type="text" autocomplete="off" autocapitalize="characters"></div>
+      <div class="campo"><label for="nTelefono">Teléfono</label><input id="nTelefono" type="tel" autocomplete="off"></div>
+      <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
+      <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Si">Socio</option></select></div>
+      <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota de socio (€)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="199"></div>
+      <div class="campo" id="nEstadoCampo" style="display:none"><label for="nEstado">Estado</label><select id="nEstado"><option>NUEVO</option><option>EN FACTURACIÓN</option></select></div>
+    </div>
+  </div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Dirección</h2>
+    <div class="rejilla">
+      <div class="campo ancho"><label for="nCalle">Calle y número</label><input id="nCalle" type="text" autocomplete="off"></div>
+      <div class="campo"><label for="nCp">CP</label><input id="nCp" type="text" inputmode="numeric" autocomplete="off"></div>
+      <div class="campo"><label for="nCiudad">Ciudad</label><input id="nCiudad" type="text" autocomplete="off"></div>
+      <div class="campo"><label for="nProvincia">Provincia</label><input id="nProvincia" type="text" autocomplete="off"></div>
+      <div class="campo"><label for="nPais">País</label><input id="nPais" type="text" autocomplete="off" value="España"></div>
+    </div>
+  </div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:4px">Documentos</h2>
+    <p class="info">Fotos del DNI, la licencia y el certificado médico. Se guardan en Drive al pulsar Guardar.</p>
+    <div class="docs">
+      <div class="docslot"><div class="doc-prev"><img id="docimg-dniDelante" alt="" style="display:none"><span class="doc-estado" id="docest-dniDelante">Sin foto</span></div>
+        <div class="doc-nombre">DNI delante</div>
+        <div class="doc-botones"><label class="mini" for="docin-dniDelante">Subir foto</label><button type="button" class="mini" id="docver-dniDelante" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-dniDelante" style="display:none">Quitar</button></div>
+        <input type="file" accept="image/*" id="docin-dniDelante"></div>
+      <div class="docslot"><div class="doc-prev"><img id="docimg-dniDetras" alt="" style="display:none"><span class="doc-estado" id="docest-dniDetras">Sin foto</span></div>
+        <div class="doc-nombre">DNI detrás</div>
+        <div class="doc-botones"><label class="mini" for="docin-dniDetras">Subir foto</label><button type="button" class="mini" id="docver-dniDetras" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-dniDetras" style="display:none">Quitar</button></div>
+        <input type="file" accept="image/*" id="docin-dniDetras"></div>
+      <div class="docslot"><div class="doc-prev"><img id="docimg-licencia" alt="" style="display:none"><span class="doc-estado" id="docest-licencia">Sin foto</span></div>
+        <div class="doc-nombre">Licencia</div>
+        <div class="doc-botones"><label class="mini" for="docin-licencia">Subir foto</label><button type="button" class="mini" id="docver-licencia" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-licencia" style="display:none">Quitar</button></div>
+        <input type="file" accept="image/*" id="docin-licencia"></div>
+      <div class="docslot"><div class="doc-prev"><img id="docimg-medico" alt="" style="display:none"><span class="doc-estado" id="docest-medico">Sin foto</span></div>
+        <div class="doc-nombre">Certificado médico</div>
+        <div class="doc-botones"><label class="mini" for="docin-medico">Subir foto</label><button type="button" class="mini" id="docver-medico" style="display:none">Ver</button><button type="button" class="mini peligro" id="docquitar-medico" style="display:none">Quitar</button></div>
+        <input type="file" accept="image/*" id="docin-medico"></div>
+    </div>
+  </div>
+  <div class="acciones" id="fichaExtra" style="display:none;margin-bottom:10px">
+    <button type="button" class="boton" style="margin:0;max-width:none;flex:1" onclick="fichaPdf()" id="fichaPdfBtn">Ficha en PDF</button>
+    <button type="button" class="boton" style="margin:0;max-width:none;flex:1" onclick="abrirDetalle(fichaNombre)">Ver sus horas</button>
+  </div>
+  <button type="button" class="boton" id="fichaBorrar" style="display:none;max-width:none;color:var(--rojo);border-color:#f0c4c0" onclick="borrarClienteFicha()">Borrar cliente</button>
+</section>
+
+<section id="clientes" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <h1 class="titulo">Clientes</h1>
+  <p class="info" id="clientesInfo">Cargando…</p>
+  <input id="clientesBuscar" class="buscar" type="search" placeholder="Buscar por nombre, DNI o teléfono" autocomplete="off">
+  <div id="clientesLista"></div>
+  <p class="pie" id="clientesArchivo"></p>
+</section>
+
+
+<!-- Facturas -->
+<section id="facturas" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <h1 class="titulo">Facturas</h1>
+  <div class="segmento"><button id="segManual" class="activo" onclick="verPestanaFacturas('MANUAL')">Manuales</button><button id="segMensual" onclick="verPestanaFacturas('MENSUAL')">Mensuales</button></div>
+  <div id="facturasOk" class="resumen ok" style="display:none"></div>
+  <div id="facturasError" class="resumen mal" style="display:none"></div>
+  <div id="panelManual">
+    <input id="facturasBuscar" class="buscar" type="search" placeholder="Buscar por número o cliente" autocomplete="off">
+    <p class="info" id="facturasInfo">Cargando…</p>
+    <div id="facturasLista"></div>
+  </div>
+  <div id="panelMensual" style="display:none">
+    <div class="tarjeta">
+      <div class="rejilla">
+        <div class="campo"><label for="mMes">Mes que se factura</label><input id="mMes" type="month"></div>
+        <div class="campo"><label for="mFecha">Fecha de las facturas</label><input id="mFecha" type="date"></div>
+        <div class="campo ancho"><p class="info" id="mInfo" style="margin:4px 0 0"></p></div>
+      </div>
+    </div>
+    <div id="mSocios"></div>
+    <button class="boton principal" id="mGenerar" style="max-width:none;margin:6px 0 18px" onclick="generarMensuales()">Generar facturas</button>
+    <div class="sec-tit" id="mHechasTit" style="display:none">Facturas de este mes</div>
+    <div id="mHechas"></div>
+  </div>
+</section>
+
+<!-- Nueva / editar factura -->
+<section id="factura" class="pantalla">
+  <button class="volver" onclick="salirFactura()">‹ Facturas</button>
+  <h1 class="titulo" id="facTitulo">Nueva factura</h1>
+  <div id="facError" class="resumen mal" style="display:none"></div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Datos de la factura</h2>
+    <div class="rejilla">
+      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off"></div>
+      <div class="campo"><label for="facFecha">Fecha</label><input id="facFecha" type="date"></div>
+      <div class="campo ancho"><label for="facCliente">Cliente</label><select id="facCliente"></select><div class="nota" id="facClienteNota"></div></div>
+    </div>
+  </div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Conceptos</h2>
+    <div id="facLineas"></div>
+    <button type="button" class="mini" style="margin-top:4px" onclick="anadirLinea()">+ Añadir línea</button>
+  </div>
+  <div class="tarjeta">
+    <h2 style="margin-bottom:12px">Impuestos y pago</h2>
+    <label class="info" style="display:block;margin-bottom:6px">IVA (%)</label>
+    <div class="chips" id="facIvaChips"><button type="button" data-iva="0">0%</button><button type="button" data-iva="4">4%</button><button type="button" data-iva="10">10%</button><button type="button" data-iva="21">21%</button><input id="facIva" type="text" inputmode="decimal" aria-label="IVA personalizado"></div>
+    <div class="rejilla" style="margin-top:12px">
+      <div class="campo"><label for="facIrpf">Retención IRPF (%)</label><input id="facIrpf" type="text" inputmode="decimal" placeholder="0"></div>
+      <div class="campo"><label for="facVence">Vencimiento</label><input id="facVence" type="date"></div>
+      <div class="campo ancho"><label for="facPago">Forma de pago</label><input id="facPago" type="text" list="lista-formas" autocomplete="off" placeholder="Transferencia, tarjeta…"></div>
+      <div class="campo ancho"><label for="facNotas">Notas (salen en la factura)</label><textarea id="facNotas" rows="2"></textarea></div>
+    </div>
+  </div>
+  <div class="tarjeta totales">
+    <div><span>Subtotal</span><span id="facBase">0,00 €</span></div>
+    <div><span id="facIvaTxt">IVA (21%)</span><span id="facIvaImp">0,00 €</span></div>
+    <div id="facIrpfFila" style="display:none"><span id="facIrpfTxt">IRPF</span><span id="facIrpfImp">0,00 €</span></div>
+    <div class="total"><span>TOTAL</span><span id="facTotal">0,00 €</span></div>
+  </div>
+</section>
+
+<!-- Ajustes -->
+<section id="ajustes" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <h1 class="titulo">Ajustes</h1>
+  <p class="sub" style="margin-bottom:14px">Tus datos tal como salen en las facturas.</p>
+  <div id="ajOk" class="resumen ok" style="display:none"></div>
+  <div id="ajError" class="resumen mal" style="display:none"></div>
+  <div id="ajCampos"></div>
+</section>
+
+<!-- Papelera -->
+<section id="papelera" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <h1 class="titulo">Papelera</h1>
+  <p class="info">Las facturas y clientes borrados se guardan aquí 30 días. Después se borran solos.</p>
+  <div id="papError" class="resumen mal" style="display:none"></div>
+  <div id="papLista"></div>
+</section>
+
+<div id="hoja" class="hoja"><div class="hoja-caja"><div id="hojaTexto"></div><div class="hoja-botones" id="hojaBotones"></div></div></div>
+<div id="aviso" class="aviso"></div>
+
+<section id="foto" class="pantalla">
+  <h1 class="titulo" id="fotoTitulo">Parte</h1>
+  <p class="info" id="fotoInfo">Cargando la foto…</p>
+  <img id="fotoImg" class="foto-parte" alt="Foto del parte" style="display:none">
+  <p class="pie">Puedes ampliar la foto con dos dedos.</p>
+</section>
+
+<!-- 4. Hecho -->
+<section id="hecho" class="pantalla centro">
+  <div class="hecho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+  <h1 id="hechoTitulo">Parte guardado</h1>
+  <p class="sub" id="hechoTexto">Ya está en la hoja.</p>
+  <div class="lineas" id="hechoLineas"></div>
+  <button class="boton principal" onclick="volverAlInicio()">Volver al inicio</button>
+</section>
+
+<!-- 5. Error -->
+<section id="fallo" class="pantalla centro">
+  <h2>Algo no ha ido bien</h2>
+  <p class="sub error" id="falloTexto"></p>
+  <button class="boton principal" id="falloReintentar">Reintentar</button>
+  <button class="boton" onclick="volverAlInicio()">Volver al inicio</button>
+</section>
+
+<div id="barra" class="barra">
+  <button class="boton secundario" id="barraIzq">Cancelar</button>
+  <button class="boton" id="barraMedio" style="display:none"></button>
+  <button class="boton principal" id="guardar">Guardar</button>
+</div>
+
+<datalist id="lista-clientes"></datalist>
+<datalist id="lista-formas"><option>Transferencia</option><option>Tarjeta</option><option>Efectivo</option><option>Bizum</option><option>Domiciliación</option></datalist>
+<datalist id="lista-pagos"><option>TARJETA</option><option>EFECTIVO</option><option>TRANSFERENCIA</option><option>BIZUM</option><option>ENLACE</option></datalist>
+
+<script>
+const DEMO = /[?&]demo/.test(location.search);
+const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
+const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
+const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
+const CAMPOS = [
+  { k:'numero_parte', t:'Nº parte', modo:'numeric' },
+  { k:'fecha', t:'Fecha', tipo:'date' },
+  { k:'matricula', t:'Matrícula', tipo:'matricula' },
+  { k:'tipo_vuelo', t:'Tipo de vuelo', tipo:'select', ops:TIPOS },
+  { k:'delante_nombre', t:'Piloto (delante)', ancho:1, lista:'lista-clientes' },
+  { k:'delante_funcion', t:'Función delante', tipo:'select', ops:FUNCIONES },
+  { k:'tomas', t:'Nº tomas', modo:'numeric' },
+  { k:'detras_nombre', t:'Detrás (opcional)', ancho:1, lista:'lista-clientes' },
+  { k:'detras_funcion', t:'Función detrás', tipo:'select', ops:FUNCIONES },
+  { k:'autorizado_por', t:'Autorizado por' },
+  { k:'aerodromo_salida', t:'Aeródromo salida', mayus:1 },
+  { k:'aerodromo_llegada', t:'Aeródromo llegada', mayus:1 },
+  { k:'hora_salida', t:'Hora salida', tipo:'time' },
+  { k:'hora_regreso', t:'Hora regreso', tipo:'time' },
+  { k:'tiempo_total_min', t:'Tiempo total (min)', modo:'numeric' },
+  { k:'total_horometro', t:'Total horómetro', modo:'decimal' },
+  { k:'horometro_inicial', t:'Horómetro inicial', modo:'decimal' },
+  { k:'horometro_final', t:'Horómetro final', modo:'decimal' },
+  { k:'importe_gasolina', t:'Gasolina (€)', modo:'decimal' },
+  { k:'total_pagado', t:'Importe pagado (€)', modo:'decimal' },
+  { k:'forma_pago', t:'Forma de pago', ancho:1, lista:'lista-pagos', mayus:1 },
+  { k:'comentarios', t:'Comentarios', tipo:'textarea', ancho:1 },
+];
+
+let imagen = null, tipoImagen = 'image/jpeg', partes = [], matriculas = [];
+
+// ---------- utilidades ----------
+const $ = id => document.getElementById(id);
+const BARRAS = {
+  revisar: ['Cancelar', () => volverAlInicio(), 'Guardar', () => guardar()],
+  horas:    ['No descontar', () => terminar([]), 'Descontar', () => descontar()],
+  compra:   ['Cancelar', () => volverAlInicio(), 'Añadir horas', () => comprar()],
+  cliente:  ['Cancelar', () => fichaSalir(), 'Guardar', () => guardarCliente()],
+  facturas: ['Inicio', () => volverAlInicio(), 'Nueva factura', () => abrirNuevaFactura()],
+  factura:  ['Cancelar', () => salirFactura(), 'Guardar', () => guardarFactura()],
+  ajustes:  ['Cancelar', () => volverAlInicio(), 'Guardar ajustes', () => guardarAjustes()],
+  papelera: ['Inicio', () => volverAlInicio(), 'Vaciar papelera', () => vaciarPapelera()],
+  clientes: ['Inicio', () => volverAlInicio(), 'Añadir cliente', () => abrirNuevoCliente(() => abrirClientes())],
+  consulta: ['Inicio', () => volverAlInicio(), 'Añadir horas', () => abrirCompra(), 'Descontar horas', () => abrirDescontar()],
+  detalle:  ['Volver', () => abrirConsulta(), 'Añadir horas', () => abrirCompra(detalleAlumno), 'Descontar horas', () => abrirDescontar(detalleAlumno)],
+  foto:     ['Volver', () => (fotoVolver || (() => abrirDetalle(detalleAlumno)))(), 'Inicio', () => volverAlInicio()],
+};
+function mostrar(id) {
+  document.querySelectorAll('.pantalla').forEach(s => s.classList.toggle('activa', s.id === id));
+  activarSelectores();
+  const b = BARRAS[id];
+  $('barra').classList.toggle('activa', !!b);
+  if (b) {
+    $('barraIzq').textContent = b[0]; $('barraIzq').onclick = b[1];
+    const tres = b.length > 4;
+    $('barra').classList.toggle('tres', tres);
+    $('barraMedio').style.display = tres ? '' : 'none';
+    if (tres) { $('barraMedio').textContent = b[2]; $('barraMedio').onclick = b[3]; $('guardar').textContent = b[4]; $('guardar').onclick = b[5]; }
+    else { $('guardar').textContent = b[2]; $('guardar').onclick = b[3]; }
+  }
+  window.scrollTo(0, 0);
+}
+function tiempo(min) {
+  if (min === null || min === undefined || isNaN(min)) return '—';
+  const signo = min < 0 ? '−' : '', a = Math.abs(Math.round(min)), h = Math.floor(a / 60), m = a % 60;
+  if (!h && !m) return '0 min';
+  return signo + (h ? h + ' h' : '') + (h && m ? ' ' : '') + (m ? m + ' min' : '');
+}
+function leerMinutos(idH, idM) {
+  const h = $(idH).value.trim(), m = $(idM).value.trim();
+  if (!h && !m) return null;
+  const nh = h ? Number(h.replace(',', '.')) : 0, nm = m ? Number(m.replace(',', '.')) : 0;
+  if (isNaN(nh) || isNaN(nm) || nh < 0 || nm < 0) return NaN;
+  return Math.round(nh * 60 + nm);
+}
+function claseSaldo(min) { return min <= 0 ? 'nada' : (min < 120 ? 'poco' : ''); }
+function numero(v) { if (v === null || v === undefined || v === '') return null; const n = parseFloat(String(v).replace(',', '.')); return isNaN(n) ? null : n; }
+function hoyInput() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function textoSaldo(info) {
+  if (!info || !info.tieneHoras) return 'Todavía no tiene horas registradas.';
+  return `Le quedan <b>${tiempo(info.saldo)}</b>` + (info.fechaPago ? ` · último pago: ${tiempo(info.ultimaCompra)} el ${esc(info.fechaPago)}` : '');
+}
+function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c])); }
+function aTextoNumero(v) { return v === null || v === undefined ? '' : String(v).replace('.', ','); }
+function fechaAInput(f) { const m = String(f || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}` : ''; }
+function inputAFecha(v) { const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? `${m[3]}/${m[2]}/${m[1]}` : null; }
+function horaAInput(h) { const m = String(h || '').match(/^(\d{1,2})[:.hH](\d{2})/); return m ? `${m[1].padStart(2,'0')}:${m[2]}` : ''; }
+function guardarLocal(k, v) { if (DEMO) return; try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function leerLocal(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+
+function leerClave() { try { return localStorage.getItem('partes-clave') || ''; } catch (e) { return claveMemoria; } }
+function guardarClave(c) { claveMemoria = c; try { c ? localStorage.setItem('partes-clave', c) : localStorage.removeItem('partes-clave'); } catch (e) {} }
+let claveMemoria = '';
+
+async function api(cuerpo, clave) {
+  if (DEMO) return demo(cuerpo);
+  const r = await fetch(API_URL, { method:'POST', body: JSON.stringify(Object.assign({ clave: clave || leerClave() }, cuerpo)) });
+  if (!r.ok) throw new Error('El servidor ha respondido con un error (' + r.status + ').');
+  const j = await r.json();
+  if (!j.ok) {
+    if (/clave incorrecta/i.test(j.error || '') && !clave) { guardarClave(''); mostrar('clave'); throw Object.assign(new Error('Clave incorrecta.'), { silencioso: true }); }
+    throw new Error(j.error || 'Error desconocido.');
+  }
+  return j;
+}
+
+async function entrarConClave() {
+  const c = $('claveInput').value.trim();
+  $('claveError').textContent = '';
+  if (!c) { $('claveError').textContent = 'Escribe la clave.'; return; }
+  const b = $('claveBoton'); b.disabled = true; b.textContent = 'Comprobando…';
+  try {
+    const cfg = await api({ accion:'config' }, c);
+    guardarClave(c); guardarLocal('partes-config', cfg); rellenarListas(cfg);
+    $('claveInput').value = ''; mostrar('inicio');
+  } catch (e) {
+    $('claveError').textContent = /clave incorrecta/i.test(e.message) ? 'Clave incorrecta. Pregunta la clave a quien te pasó la app.' : e.message;
+  } finally { b.disabled = false; b.textContent = 'Entrar'; }
+}
+$('claveInput').addEventListener('keydown', e => { if (e.key === 'Enter') entrarConClave(); });
+
+// ---------- listas (clientes y matrículas) ----------
+let CLIENTES = [];
+// Lista desplegable de clientes: al tocar el campo sale la lista; escribiendo se filtra.
+function buscarClientes(q) {
+  const palabras = quitarAcentosJs(q).split(/\s+/).filter(Boolean);
+  return CLIENTES.filter(c => { const n = quitarAcentosJs(c); return palabras.every(w => n.includes(w)); });
+}
+function activarSelector(input) {
+  if (input.dataset.selector) return;
+  input.dataset.selector = '1'; input.removeAttribute('list'); input.setAttribute('autocomplete', 'off');
+  const caja = document.createElement('div'); caja.className = 'sugerencias'; input.after(caja);
+  const pintar = () => {
+    const q = input.value.trim();
+    const todos = q ? buscarClientes(q) : CLIENTES;
+    const lista = todos.slice(0, 30);
+    let html = '';
+    if (!CLIENTES.length) html = '<div class="sug-info">Cargando la lista de clientes… Si no aparece, escribe el nombre completo.</div>';
+    else if (!q) html = `<div class="sug-info">${CLIENTES.length} clientes. Escribe parte del nombre para filtrar.</div>`;
+    else if (!lista.length) html = `<div class="sug-info">No está en tu lista. Si es un cliente nuevo, escribe su nombre completo: se creará al guardar.</div>`;
+    html += lista.map(c => `<button type="button" class="sug">${esc(c)}</button>`).join('');
+    if (todos.length > lista.length) html += `<div class="sug-info">… y ${todos.length - lista.length} más. Sigue escribiendo para afinar.</div>`;
+    caja.innerHTML = html; caja.style.display = 'block';
+    caja.querySelectorAll('.sug').forEach(b => {
+      b.addEventListener('pointerdown', e => e.preventDefault());
+      b.addEventListener('mousedown', e => e.preventDefault());
+      b.addEventListener('click', () => { input.value = b.textContent; caja.style.display = 'none'; input.blur(); input.dispatchEvent(new Event('change')); });
+    });
+  };
+  input.addEventListener('focus', pintar);
+  input.addEventListener('input', pintar);
+  input.addEventListener('blur', () => setTimeout(() => { caja.style.display = 'none'; }, 250));
+}
+function activarSelectores() { document.querySelectorAll('input[list="lista-clientes"]').forEach(activarSelector); }
+
+function rellenarListas(cfg) {
+  if (!cfg) return;
+  matriculas = cfg.matriculas || [];
+  CLIENTES = cfg.clientes || [];
+  $('lista-clientes').innerHTML = CLIENTES.map(c => `<option value="${esc(c)}">`).join('');
+}
+rellenarListas(leerLocal('partes-config'));
+if (DEMO) $('avisoDemo').style.display = 'block';
+if (SIN_CONFIGURAR) { $('urlActual').textContent = API_URL; mostrar('sinConfigurar'); }
+else if (!DEMO && !leerClave()) mostrar('clave');
+else api({ accion:'config' }).then(cfg => { guardarLocal('partes-config', cfg); rellenarListas(cfg); }).catch(() => {});
+
+// ---------- foto ----------
+async function prepararImagen(archivo, max) {
+  const MAX = max || 2000;
+  let bmp;
+  try { bmp = await createImageBitmap(archivo, { imageOrientation: 'from-image' }); }
+  catch (e) {
+    bmp = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ko(new Error('No se ha podido abrir la imagen.')); i.src = URL.createObjectURL(archivo); });
+  }
+  const w = bmp.width, h = bmp.height, f = Math.min(1, MAX / Math.max(w, h));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w * f); c.height = Math.round(h * f);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return c.toDataURL('image/jpeg', 0.85);
+}
+
+async function alElegirFoto(ev) {
+  const archivo = ev.target.files && ev.target.files[0];
+  ev.target.value = '';
+  if (!archivo) return;
+  try {
+    const dataUrl = await prepararImagen(archivo);
+    $('mini').src = dataUrl;
+    imagen = dataUrl.split(',')[1]; tipoImagen = 'image/jpeg';
+    leer();
+  } catch (e) { fallo(e.message, () => mostrar('inicio')); }
+}
+$('camara').addEventListener('change', alElegirFoto);
+$('galeria').addEventListener('change', alElegirFoto);
+
+async function leer() {
+  $('leyendoTexto').textContent = 'Leyendo el parte…';
+  mostrar('leyendo');
+  try {
+    const r = await api({ accion:'leer', imagen, tipo: tipoImagen });
+    partes = r.partes.map(p => ({ datos: p.datos, avisos: p.avisos || {}, incluir: !(p.avisos && p.avisos.numero_parte && /ya está en la hoja/.test(p.avisos.numero_parte)) }));
+    pintarRevision();
+    mostrar('revisar');
+  } catch (e) { if (!e.silencioso) fallo(e.message, leer); }
+}
+
+// ---------- revisión ----------
+function controlHTML(c, i, valor) {
+  const id = `p${i}-${c.k}`;
+  const base = `id="${id}" data-p="${i}" data-k="${c.k}"`;
+  if (c.tipo === 'select') {
+    valor = valor ? String(valor).trim().toUpperCase() : '';
+    const ops = c.ops.includes(valor) ? c.ops : c.ops.concat([valor]);
+    return `<select ${base}>${ops.map(o => `<option value="${esc(o)}"${o === (valor || '') ? ' selected' : ''}>${o ? esc(o) : '—'}</option>`).join('')}</select>`;
+  }
+  if (c.tipo === 'matricula') {
+    const ops = [''].concat(matriculas.length ? matriculas : []);
+    if (valor && !ops.includes(valor)) ops.push(valor);
+    return `<select ${base}>${ops.map(o => `<option value="${esc(o)}"${o === (valor || '') ? ' selected' : ''}>${o ? esc(o) : '—'}</option>`).join('')}</select>`;
+  }
+  if (c.tipo === 'date') return `<input ${base} type="date" value="${esc(fechaAInput(valor))}">`;
+  if (c.tipo === 'time') return `<input ${base} type="time" value="${esc(horaAInput(valor))}">`;
+  if (c.tipo === 'textarea') return `<textarea ${base} rows="2">${esc(valor)}</textarea>`;
+  const modo = c.modo ? ` inputmode="${c.modo}"` : '';
+  const lista = c.lista ? ` list="${c.lista}" autocomplete="off"` : '';
+  const v = c.modo === 'decimal' ? aTextoNumero(valor) : (valor ?? '');
+  return `<input ${base} type="text"${modo}${lista}${c.mayus ? ' autocapitalize="characters"' : ''} value="${esc(v)}">`;
+}
+
+function pintarRevision() {
+  const varios = partes.length > 1;
+  const nAvisos = partes.reduce((s, p) => s + Object.keys(p.avisos).length, 0);
+  const res = $('resumen');
+  res.className = 'resumen ' + (nAvisos ? 'mal' : 'ok');
+  res.textContent = (varios ? `He encontrado ${partes.length} partes. ` : '') +
+    (nAvisos ? `Revisa lo marcado en amarillo (${nAvisos}) y pulsa Guardar.` : 'Todo cuadra. Revisa de un vistazo y pulsa Guardar.');
+  $('tarjetas').innerHTML = partes.map((p, i) => {
+    const d = p.datos;
+    const titulo = `Parte ${esc(d.numero_parte || '¿?')}${d.matricula ? ' · ' + esc(d.matricula) : ''}`;
+    const casilla = `<label class="incluir"><input type="checkbox" data-incluir="${i}" ${p.incluir ? 'checked' : ''}> Guardar</label>`;
+    const repetido = !p.incluir ? `<div class="resumen mal" style="margin:0 0 12px">Este parte ya está en la hoja, por eso no se va a guardar. Si quieres guardarlo igualmente, marca la casilla <b>Guardar</b> de arriba.</div>` : '';
+    const campos = CAMPOS.map(c => {
+      const aviso = p.avisos[c.k];
+      return `<div class="campo${c.ancho ? ' ancho' : ''}${aviso ? ' aviso' : ''}">
+        <label for="p${i}-${c.k}">${c.t}</label>${controlHTML(c, i, d[c.k])}
+        ${aviso ? `<div class="nota">${esc(aviso)}</div>` : ''}</div>`;
+    }).join('');
+    return `<div class="tarjeta${p.incluir ? '' : ' apagada'}" id="tarjeta${i}"><div class="cabecera"><h2>${titulo}</h2>${casilla}</div>${repetido}<div class="rejilla">${campos}</div></div>`;
+  }).join('');
+  document.querySelectorAll('[data-incluir]').forEach(el => el.addEventListener('change', () => {
+    const i = +el.dataset.incluir; partes[i].incluir = el.checked;
+    $('tarjeta' + i).classList.toggle('apagada', !el.checked);
+  }));
+  document.querySelectorAll('[data-k]').forEach(el => el.addEventListener('input', () => {
+    const div = el.closest('.campo'); if (div) div.classList.remove('aviso');
+  }));
+  if (varios) $('guardar').textContent = 'Guardar partes';
+}
+
+function recoger() {
+  return partes.map((p, i) => {
+    const d = Object.assign({}, p.datos);
+    CAMPOS.forEach(c => {
+      const el = $(`p${i}-${c.k}`); if (!el) return;
+      let v = el.value.trim();
+      if (c.tipo === 'date') v = inputAFecha(v);
+      if (c.mayus) v = v.toUpperCase();
+      d[c.k] = v === '' ? null : v;
+    });
+    return { datos: d, incluir: p.incluir };
+  }).filter(p => p.incluir).map(p => p.datos);
+}
+
+async function guardar() {
+  const lista = recoger();
+  if (!lista.length) { alerta(partes.length > 1 ? 'No hay ningún parte marcado para guardar. Marca la casilla Guardar del parte que quieras guardar.' : 'Este parte no está marcado para guardar porque ya está en la hoja. Si quieres guardarlo igualmente, marca la casilla Guardar arriba a la derecha del parte.'); return; }
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
+  resultadoPartes = '';
+  try {
+    const r = await api({ accion:'guardar', partes: lista, imagen, tipo: tipoImagen });
+    const n = r.filas.length, rev = r.filas.filter(f => f.revisar).length;
+    resultadoPartes = (n > 1 ? `${n} partes guardados en la hoja.` : 'Parte guardado en la hoja.') +
+      (rev ? ' Lo que no cuadraba queda marcado en amarillo.' : '');
+    if (r.descuentos && r.descuentos.length) pintarHoras(r.descuentos);
+    else terminar([]);
+  } catch (e) { if (!e.silencioso) fallo(e.message, guardar, true); }
+  finally { btn.disabled = false; }
+}
+
+// ---------- horas del alumno tras guardar el parte ----------
+let resultadoPartes = '', descuentos = [];
+function pintarHoras(lista) {
+  descuentos = lista.map(d => Object.assign({}, d, { incluir: d.tieneHoras && !d.yaDescontado }));
+  $('horasGuardado').textContent = '✓ ' + resultadoPartes;
+  $('horasError').style.display = 'none';
+  $('horasTarjetas').innerHTML = descuentos.map((d, i) => {
+    const min = d.minutos;
+    const hor = d.horometro_inicial !== null && d.horometro_final !== null
+      ? `Horómetro del parte: ${aTextoNumero(d.horometro_inicial.toFixed(1))} → ${aTextoNumero(d.horometro_final.toFixed(1))} (${aTextoNumero(Number(d.horometro).toFixed(1))} h = ${tiempo(min)})` : 'El parte no tiene horómetro completo.';
+    return `
+    <div class="tarjeta${d.incluir ? '' : ' apagada'}" id="h${i}">
+      <div class="cabecera"><h2>Parte ${esc(d.numero || '¿?')}${d.fecha ? ' · ' + esc(d.fecha) : ''}</h2>
+        <label class="incluir"><input type="checkbox" id="h${i}-incluir" ${d.incluir ? 'checked' : ''}> Descontar</label></div>
+      ${d.yaDescontado ? '<div class="resumen mal" style="margin:0 0 12px">Este vuelo ya se descontó antes. Márcalo solo si quieres descontarlo otra vez.</div>' : ''}
+      ${!d.tieneHoras && !d.yaDescontado ? '<div class="resumen mal" style="margin:0 0 12px">Este cliente no tiene horas registradas. Si descuentas, quedará en negativo.</div>' : ''}
+      <div class="rejilla">
+        <div class="campo ancho"><label for="h${i}-alumno">Cliente</label><input id="h${i}-alumno" type="text" list="lista-clientes" autocomplete="off" value="${esc(d.alumno)}"></div>
+        <div class="campo ancho"><div class="saldo" id="h${i}-saldo">${textoSaldo(d)}</div><p class="info">${hor}</p></div>
+        <div class="campo"><label for="h${i}-h">Horas a descontar</label><input id="h${i}-h" type="text" inputmode="numeric" value="${min === null ? '' : Math.floor(min / 60)}"></div>
+        <div class="campo"><label for="h${i}-m">Minutos</label><input id="h${i}-m" type="text" inputmode="numeric" value="${min === null ? '' : min % 60}"></div>
+        <div class="campo ancho"><div class="cuenta" id="h${i}-cuenta"></div></div>
+      </div>
+    </div>`; }).join('');
+  descuentos.forEach((d, i) => {
+    [`h${i}-h`, `h${i}-m`].forEach(id => $(id).addEventListener('input', () => actualizarCuenta(i)));
+    $(`h${i}-incluir`).addEventListener('change', e => { d.incluir = e.target.checked; $(`h${i}`).classList.toggle('apagada', !d.incluir); });
+    $(`h${i}-alumno`).addEventListener('change', async e => {
+      const nombre = e.target.value.trim(); if (!nombre) return;
+      $(`h${i}-saldo`).textContent = 'Buscando…';
+      try { const info = await api({ accion:'saldo', alumno: nombre }); Object.assign(d, info); e.target.value = info.alumno; $(`h${i}-saldo`).innerHTML = textoSaldo(info); actualizarCuenta(i); }
+      catch (err) { $(`h${i}-saldo`).textContent = err.message; }
+    });
+    actualizarCuenta(i);
+  });
+  mostrar('horas');
+}
+function actualizarCuenta(i) {
+  const d = descuentos[i], min = leerMinutos(`h${i}-h`, `h${i}-m`), c = $(`h${i}-cuenta`);
+  const saldo = d.tieneHoras ? d.saldo : 0;
+  if (min === null || isNaN(min)) { c.textContent = 'Escribe las horas y minutos a descontar'; c.className = 'cuenta negativa'; return; }
+  c.textContent = `${tiempo(saldo)} − ${tiempo(min)} = le quedarán ${tiempo(saldo - min)}`;
+  c.className = 'cuenta' + (saldo - min < 0 ? ' negativa' : '');
+}
+async function descontar() {
+  const items = [];
+  for (let i = 0; i < descuentos.length; i++) {
+    const d = descuentos[i]; if (!d.incluir) continue;
+    const min = leerMinutos(`h${i}-h`, `h${i}-m`), alumno = $(`h${i}-alumno`).value.trim();
+    if (!alumno || !(min > 0)) { $('horasError').style.display = 'block'; $('horasError').textContent = 'Revisa el cliente y las horas del parte ' + (d.numero || (i + 1)) + '.'; window.scrollTo(0, 0); return; }
+    items.push({ alumno, horas: Math.floor(min / 60), minutos: min % 60, horometro_inicial: d.horometro_inicial, horometro_final: d.horometro_final, numero: d.numero, fecha: d.fecha, matricula: d.matricula, fotoId: d.fotoId || '' });
+  }
+  if (!items.length) { terminar([]); return; }
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Descontando…';
+  try { const r = await api({ accion:'descontar', items }); terminar(r.hechos || []); }
+  catch (e) { if (!e.silencioso) fallo(e.message, () => mostrar('horas')); }
+  finally { btn.disabled = false; }
+}
+function terminar(hechos) {
+  $('hechoTitulo').textContent = hechos.length ? 'Hecho' : 'Parte guardado';
+  $('hechoTexto').textContent = resultadoPartes + (hechos.length ? ' Horas descontadas:' : '');
+  $('hechoLineas').innerHTML = hechos.map(h => `<div><b>${esc(h.alumno)}</b><br>${tiempo(h.antes)} − ${tiempo(h.minutos)} → <b>le quedan ${tiempo(h.saldo)}</b></div>`).join('');
+  mostrar('hecho');
+}
+
+// ---------- añadir horas compradas ----------
+let compraInfo = null;
+function abrirCompra(nombre) {
+  ['cAlumno', 'cHoras', 'cMinutos', 'cComentario'].forEach(id => $(id).value = '');
+  $('cFecha').value = hoyInput(); $('cSaldo').style.display = 'none'; $('cCuenta').style.display = 'none'; $('compraError').style.display = 'none';
+  compraInfo = null; mostrar('compra');
+  if (typeof nombre === 'string' && nombre) { $('cAlumno').value = nombre; buscarSaldoCompra(); }
+}
+async function buscarSaldoCompra() {
+  const nombre = $('cAlumno').value.trim(); if (!nombre) return;
+  $('cSaldo').style.display = 'block'; $('cSaldo').textContent = 'Buscando…';
+  try { compraInfo = await api({ accion:'saldo', alumno: nombre }); $('cAlumno').value = compraInfo.alumno;
+    $('cSaldo').innerHTML = textoSaldo(compraInfo) + (compraInfo.nuevo ? '<br><small>No tiene horas todavía: se creará al guardar.</small>' : ''); cuentaCompra(); }
+  catch (e) { $('cSaldo').textContent = e.message; }
+}
+function cuentaCompra() {
+  const min = leerMinutos('cHoras', 'cMinutos'), c = $('cCuenta');
+  if (min === null || isNaN(min) || !compraInfo) { c.style.display = 'none'; return; }
+  c.style.display = 'block'; c.className = 'cuenta';
+  c.textContent = `${tiempo(compraInfo.saldo)} + ${tiempo(min)} = tendrá ${tiempo(compraInfo.saldo + min)}`;
+}
+$('cAlumno').addEventListener('change', buscarSaldoCompra);
+['cHoras', 'cMinutos'].forEach(id => $(id).addEventListener('input', cuentaCompra));
+['cAlumno', 'cHoras', 'cMinutos', 'cFecha'].forEach(id => $(id).addEventListener('input', () => { $('compraError').style.display = 'none'; }));
+async function comprar() {
+  const alumno = $('cAlumno').value.trim(), min = leerMinutos('cHoras', 'cMinutos'), fecha = inputAFecha($('cFecha').value);
+  const err = t => { $('compraError').style.display = 'block'; $('compraError').textContent = t; window.scrollTo(0, 0); };
+  if (!alumno) return err('Elige el cliente.');
+  if (!(min > 0)) return err('Escribe las horas (y minutos, si hace falta) compradas.');
+  if (!fecha) return err('Elige la fecha de pago.');
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
+  try {
+    const r = await api({ accion:'comprar', alumno, horas: Math.floor(min / 60), minutos: min % 60, fechaPago: fecha, comentario: $('cComentario').value });
+    $('hechoTitulo').textContent = 'Horas añadidas';
+    $('hechoTexto').textContent = `Pago del ${fecha} registrado.`;
+    $('hechoLineas').innerHTML = `<div><b>${esc(r.alumno)}</b><br>${tiempo(r.antes)} + ${tiempo(r.minutos)} → <b>tiene ${tiempo(r.saldo)}</b></div>`;
+    mostrar('hecho');
+  } catch (e) { if (!e.silencioso) err(e.message); }
+  finally { btn.disabled = false; btn.textContent = 'Añadir horas'; }
+}
+
+// ---------- consultar y modificar horas ----------
+let listaAlumnos = [], detalleAlumno = '', detalleMovs = [];
+async function abrirConsulta() {
+  mostrar('consulta');
+  $('consultaInfo').textContent = 'Cargando…'; $('consultaLista').innerHTML = '';
+  try {
+    const r = await api({ accion:'alumnos' });
+    listaAlumnos = r.alumnos || [];
+    $('consultaInfo').textContent = listaAlumnos.length ? `${listaAlumnos.length} clientes con horas. Pulsa uno para ver o modificar sus horas.` : 'Todavía no hay clientes con horas. Empieza con "Añadir horas".';
+    $('consultaArchivo').innerHTML = r.urlArchivo ? `<a href="${esc(r.urlArchivo)}" target="_blank" rel="noopener">Abrir el archivo de horas de clientes</a>` : '';
+    pintarLista();
+  } catch (e) { if (!e.silencioso) $('consultaInfo').textContent = e.message; }
+}
+function pintarLista() {
+  const q = quitarAcentosJs($('consultaBuscar').value);
+  $('consultaLista').innerHTML = listaAlumnos.filter(a => !q || quitarAcentosJs(a.alumno).includes(q)).map(a => `
+    <button class="fila-alumno" data-alumno="${esc(a.alumno)}">
+      <span><b>${esc(a.alumno)}</b><small>Compradas ${tiempo(a.compradas)} · voladas ${tiempo(a.voladas)}${a.fechaPago ? ' · último pago ' + esc(a.fechaPago) : ''}</small></span>
+      <span class="chapa ${claseSaldo(a.saldo)}">${tiempo(a.saldo)}</span>
+    </button>`).join('');
+  document.querySelectorAll('.fila-alumno').forEach(b => b.addEventListener('click', () => abrirDetalle(b.dataset.alumno)));
+}
+function quitarAcentosJs(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); }
+$('consultaBuscar').addEventListener('input', pintarLista);
+
+async function abrirDetalle(nombre, datos) {
+  detalleAlumno = nombre;
+  mostrar('detalle');
+  $('detalleNombre').textContent = nombre; $('detalleError').style.display = 'none'; $('detalleOk').style.display = 'none';
+  if (!datos) { $('detalleSaldo').textContent = 'Cargando…'; $('detalleLista').innerHTML = ''; }
+  try { pintarDetalle(datos || await api({ accion:'movimientos', alumno: nombre })); }
+  catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; } }
+}
+function pintarDetalle(r) {
+  detalleAlumno = r.alumno; detalleMovs = r.movimientos || [];
+  $('detalleNombre').textContent = r.alumno;
+  $('detalleSaldo').innerHTML = `Le quedan <b>${tiempo(r.saldo)}</b> · compradas ${tiempo(r.compradas)} · voladas ${tiempo(r.voladas)}`;
+  $('detalleLista').innerHTML = detalleMovs.length ? detalleMovs.map((m, i) => {
+    const mas = m.signo > 0;
+    let lineas;
+    if (m.tipo === 'VUELO') lineas = [`Vuelo · parte ${esc(m.numero || '¿?')}`,
+      `<b>Fecha:</b> ${esc(m.fecha || '—')}`, `<b>Aparato:</b> <span style="white-space:nowrap">${esc(m.matricula || '—')}</span>`,
+      `<b>Horómetro:</b> ${m.hi !== null && m.hf !== null ? aTextoNumero(m.hi.toFixed(1)) + ' → ' + aTextoNumero(m.hf.toFixed(1)) : '—'}`];
+    else if (m.tipo === 'COMPRA') lineas = [`Compra · pagado el ${esc(m.fecha || '—')}`];
+    else lineas = [`Ajuste${m.fecha ? ' · ' + esc(m.fecha) : ''}`];
+    if (m.comentario) lineas.push(esc(m.comentario));
+    return `<div class="mov" id="mov${i}">
+      <div class="cab"><div><div class="cant ${mas ? 'mas' : 'menos'}">${mas ? '+' : '−'}${tiempo(m.minutos)}</div>${lineas.map(l => `<div class="det">${l}</div>`).join('')}</div>
+        <div class="botones"><button class="mini" onclick="abrirEdicion(${i})">Modificar</button>${m.tipo === 'VUELO' ? `<button class="mini" onclick="verParte(${i})">Ver parte</button>` : ''}</div></div>
+      <div class="editar" id="ed${i}" style="display:none">
+        <div class="rejilla">
+          <div class="campo"><label for="ed${i}-h">Horas</label><input id="ed${i}-h" type="text" inputmode="numeric" value="${Math.floor(m.minutos / 60)}"></div>
+          <div class="campo"><label for="ed${i}-m">Minutos</label><input id="ed${i}-m" type="text" inputmode="numeric" value="${m.minutos % 60}"></div>
+          ${m.tipo === 'COMPRA' ? `<div class="campo ancho"><label for="ed${i}-f">Fecha de pago</label><input id="ed${i}-f" type="date" value="${esc(fechaAInput(m.fecha))}"></div>` : ''}
+          <div class="campo ancho"><label for="ed${i}-c">Comentario</label><input id="ed${i}-c" type="text" value="${esc(m.comentario)}"></div>
+        </div>
+        <div class="acciones">
+          <button class="mini principal" onclick="guardarEdicion(${i})">Guardar cambios</button>
+          <button class="mini" onclick="abrirEdicion(${i})">Cancelar</button>
+          <button class="mini peligro" id="ed${i}-borrar" onclick="borrarMov(${i})">Borrar</button>
+        </div>
+      </div>
+    </div>`; }).join('') : '<p class="info">Sin movimientos.</p>';
+}
+let fotoVolver = null;
+async function verParte(i) { fotoVolver = null; return verFoto(detalleMovs[i]); }
+async function verFoto(m) {
+  mostrar('foto');
+  $('fotoTitulo').textContent = `Parte ${m.numero || '¿?'}`;
+  $('fotoInfo').textContent = [m.fecha, m.matricula, detalleAlumno].filter(Boolean).join(' · ') + ' — cargando la foto…';
+  $('fotoImg').style.display = 'none'; $('fotoImg').removeAttribute('src');
+  if (!m.foto) { $('fotoInfo').textContent = 'No encuentro la foto de este parte. Puede que se subiera antes de guardar fotos o que se haya borrado de Drive.'; return; }
+  try {
+    const r = await api({ accion:'foto', id: m.foto });
+    $('fotoImg').src = `data:${r.tipo || 'image/jpeg'};base64,${r.datos}`; $('fotoImg').style.display = 'block';
+    $('fotoInfo').textContent = [m.fecha, m.matricula, detalleAlumno].filter(Boolean).join(' · ');
+  } catch (e) { if (!e.silencioso) $('fotoInfo').textContent = e.message; }
+}
+// ---------- descontar horas más tarde, eligiendo el parte ----------
+let vCliente = '', vPartes = [], vInfo = null, vVolverA = null;
+function abrirDescontar(nombre) {
+  vVolverA = nombre ? () => abrirDetalle(nombre) : () => abrirConsulta();
+  $('vVolver').onclick = () => vVolverA();
+  $('vCliente').value = nombre || ''; $('vSaldo').style.display = 'none'; $('vError').style.display = 'none';
+  $('vInfo').textContent = nombre ? '' : 'Primero elige el cliente.'; $('vLista').innerHTML = '';
+  mostrar('vuelos');
+  if (nombre) cargarPartesCliente();
+}
+async function cargarPartesCliente() {
+  const nombre = $('vCliente').value.trim(); if (!nombre) return;
+  $('vInfo').textContent = 'Buscando sus partes…'; $('vLista').innerHTML = ''; $('vError').style.display = 'none';
+  try {
+    const r = await api({ accion:'partesCliente', alumno: nombre });
+    vCliente = r.alumno; vPartes = r.partes || []; vInfo = r;
+    $('vCliente').value = r.alumno;
+    $('vSaldo').style.display = 'block'; $('vSaldo').innerHTML = textoSaldo(r);
+    $('vInfo').textContent = vPartes.length ? `${vPartes.length} partes sin descontar${vPartes.length >= (r.maximo || 40) ? ' (los más recientes)' : ''}.` : 'No hay partes de este cliente pendientes de descontar.';
+    pintarPartesCliente();
+  } catch (e) { if (!e.silencioso) { $('vInfo').textContent = ''; $('vError').style.display = 'block'; $('vError').textContent = e.message; } }
+}
+$('vCliente').addEventListener('change', cargarPartesCliente);
+function pintarPartesCliente() {
+  $('vLista').innerHTML = vPartes.map((p, i) => {
+    const hor = p.horometro_inicial !== null && p.horometro_final !== null
+      ? `${aTextoNumero(p.horometro_inicial.toFixed(1))} → ${aTextoNumero(p.horometro_final.toFixed(1))}${p.horometro !== null ? ` (${aTextoNumero(Number(p.horometro).toFixed(1))} h = ${tiempo(p.minutos)})` : ''}` : '—';
+    return `<div class="mov" id="v${i}">
+      <div class="cab"><div>
+        <div class="cant">Parte ${esc(p.numero || '¿?')}</div>
+        <div class="det"><b>Fecha:</b> ${esc(p.fecha || '—')}</div>
+        <div class="det"><b>Aparato:</b> ${esc(p.matricula || '—')}</div>
+        <div class="det"><b>Horómetro:</b> ${hor}</div>
+        <div class="det">En el parte: ${esc(p.nombreEnParte)}${p.funcion ? ' · ' + esc(p.funcion) : ''}</div>
+      </div>
+      <div class="botones">${p.foto ? `<button class="mini" onclick="verFotoParteCliente(${i})">Ver parte</button>` : ''}<button class="mini principal" onclick="elegirParte(${i})">Elegir</button></div></div>
+      <div class="vuelo-elegir" id="v${i}-el" style="display:none">
+        <div class="rejilla">
+          <div class="campo"><label for="v${i}-h">Horas a descontar</label><input id="v${i}-h" type="text" inputmode="numeric" value="${p.minutos === null ? '' : Math.floor(p.minutos / 60)}"></div>
+          <div class="campo"><label for="v${i}-m">Minutos</label><input id="v${i}-m" type="text" inputmode="numeric" value="${p.minutos === null ? '' : p.minutos % 60}"></div>
+          <div class="campo ancho"><div class="cuenta" id="v${i}-cuenta"></div></div>
+        </div>
+        <div class="acciones"><button class="mini principal" id="v${i}-ok" onclick="descontarParteCliente(${i})">Descontar</button><button class="mini" onclick="elegirParte(${i})">Cancelar</button></div>
+      </div>
+    </div>`; }).join('');
+  vPartes.forEach((p, i) => [`v${i}-h`, `v${i}-m`].forEach(id => $(id).addEventListener('input', () => cuentaParteCliente(i))));
+}
+function elegirParte(i) { const e = $(`v${i}-el`); e.style.display = e.style.display === 'none' ? 'block' : 'none'; cuentaParteCliente(i); }
+function cuentaParteCliente(i) {
+  const min = leerMinutos(`v${i}-h`, `v${i}-m`), c = $(`v${i}-cuenta`), saldo = vInfo && vInfo.tieneHoras ? vInfo.saldo : 0;
+  if (min === null || isNaN(min)) { c.textContent = 'Escribe las horas y minutos a descontar'; c.className = 'cuenta negativa'; return; }
+  c.textContent = `${tiempo(saldo)} − ${tiempo(min)} = le quedarán ${tiempo(saldo - min)}`;
+  c.className = 'cuenta' + (saldo - min < 0 ? ' negativa' : '');
+}
+function verFotoParteCliente(i) { fotoVolver = () => { mostrar('vuelos'); }; verFoto(vPartes[i]); }
+async function descontarParteCliente(i) {
+  const p = vPartes[i], min = leerMinutos(`v${i}-h`, `v${i}-m`);
+  if (!(min > 0)) { $('vError').style.display = 'block'; $('vError').textContent = 'Escribe las horas o los minutos a descontar.'; window.scrollTo(0, 0); return; }
+  const b = $(`v${i}-ok`); b.disabled = true; b.textContent = 'Descontando…';
+  try {
+    const r = await api({ accion:'descontar', items: [{ alumno: vCliente, horas: Math.floor(min / 60), minutos: min % 60,
+      horometro_inicial: p.horometro_inicial, horometro_final: p.horometro_final, numero: p.numero, fecha: p.fecha, matricula: p.matricula, fotoId: p.foto }] });
+    const h = (r.hechos || [])[0];
+    await abrirDetalle(vCliente);
+    if (h) { $('detalleOk').style.display = 'block'; $('detalleOk').textContent = `Descontado el parte ${p.numero}: ${tiempo(h.antes)} − ${tiempo(h.minutos)} → le quedan ${tiempo(h.saldo)}.`; }
+  } catch (e) { if (!e.silencioso) { $('vError').style.display = 'block'; $('vError').textContent = e.message; window.scrollTo(0, 0); } }
+  finally { b.disabled = false; b.textContent = 'Descontar'; }
+}
+
+// ---------- clientes: ficha (añadir y modificar) ----------
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', estado:'nEstado' };
+const DOCS = { dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
+let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
+
+function pintarDocs() {
+  Object.keys(DOCS).forEach(k => {
+    const img = $('docimg-' + k), est = $('docest-' + k);
+    if (fichaFotos[k]) { img.src = 'data:image/jpeg;base64,' + fichaFotos[k]; img.style.display = 'block'; est.style.display = 'none'; }
+    else {
+      img.style.display = 'none'; img.removeAttribute('src'); est.style.display = '';
+      const tiene = fichaDocs[k] && !fichaBorrar.has(k);
+      est.textContent = tiene ? '✓ Guardada' : (fichaBorrar.has(k) ? 'Se quitará al guardar' : 'Sin foto');
+      est.className = 'doc-estado' + (tiene ? ' si' : '');
+    }
+    $('docver-' + k).style.display = (fichaDocs[k] && !fichaBorrar.has(k) && !fichaFotos[k]) ? '' : 'none';
+    $('docquitar-' + k).style.display = (fichaFotos[k] || (fichaDocs[k] && !fichaBorrar.has(k))) ? '' : 'none';
+  });
+}
+Object.keys(DOCS).forEach(k => {
+  $('docin-' + k).addEventListener('change', async ev => {
+    const archivo = ev.target.files && ev.target.files[0]; ev.target.value = ''; if (!archivo) return;
+    $('docest-' + k).textContent = 'Preparando…';
+    try { fichaFotos[k] = (await prepararImagen(archivo, 1600)).split(',')[1]; fichaBorrar.delete(k); pintarDocs(); avisoSinGuardar(); }
+    catch (e) { $('docest-' + k).textContent = 'No se ha podido abrir'; }
+  });
+  $('docquitar-' + k).addEventListener('click', () => { if (fichaFotos[k]) delete fichaFotos[k]; else fichaBorrar.add(k); pintarDocs(); avisoSinGuardar(); });
+  $('docver-' + k).addEventListener('click', () => verDocumento(k));
+});
+function avisoSinGuardar() { $('fichaOk').style.display = 'none'; }
+
+function rellenarFicha(c) {
+  Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { const v = c ? c[k] : ''; $(id).value = v === null || v === undefined ? '' : String(v).replace('.', k === 'cuota' ? ',' : '.'); });
+  if (!c || !c.pais) $('nPais').value = c ? '' : 'España';
+  $('nSocio').value = c && c.socio === 'Si' ? 'Si' : 'No';
+  $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none';
+  if (c && c.estado) $('nEstado').value = c.estado;
+  fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
+  pintarDocs();
+}
+function abrirNuevoCliente(volverA) {
+  fichaNombre = ''; forzarCliente = false; fichaVolverA = volverA || null;
+  rellenarFicha(null);
+  $('fichaTitulo').textContent = 'Añadir cliente';
+  $('fichaSub').style.display = '';
+  $('nEstadoCampo').style.display = 'none'; $('fichaExtra').style.display = 'none'; $('fichaBorrar').style.display = 'none';
+  $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
+  $('fichaVolver').onclick = () => fichaSalir();
+  mostrar('cliente');
+}
+async function abrirFichaCliente(nombre, volverA) {
+  fichaNombre = nombre; forzarCliente = false; fichaVolverA = volverA || (() => abrirClientes());
+  rellenarFicha(null); $('nNombre').value = nombre;
+  $('fichaTitulo').textContent = nombre; $('fichaSub').style.display = 'none';
+  $('nEstadoCampo').style.display = ''; $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = '';
+  $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
+  $('fichaVolver').onclick = () => fichaSalir();
+  mostrar('cliente');
+  try { const c = await api({ accion:'cliente', nombre }); rellenarFicha(c); fichaNombre = c.nombre; $('fichaTitulo').textContent = c.nombre; }
+  catch (e) { if (!e.silencioso) { $('clienteError').style.display = 'block'; $('clienteError').textContent = e.message; } }
+}
+function fichaSalir() { if (fichaVolverA) fichaVolverA(); else volverAlInicio(); }
+$('nSocio').addEventListener('change', () => { $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none'; avisoSinGuardar(); });
+$('nNombre').addEventListener('input', () => { forzarCliente = false; $('clienteError').style.display = 'none'; avisoSinGuardar(); });
+
+async function guardarCliente() {
+  const datos = {}; Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { datos[k] = $(id).value.trim(); });
+  if (!fichaNombre) delete datos.estado;
+  const err = t => { $('clienteError').style.display = 'block'; $('clienteError').textContent = t; $('fichaOk').style.display = 'none'; window.scrollTo(0, 0); };
+  if (datos.nombre.length < 2) return err('Escribe el nombre del cliente.');
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = Object.keys(fichaFotos).length ? 'Subiendo fotos…' : 'Guardando…';
+  try {
+    const r = await api({ accion:'guardarCliente', original: fichaNombre || '', datos, fotos: fichaFotos, borrarFotos: [...fichaBorrar], forzar: forzarCliente });
+    if (r.clientes) CLIENTES = r.clientes; else CLIENTES = [r.nombre].concat(CLIENTES.filter(c => c !== r.nombre));
+    const eraNuevo = !fichaNombre;
+    fichaNombre = r.nombre; forzarCliente = false;
+    rellenarFicha(r);
+    $('fichaTitulo').textContent = r.nombre; $('fichaSub').style.display = 'none';
+    $('nEstadoCampo').style.display = ''; $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = ''; $('clienteError').style.display = 'none';
+    if (eraNuevo && !fichaVolverA) fichaVolverA = () => abrirClientes();
+    $('fichaOk').style.display = 'block';
+    $('fichaOk').textContent = eraNuevo ? 'Cliente añadido. Está marcado como NUEVO en la pestaña "Clientes" para que lo pases a la app de facturas.'
+      : 'Cambios guardados.' + (r.horasRenombradas ? ' También se ha cambiado el nombre en sus horas.' : '');
+    window.scrollTo(0, 0);
+  } catch (e) {
+    if (e.silencioso) return;
+    if (/parecido/.test(e.message)) forzarCliente = true;
+    err(e.message);
+  } finally { btn.disabled = false; btn.textContent = 'Guardar'; }
+}
+
+async function verDocumento(k) {
+  fotoVolver = () => mostrar('cliente');
+  mostrar('foto');
+  $('fotoTitulo').textContent = DOCS[k];
+  $('fotoInfo').textContent = fichaNombre + ' — cargando la foto…';
+  $('fotoImg').style.display = 'none'; $('fotoImg').removeAttribute('src');
+  try {
+    const r = await api({ accion:'docCliente', nombre: fichaNombre, doc: k });
+    $('fotoImg').src = `data:${r.tipo || 'image/jpeg'};base64,${r.datos}`; $('fotoImg').style.display = 'block';
+    $('fotoInfo').textContent = fichaNombre;
+  } catch (e) { if (!e.silencioso) $('fotoInfo').textContent = e.message; }
+}
+
+async function fichaPdf() {
+  const b = $('fichaPdfBtn'); b.disabled = true; b.textContent = 'Generando PDF…';
+  try {
+    const r = await api({ accion:'pdfCliente', nombre: fichaNombre });
+    const bytes = Uint8Array.from(atob(r.datos), ch => ch.charCodeAt(0));
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+    const a = document.createElement('a'); a.href = url; a.download = r.nombre || 'ficha.pdf'; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+    $('fichaOk').style.display = 'block'; $('fichaOk').textContent = 'PDF generado. También queda guardado en Drive, en la carpeta "Clientes - fichas PDF".';
+  } catch (e) { if (!e.silencioso) { $('clienteError').style.display = 'block'; $('clienteError').textContent = e.message; } }
+  finally { b.disabled = false; b.textContent = 'Ficha en PDF'; }
+}
+
+// ---------- utilidades comunes ----------
+function euros(n) { return (Math.round((Number(n) || 0) * 100) / 100).toFixed(2).replace('.', ',') + ' €'; }
+function avisar(t, ms) { const a = $('aviso'); a.textContent = t; a.style.display = 'block'; clearTimeout(avisar.t); avisar.t = setTimeout(() => { a.style.display = 'none'; }, ms || 3500); }
+function hoja(texto, botones) {
+  $('hojaTexto').innerHTML = texto;
+  $('hojaBotones').innerHTML = '';
+  botones.concat([{ t: 'Cancelar' }]).forEach(b => { const el = document.createElement('button'); el.className = 'boton' + (b.principal ? ' principal' : ''); el.textContent = b.t; el.onclick = () => { $('hoja').classList.remove('activa'); if (b.f) b.f(); }; $('hojaBotones').appendChild(el); });
+  $('hoja').classList.add('activa');
+}
+$('hoja').addEventListener('click', e => { if (e.target.id === 'hoja') $('hoja').classList.remove('activa'); });
+function base64ABlob(b64, tipo) { const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0)); return new Blob([bytes], { type: tipo }); }
+function abrirEnlace(url) { const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+function mesAnterior() { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; }
+
+// ---------- facturas: listado ----------
+let pestanaFacturas = 'MANUAL', listaFacturas = [], pdfCache = {};
+async function abrirFacturas(ok) {
+  mostrar('facturas');
+  $('facturasError').style.display = 'none';
+  $('facturasOk').style.display = ok ? 'block' : 'none'; if (ok) $('facturasOk').textContent = ok;
+  verPestanaFacturas(pestanaFacturas);
+}
+function verPestanaFacturas(t) {
+  pestanaFacturas = t;
+  $('segManual').classList.toggle('activo', t === 'MANUAL'); $('segMensual').classList.toggle('activo', t === 'MENSUAL');
+  $('panelManual').style.display = t === 'MANUAL' ? '' : 'none'; $('panelMensual').style.display = t === 'MENSUAL' ? '' : 'none';
+  if (t === 'MANUAL') cargarFacturas(); else abrirMensuales();
+}
+async function cargarFacturas() {
+  $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = '';
+  try {
+    const r = await api({ accion:'facturas', tipo:'MANUAL' });
+    listaFacturas = r.facturas || [];
+    $('facturasInfo').textContent = listaFacturas.length ? `${r.total} facturas manuales.` : 'Todavía no hay facturas. Pulsa "Nueva factura".';
+    pintarFacturas();
+  } catch (e) { if (!e.silencioso) $('facturasInfo').textContent = e.message; }
+}
+$('facturasBuscar').addEventListener('input', pintarFacturas);
+const ICO = {
+  ver:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  editar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+  carpeta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  correo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+  pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  borrar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg>',
+};
+function htmlFactura(f) {
+  return `<div class="fac" id="fac-${esc(f.id)}"><div class="fac-cab"><div><div class="fac-num">N.º ${esc(f.numero)}</div><div class="fac-det">${esc(f.fecha || '')} · ${esc(f.cliente)}</div></div><div class="fac-tot">${euros(f.total)}</div></div>
+    <div class="fac-acc">
+      <button onclick="accionFactura('ver','${esc(f.id)}')">${ICO.ver}Ver</button>
+      <button onclick="editarFactura('${esc(f.id)}')">${ICO.editar}Editar</button>
+      <button onclick="accionFactura('carpeta','${esc(f.id)}')">${ICO.carpeta}Carpeta</button>
+      <button onclick="accionFactura('correo','${esc(f.id)}')">${ICO.correo}Correo</button>
+      <button onclick="accionFactura('pdf','${esc(f.id)}')">${ICO.pdf}PDF</button>
+      <button class="rojo" data-borrar="${esc(f.id)}" onclick="borrarFacturaApp('${esc(f.id)}', this)">${ICO.borrar}Borrar</button>
+    </div></div>`;
+}
+function pintarFacturas() {
+  const q = quitarAcentosJs($('facturasBuscar').value);
+  $('facturasLista').innerHTML = listaFacturas.filter(f => !q || quitarAcentosJs(f.numero + ' ' + f.cliente).includes(q)).map(htmlFactura).join('');
+}
+function buscarFacturaLocal(id) { return listaFacturas.concat(mensualesHechas).find(f => f.id === id) || {}; }
+async function obtenerPdf(id) {
+  if (pdfCache[id]) return pdfCache[id];
+  const r = await api({ accion:'pdfFactura', id });
+  const blob = base64ABlob(r.datos, 'application/pdf');
+  pdfCache[id] = { blob, nombre: r.nombre, correo: r.correo, numero: r.numero, cliente: r.cliente, carpeta: r.carpeta,
+    archivo: (typeof File === 'function') ? new File([blob], r.nombre, { type: 'application/pdf' }) : null };
+  return pdfCache[id];
+}
+async function accionFactura(tipo, id) {
+  const f = buscarFacturaLocal(id);
+  if (tipo === 'carpeta') { if (f.carpeta) abrirEnlace(f.carpeta); else avisar('Esta factura todavía no tiene carpeta.'); return; }
+  avisar('Preparando la factura…', 20000);
+  try {
+    const p = await obtenerPdf(id);
+    $('aviso').style.display = 'none';
+    if (tipo === 'ver') { abrirEnlace(URL.createObjectURL(p.blob)); return; }
+    if (tipo === 'pdf') { const a = document.createElement('a'); a.href = URL.createObjectURL(p.blob); a.download = p.nombre; document.body.appendChild(a); a.click(); a.remove(); return; }
+    if (tipo === 'correo') {
+      const puedeCompartir = p.archivo && navigator.canShare && navigator.canShare({ files: [p.archivo] });
+      const texto = `<h2 style="margin-bottom:6px">Enviar factura ${esc(p.numero)}</h2><p class="info" style="margin:0">` +
+        (puedeCompartir ? `Se abrirá el menú de compartir: elige tu app de correo y la factura irá adjunta.` : `Tu navegador no puede adjuntar archivos: se descargará el PDF y se abrirá un correo para que lo adjuntes.`) +
+        (p.correo ? `<br><br>Correo del cliente: <b>${esc(p.correo)}</b> (se copia para que lo pegues en "Para").` : '<br><br>Este cliente no tiene correo en su ficha.') + '</p>';
+      hoja(texto, [{ t: 'Abrir correo', principal: true, f: () => enviarFactura(p, puedeCompartir) }]);
+    }
+  } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+async function enviarFactura(p, puedeCompartir) {
+  if (p.correo && navigator.clipboard) { try { await navigator.clipboard.writeText(p.correo); } catch (e) {} }
+  const asunto = `Factura ${p.numero} · Airía Privé`, cuerpo = `Hola,\n\nTe adjunto la factura ${p.numero}.\n\nUn saludo,\nAiría Privé`;
+  if (puedeCompartir) {
+    try { await navigator.share({ files: [p.archivo], title: asunto, text: cuerpo }); if (p.correo) avisar('Correo del cliente copiado: ' + p.correo, 5000); }
+    catch (e) { if (e.name !== 'AbortError') avisar('No se ha podido compartir: ' + e.message, 5000); }
+    return;
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(p.blob); a.download = p.nombre; document.body.appendChild(a); a.click(); a.remove();
+  location.href = `mailto:${encodeURIComponent(p.correo || '')}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+}
+async function borrarFacturaApp(id, boton) {
+  if (!boton.classList.contains('listo')) { boton.classList.add('listo'); boton.lastChild.textContent = '¿Seguro?'; setTimeout(() => { if (boton.isConnected) { boton.classList.remove('listo'); boton.lastChild.textContent = 'Borrar'; } }, 4000); return; }
+  try { await api({ accion:'borrarFactura', id }); delete pdfCache[id]; avisar('Factura movida a la papelera (30 días para recuperarla).'); verPestanaFacturas(pestanaFacturas); }
+  catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+
+// ---------- facturas: formulario ----------
+let facEditando = null, facNumeroTocado = false, facClientes = [], facVolverA = null;
+function lineaHTML(l, i) {
+  return `<div class="linea" data-linea="${i}"><textarea rows="1" placeholder="Descripción" data-c="descripcion">${esc(l.descripcion || '')}</textarea>
+    <div class="linea-nums"><div><label>Cant.</label><input data-c="cantidad" inputmode="decimal" value="${esc(aTextoNumero(l.cantidad ?? 1))}"></div>
+    <div><label>Precio unit. (€)</label><input data-c="precio" inputmode="decimal" value="${esc(l.precio === undefined || l.precio === null || l.precio === '' ? '' : aTextoNumero(l.precio))}" placeholder="0,00"></div>
+    <div class="linea-tot" data-c="total">0,00 €</div><button type="button" class="linea-quitar" onclick="quitarLinea(${i})" aria-label="Quitar línea">−</button></div></div>`;
+}
+function leerLineas() {
+  return [...document.querySelectorAll('#facLineas .linea')].map(el => ({
+    descripcion: el.querySelector('[data-c=descripcion]').value.trim(),
+    cantidad: numero(el.querySelector('[data-c=cantidad]').value) ?? 1,
+    precio: numero(el.querySelector('[data-c=precio]').value) ?? 0 }));
+}
+function pintarLineas(lineas) {
+  $('facLineas').innerHTML = (lineas.length ? lineas : [{ cantidad: 1 }]).map(lineaHTML).join('');
+  $('facLineas').querySelectorAll('input,textarea').forEach(el => el.addEventListener('input', recalcularFactura));
+  recalcularFactura();
+}
+function anadirLinea() { const l = leerLineas(); l.push({ cantidad: 1 }); pintarLineas(l); }
+function quitarLinea(i) { const l = leerLineas(); l.splice(i, 1); pintarLineas(l); }
+function ivaElegido() { const v = numero($('facIva').value); return v === null ? 21 : v; }
+function marcarIva(v) { document.querySelectorAll('#facIvaChips button').forEach(b => b.classList.toggle('activo', Number(b.dataset.iva) === Number(v))); $('facIva').value = aTextoNumero(v); recalcularFactura(); }
+document.querySelectorAll('#facIvaChips button').forEach(b => b.addEventListener('click', () => marcarIva(Number(b.dataset.iva))));
+$('facIva').addEventListener('input', () => { document.querySelectorAll('#facIvaChips button').forEach(b => b.classList.toggle('activo', Number(b.dataset.iva) === ivaElegido())); recalcularFactura(); });
+$('facIrpf').addEventListener('input', recalcularFactura);
+function r2(n) { return Math.round((n + 1e-9) * 100) / 100; }
+function recalcularFactura() {
+  const lineas = leerLineas();
+  document.querySelectorAll('#facLineas .linea').forEach((el, i) => { el.querySelector('[data-c=total]').textContent = euros(r2(lineas[i].cantidad * lineas[i].precio)); });
+  const base = r2(lineas.reduce((s, l) => s + r2(l.cantidad * l.precio), 0)), iva = ivaElegido(), irpf = numero($('facIrpf').value) || 0;
+  const ivaImp = r2(base * iva / 100), irpfImp = r2(base * irpf / 100);
+  $('facBase').textContent = euros(base); $('facIvaTxt').textContent = `IVA (${aTextoNumero(iva)}%)`; $('facIvaImp').textContent = euros(ivaImp);
+  $('facIrpfFila').style.display = irpf ? 'flex' : 'none'; $('facIrpfTxt').textContent = `IRPF (−${aTextoNumero(irpf)}%)`; $('facIrpfImp').textContent = '−' + euros(irpfImp);
+  $('facTotal').textContent = euros(base + ivaImp - irpfImp);
+}
+function pintarClientesFactura(sel) {
+  $('facCliente').innerHTML = '<option value="">Seleccionar cliente…</option>' + facClientes.map(c => `<option${c.nombre === sel ? ' selected' : ''}>${esc(c.nombre)}</option>`).join('') +
+    (sel && !facClientes.some(c => c.nombre === sel) ? `<option selected>${esc(sel)}</option>` : '');
+  notaClienteFactura();
+}
+function notaClienteFactura() {
+  const c = facClientes.find(x => x.nombre === $('facCliente').value);
+  $('facClienteNota').textContent = c && c.socio === 'Si' ? 'Socio' + (c.cuota ? ` · cuota ${euros(c.cuota)}` : '') : '';
+}
+$('facCliente').addEventListener('change', notaClienteFactura);
+async function abrirNuevaFactura(volverA) {
+  facEditando = null; facNumeroTocado = false; facVolverA = volverA || null;
+  $('facTitulo').textContent = 'Nueva factura'; $('facError').style.display = 'none';
+  $('facFecha').value = hoyInput(); $('facNumero').value = ''; $('facIrpf').value = ''; $('facVence').value = ''; $('facPago').value = ''; $('facNotas').value = '';
+  pintarLineas([]); marcarIva(21); facClientes = []; pintarClientesFactura('');
+  mostrar('factura');
+  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); facClientes = r.clientes || []; pintarClientesFactura($('facCliente').value);
+    if (!facNumeroTocado) $('facNumero').value = r.numero; marcarIva(r.ivaPct); }
+  catch (e) { if (!e.silencioso) { $('facError').style.display = 'block'; $('facError').textContent = e.message; } }
+}
+$('facNumero').addEventListener('input', () => { facNumeroTocado = true; });
+$('facFecha').addEventListener('change', async () => {
+  if (facEditando || facNumeroTocado) return;
+  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); if (!facNumeroTocado) $('facNumero').value = r.numero; } catch (e) {}
+});
+async function editarFactura(id, volverA) {
+  facVolverA = volverA || null;
+  avisar('Abriendo la factura…', 15000);
+  try {
+    const [f, n] = await Promise.all([api({ accion:'factura', id }), api({ accion:'nuevaFactura' })]);
+    $('aviso').style.display = 'none';
+    facEditando = f; facNumeroTocado = true; facClientes = n.clientes || [];
+    $('facTitulo').textContent = 'Factura ' + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
+    $('facError').style.display = 'none';
+    $('facNumero').value = f.numero; $('facFecha').value = fechaAInput(f.fecha); pintarClientesFactura(f.cliente);
+    $('facIrpf').value = f.irpfPct ? aTextoNumero(f.irpfPct) : ''; $('facVence').value = fechaAInput(f.vencimiento || ''); $('facPago').value = f.formaPago || ''; $('facNotas').value = f.notas || '';
+    pintarLineas(f.lineas || []); marcarIva(f.ivaPct);
+    mostrar('factura');
+  } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+function salirFactura() { if (facVolverA) facVolverA(); else abrirFacturas(); }
+async function guardarFactura() {
+  const err = t => { $('facError').style.display = 'block'; $('facError').textContent = t; window.scrollTo(0, 0); };
+  const cliente = $('facCliente').value, fecha = inputAFecha($('facFecha').value), lineas = leerLineas().filter(l => l.descripcion || l.precio);
+  if (!cliente) return err('Elige el cliente.');
+  if (!fecha) return err('Elige la fecha.');
+  if (!lineas.length) return err('Añade al menos un concepto con su precio.');
+  if (lineas.some(l => !l.descripcion)) return err('Hay una línea sin descripción.');
+  const f = { id: facEditando ? facEditando.id : undefined, tipo: facEditando ? facEditando.tipo : 'MANUAL', mes: facEditando ? facEditando.mes : undefined,
+    numero: $('facNumero').value.trim(), fecha, cliente, lineas, ivaPct: ivaElegido(), irpfPct: numero($('facIrpf').value) || 0,
+    formaPago: $('facPago').value.trim(), vencimiento: inputAFecha($('facVence').value) || '', notas: $('facNotas').value.trim() };
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando y creando PDF…';
+  try {
+    const r = await api({ accion:'guardarFactura', factura: f });
+    delete pdfCache[r.id];
+    const msg = `Factura ${r.numero} guardada (${euros(r.total)}). El PDF está en su carpeta de Drive.`;
+    if (facVolverA) { facVolverA(); avisar(msg, 4000); }
+    else { pestanaFacturas = r.tipo === 'MENSUAL' ? 'MENSUAL' : 'MANUAL'; abrirFacturas(msg); }
+  } catch (e) { if (!e.silencioso) err(e.message); }
+  finally { btn.disabled = false; if ($('factura').classList.contains('activa')) btn.textContent = 'Guardar'; }
+}
+
+// ---------- facturas mensuales de socios ----------
+let mensualesHechas = [], mensualesInfo = null;
+function abrirMensuales() {
+  if (!$('mMes').value) $('mMes').value = mesAnterior();
+  cargarMensuales();
+}
+$('mMes').addEventListener('change', () => { $('mFecha').value = ''; cargarMensuales(); });
+async function cargarMensuales() {
+  const mes = $('mMes').value; if (!mes) return;
+  $('mInfo').textContent = 'Cargando socios…'; $('mSocios').innerHTML = ''; $('mHechas').innerHTML = ''; $('mHechasTit').style.display = 'none';
+  try {
+    const r = await api({ accion:'mensuales', mes });
+    mensualesInfo = r; mensualesHechas = r.facturas || [];
+    if (!$('mFecha').value) $('mFecha').value = fechaAInput(r.fechaSugerida);
+    const pendientes = r.socios.filter(s => !s.facturada);
+    $('mInfo').textContent = `${r.socios.length} socios · ${pendientes.length} sin factura de ${r.nombreMes}. Las facturas se guardan en la carpeta de ${r.nombreMes.split(' ')[0]}.`;
+    $('mSocios').innerHTML = r.socios.map((s, i) => s.facturada
+      ? `<div class="socio hecho"><input type="checkbox" disabled checked><div class="n"><b>${esc(s.nombre)}</b><small>Ya tiene la ${esc(s.facturada.numero)} · ${euros(s.facturada.total)}</small></div></div>`
+      : `<label class="socio"><input type="checkbox" data-socio="${i}" ${s.cuota > 0 ? 'checked' : 'disabled'}><div class="n"><b>${esc(s.nombre)}</b><small>${s.cuota > 0 ? 'Cuota ' + euros(s.cuota) + ' + IVA' : 'Sin cuota en su ficha'}</small></div></label>`).join('') || '<p class="info">No hay socios. Marca a un cliente como Socio en su ficha.</p>';
+    document.querySelectorAll('[data-socio]').forEach(c => c.addEventListener('change', textoGenerar));
+    textoGenerar();
+    if (mensualesHechas.length) { $('mHechasTit').style.display = ''; $('mHechas').innerHTML = mensualesHechas.map(htmlFactura).join(''); }
+  } catch (e) { if (!e.silencioso) $('mInfo').textContent = e.message; }
+}
+function textoGenerar() {
+  const n = document.querySelectorAll('[data-socio]:checked').length;
+  $('mGenerar').textContent = n ? `Generar ${n} factura${n > 1 ? 's' : ''}` : 'No hay facturas por generar';
+  $('mGenerar').disabled = !n;
+}
+async function generarMensuales() {
+  const clientes = [...document.querySelectorAll('[data-socio]:checked')].map(c => mensualesInfo.socios[+c.dataset.socio].nombre);
+  const fecha = inputAFecha($('mFecha').value);
+  if (!clientes.length) return;
+  if (!fecha) { avisar('Elige la fecha de las facturas.'); return; }
+  const b = $('mGenerar'); b.disabled = true; b.textContent = `Generando ${clientes.length} facturas…`;
+  try {
+    const r = await api({ accion:'generarMensuales', mes: $('mMes').value, fecha, clientes });
+    $('facturasOk').style.display = 'block';
+    $('facturasOk').textContent = `${r.hechas.length} facturas generadas` + (r.saltadas.length ? `. No generadas: ${r.saltadas.map(s => s.nombre + ' (' + s.motivo + ')').join(', ')}` : '.');
+    window.scrollTo(0, 0);
+    cargarMensuales();
+  } catch (e) { if (!e.silencioso) { $('facturasError').style.display = 'block'; $('facturasError').textContent = e.message; } }
+  finally { b.disabled = false; }
+}
+
+// ---------- ajustes ----------
+const CAMPOS_AJUSTES = [
+  ['Datos fiscales', [['empresaNombre', 'Nombre'], ['empresaCif', 'CIF / NIF'], ['empresaCalle', 'Calle'], ['empresaCp', 'CP', 1], ['empresaCiudad', 'Ciudad', 1], ['empresaProvincia', 'Provincia', 1], ['empresaPais', 'País', 1]]],
+  ['Datos de contacto', [['empresaTelefono', 'Teléfono'], ['empresaCorreo', 'Correo']]],
+  ['Datos bancarios', [['banco', 'Banco'], ['iban', 'IBAN'], ['swift', 'SWIFT / BIC']]],
+  ['Facturas', [['ivaDefecto', 'IVA por defecto (%)', 1], ['conceptoMensual', 'Concepto de las facturas mensuales ({mes} y {año} se rellenan solos)'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
+];
+async function abrirAjustes() {
+  mostrar('ajustes'); $('ajOk').style.display = 'none'; $('ajError').style.display = 'none';
+  $('ajCampos').innerHTML = '<p class="info">Cargando…</p>';
+  try {
+    const a = await api({ accion:'ajustes' });
+    $('ajCampos').innerHTML = CAMPOS_AJUSTES.map(([tit, campos]) => `<div class="sec-tit">${tit}</div><div class="tarjeta"><div class="rejilla">` +
+      campos.map(([k, t, corto]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label><input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}"></div>`).join('') + '</div></div>').join('');
+  } catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
+}
+async function guardarAjustes() {
+  const datos = {}; CAMPOS_AJUSTES.forEach(([, c]) => c.forEach(([k]) => { const el = $('aj-' + k); if (el) datos[k] = el.value.trim(); }));
+  const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
+  try { await api({ accion:'guardarAjustes', ajustes: datos }); $('ajOk').style.display = 'block'; $('ajOk').textContent = 'Ajustes guardados. Las facturas nuevas o editadas saldrán con estos datos.'; window.scrollTo(0, 0); }
+  catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
+  finally { btn.disabled = false; btn.textContent = 'Guardar ajustes'; }
+}
+
+// ---------- papelera ----------
+let elementosPapelera = [];
+async function abrirPapelera() {
+  mostrar('papelera'); $('papError').style.display = 'none'; $('papLista').innerHTML = '<p class="info">Cargando…</p>';
+  try {
+    const r = await api({ accion:'papelera' }); elementosPapelera = r.elementos || [];
+    $('papLista').innerHTML = elementosPapelera.length ? elementosPapelera.map((x, i) => `<div class="pap"><div><b>${esc(x.titulo)}</b><small>${esc(x.detalle)} · quedan ${x.dias} días</small></div>
+      <div class="botones"><button class="mini" onclick="restaurarPapelera(${i})">Recuperar</button><button class="mini peligro" onclick="borrarPapelera(${i}, this)">Borrar ya</button></div></div>`).join('')
+      : '<p class="info">La papelera está vacía.</p>';
+  } catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+}
+async function restaurarPapelera(i) {
+  const x = elementosPapelera[i];
+  try { await api({ accion:'restaurar', tipo: x.tipo, id: x.id }); avisar(x.titulo + ' recuperado.'); abrirPapelera(); }
+  catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+}
+async function borrarPapelera(i, b) {
+  if (!b.dataset.seguro) { b.dataset.seguro = '1'; b.textContent = '¿Seguro?'; return; }
+  const x = elementosPapelera[i];
+  try { await api({ accion:'borrarDefinitivo', tipo: x.tipo, id: x.id }); abrirPapelera(); }
+  catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+}
+function vaciarPapelera() {
+  if (!elementosPapelera.length) { avisar('La papelera ya está vacía.'); return; }
+  hoja(`<h2>¿Vaciar la papelera?</h2><p class="info" style="margin:6px 0 0">Se borrarán para siempre ${elementosPapelera.length} elementos. No se podrán recuperar.</p>`,
+    [{ t: 'Vaciar papelera', principal: true, f: async () => { try { await api({ accion:'vaciarPapelera' }); abrirPapelera(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
+}
+
+// ---------- borrar cliente (a la papelera) ----------
+function borrarClienteFicha() {
+  hoja(`<h2>¿Borrar a ${esc(fichaNombre)}?</h2><p class="info" style="margin:6px 0 0">Irá a la papelera 30 días; podrás recuperarlo desde allí. Sus horas y sus facturas no se borran.</p>`,
+    [{ t: 'Borrar cliente', principal: true, f: async () => { try { await api({ accion:'borrarCliente', nombre: fichaNombre }); CLIENTES = CLIENTES.filter(c => c !== fichaNombre); avisar('Cliente movido a la papelera.'); abrirClientes(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
+}
+
+// ---------- clientes: lista ----------
+let listaClientesFichas = [];
+async function abrirClientes() {
+  mostrar('clientes');
+  $('clientesInfo').textContent = 'Cargando…'; $('clientesLista').innerHTML = '';
+  try {
+    const r = await api({ accion:'clientes' });
+    listaClientesFichas = r.clientes || [];
+    const nuevos = listaClientesFichas.filter(c => c.estado === 'NUEVO').length;
+    $('clientesInfo').textContent = `${listaClientesFichas.length} clientes` + (nuevos ? ` · ${nuevos} NUEVO${nuevos > 1 ? 'S' : ''} pendiente${nuevos > 1 ? 's' : ''} de pasar a facturación` : '') + '. Pulsa uno para ver o modificar su ficha.';
+    $('clientesArchivo').innerHTML = r.urlArchivo ? `<a href="${esc(r.urlArchivo)}" target="_blank" rel="noopener">Abrir el archivo de clientes</a>` : '';
+    pintarClientes();
+  } catch (e) { if (!e.silencioso) $('clientesInfo').textContent = e.message; }
+}
+function pintarClientes() {
+  const q = quitarAcentosJs($('clientesBuscar').value);
+  $('clientesLista').innerHTML = listaClientesFichas.filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
+    const docs = Object.values(c.docs || {}).filter(Boolean).length;
+    const chapa = c.estado === 'NUEVO' ? '<span class="chapa nuevo">NUEVO</span>' : (c.socio === 'Si' ? '<span class="chapa socio">Socio</span>' : '');
+    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · ${docs}/4 documentos</small></span>${chapa}</button>`;
+  }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
+  document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
+}
+$('clientesBuscar').addEventListener('input', pintarClientes);
+
+function abrirEdicion(i) { const e = $(`ed${i}`); e.style.display = e.style.display === 'none' ? 'block' : 'none'; }
+async function guardarEdicion(i) {
+  const m = detalleMovs[i], min = leerMinutos(`ed${i}-h`, `ed${i}-m`);
+  if (!(min > 0)) { $('detalleError').style.display = 'block'; $('detalleError').textContent = 'Escribe las horas o los minutos.'; window.scrollTo(0, 0); return; }
+  const cuerpo = { accion:'editarMovimiento', id: m.id, horas: Math.floor(min / 60), minutos: min % 60, comentario: $(`ed${i}-c`).value };
+  if ($(`ed${i}-f`)) cuerpo.fecha = inputAFecha($(`ed${i}-f`).value);
+  try { pintarDetalle(await api(cuerpo)); $('detalleError').style.display = 'none'; }
+  catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; window.scrollTo(0, 0); } }
+}
+async function borrarMov(i) {
+  const b = $(`ed${i}-borrar`);
+  if (!b.dataset.seguro) { b.dataset.seguro = '1'; b.textContent = '¿Seguro? Pulsa otra vez'; return; }
+  try { pintarDetalle(await api({ accion:'borrarMovimiento', id: detalleMovs[i].id })); }
+  catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; window.scrollTo(0, 0); } }
+}
+
+function alerta(t) { const r = $('resumen'); r.className = 'resumen mal'; r.textContent = t; window.scrollTo(0, 0); }
+function fallo(msg, reintentar, desdeRevision) {
+  $('falloTexto').textContent = msg || 'Error desconocido.';
+  $('falloReintentar').onclick = () => { if (desdeRevision) { mostrar('revisar'); reintentar(); } else reintentar(); };
+  mostrar('fallo');
+}
+function volverAlInicio() { imagen = null; partes = []; mostrar('inicio'); }
+
+// ---------- modo demostración (sin servidor) ----------
+async function demo(c) {
+  await new Promise(r => setTimeout(r, c.accion === 'config' ? 0 : 1200));
+  if (c.accion === 'config') return { ok:true, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'leer') return { ok:true, partes:[
+    { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
+    { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
+  ]};
+  if (!window.__demoMovs) window.__demoMovs = { 'Mario Ejemplo Ruiz': [{ id:'a', tipo:'COMPRA', signo:1, minutos:600, fecha:'05/11/2026', numero:'', matricula:'', hi:null, hf:null, comentario:'Bono 10 h' }, { id:'b', tipo:'VUELO', signo:-1, minutos:60, fecha:'25/09/2026', numero:'50', matricula:'EC-HF7', hi:476.8, hf:477.8, comentario:'', foto:'demo' }] };
+  const D = window.__demoMovs;
+  const res = n => { const ms = D[n] || []; const s = ms.reduce((t, m) => t + m.signo * m.minutos, 0); const c = ms.filter(m => m.tipo === 'COMPRA');
+    return { ok:true, alumno:n, tieneHoras: ms.length > 0, saldo:s, compradas:c.reduce((t, m) => t + m.minutos, 0), voladas:ms.filter(m => m.tipo === 'VUELO').reduce((t, m) => t + m.minutos, 0), ultimaCompra:c.length ? c[0].minutos : null, fechaPago:c.length ? c[0].fecha : null, movimientos: ms }; };
+  if (c.accion === 'guardar') return { ok:true, filas:c.partes.map((p, i) => ({ fila:2054 + i, numero:p.numero_parte, revisar:0 })),
+    descuentos: c.partes.map(p => Object.assign(res('Mario Ejemplo Ruiz'), { numero: p.numero_parte, fecha: p.fecha, matricula: p.matricula, horometro_inicial: numero(p.horometro_inicial), horometro_final: numero(p.horometro_final), horometro: Math.round((numero(p.horometro_final) - numero(p.horometro_inicial)) * 10) / 10, minutos: Math.round((numero(p.horometro_final) - numero(p.horometro_inicial)) * 60), yaDescontado: false })) };
+  if (c.accion === 'saldo') return res(c.alumno);
+  if (c.accion === 'alumnos') return { ok:true, alumnos: Object.keys(D).map(res).concat([Object.assign(res('x'), { alumno:'Ana Demo Gil', tieneHoras:true, saldo:45, compradas:300, voladas:255, fechaPago:'01/10/2026' })]), urlArchivo:'https://docs.google.com/' };
+  if (c.accion === 'movimientos') return res(c.alumno);
+  if (!window.__demoFact) window.__demoFact = { lista: [{ id:'d1', numero:'2026-11_03', mes:'2026-11', fecha:'13/11/2026', tipo:'MANUAL', cliente:'Empresa Ejemplo S.L', correo:'demo@example.com', lineas:[{ descripcion:'Cesión de espacio de hangar', cantidad:1, precio:500, total:500 }], base:500, ivaPct:21, iva:105, irpfPct:0, irpf:0, total:605, formaPago:'', vencimiento:'', notas:'', carpeta:'https://drive.google.com/' }],
+    ajustes: { empresaNombre:'Empresa de ejemplo S.L', empresaCif:'B00000000', empresaCalle:'Calle de Ejemplo 1', empresaCp:'28000', empresaCiudad:'Madrid', empresaProvincia:'Madrid', empresaPais:'España', empresaTelefono:'600 000 000', empresaCorreo:'correo@ejemplo.com', banco:'Banco de ejemplo', iban:'ES00 0000 0000 0000 0000 0000', swift:'XXXXESXX', ivaDefecto:'21', conceptoMensual:'Cuota mensual de socio · {mes} {año}', numeracionPrevia:'2026-11:2' }, papelera: [] };
+  const DF = window.__demoFact;
+  const sigNum = mes => { const n = DF.lista.filter(f => f.numero.startsWith(mes)).map(f => +f.numero.split('_')[1]); return mes + '_' + String(Math.max(mes === '2026-11' ? 2 : 0, ...n, 0) + 1).padStart(2, '0'); };
+  const mesDe = f => { const p = String(f || '').split('/'); return p.length === 3 ? p[2] + '-' + p[1] : '2026-11'; };
+  if (c.accion === 'ajustes') return Object.assign({ ok:true }, DF.ajustes);
+  if (c.accion === 'guardarAjustes') { Object.assign(DF.ajustes, c.ajustes); return Object.assign({ ok:true }, DF.ajustes); }
+  if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), ivaPct:21, clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
+  if (c.accion === 'facturas') { const l = DF.lista.filter(f => (!c.tipo || f.tipo === c.tipo) && (!c.mes || f.mes === c.mes)).sort((a, b) => b.numero.localeCompare(a.numero)); return { ok:true, facturas:l, total:l.length }; }
+  if (c.accion === 'factura') return Object.assign({ ok:true }, DF.lista.find(f => f.id === c.id));
+  if (c.accion === 'guardarFactura') { const f = c.factura; const base = f.lineas.reduce((s, l) => s + l.cantidad * l.precio, 0); const iva = base * f.ivaPct / 100, irpf = base * (f.irpfPct || 0) / 100;
+    let x = DF.lista.find(y => y.id === f.id); if (!x) { x = { id:'d' + Date.now(), tipo:f.tipo || 'MANUAL', mes: f.mes || mesDe(f.fecha) }; DF.lista.push(x); }
+    Object.assign(x, { numero: f.numero || sigNum(x.mes), fecha:f.fecha, cliente:f.cliente, lineas:f.lineas, base, ivaPct:f.ivaPct, iva, irpfPct:f.irpfPct, irpf, total: base + iva - irpf, formaPago:f.formaPago, vencimiento:f.vencimiento, notas:f.notas, carpeta:'https://drive.google.com/' });
+    return Object.assign({ ok:true }, x); }
+  if (c.accion === 'pdfFactura') { const f = DF.lista.find(x => x.id === c.id); return { ok:true, nombre: f.numero + '.pdf', datos: btoa('%PDF-1.4 demo'), correo: f.correo || '', numero: f.numero, cliente: f.cliente, carpeta: f.carpeta }; }
+  if (c.accion === 'borrarFactura') { const i = DF.lista.findIndex(x => x.id === c.id); DF.papelera.push({ tipo:'factura', id:c.id, titulo:'Factura ' + DF.lista[i].numero, detalle: DF.lista[i].cliente, dias:30, f: DF.lista[i] }); DF.lista.splice(i, 1); return { ok:true }; }
+  if (c.accion === 'borrarCliente') { DF.papelera.push({ tipo:'cliente', id:c.nombre, titulo:c.nombre, detalle:'Cliente', dias:30 }); return { ok:true }; }
+  if (c.accion === 'papelera') return { ok:true, elementos: DF.papelera };
+  if (c.accion === 'restaurar') { const i = DF.papelera.findIndex(x => x.id === c.id); if (DF.papelera[i].f) DF.lista.push(DF.papelera[i].f); DF.papelera.splice(i, 1); return { ok:true }; }
+  if (c.accion === 'borrarDefinitivo') { DF.papelera = DF.papelera.filter(x => x.id !== c.id); return { ok:true }; }
+  if (c.accion === 'vaciarPapelera') { DF.papelera = []; return { ok:true }; }
+  if (c.accion === 'mensuales') { const [a, m] = c.mes.split('-').map(Number); const hechas = DF.lista.filter(f => f.tipo === 'MENSUAL' && f.mes === c.mes);
+    const socios = [{ nombre:'Socio Ejemplo Uno', cuota:199 }, { nombre:'Lucía Gómez Prieto', cuota:199 }, { nombre:'Socio Ejemplo Dos', cuota:199 }, { nombre:'Socio Sin Cuota', cuota:null }]
+      .map(s => Object.assign(s, { facturada: (h => h ? { id:h.id, numero:h.numero, total:h.total } : null)(hechas.find(f => f.cliente === s.nombre)) }));
+    const d = new Date(a, m, 1); return { ok:true, mes:c.mes, nombreMes: ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m - 1] + ' ' + a, socios, fechaSugerida: `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`, facturas: hechas }; }
+  if (c.accion === 'generarMensuales') { const hechas = c.clientes.map(n => { const x = { id:'m' + Math.random(), tipo:'MENSUAL', mes:c.mes, numero: sigNum(c.mes), fecha:c.fecha, cliente:n, lineas:[{ descripcion:'Cuota mensual de socio', cantidad:1, precio:199, total:199 }], base:199, ivaPct:21, iva:41.79, total:240.79, carpeta:'https://drive.google.com/' }; DF.lista.push(x); return x; }); return { ok:true, hechas, saltadas:[] }; }
+  if (!window.__demoFichas) window.__demoFichas = [{ nombre:'Mario Ejemplo Ruiz', cif:'00000000T', telefono:'600 000 001', correo:'', calle:'Calle de Ejemplo 1', cp:'28000', ciudad:'Madrid', provincia:'Madrid', pais:'España', socio:'No', cuota:null, estado:'EN FACTURACIÓN', docs:{ dniDelante:true, dniDetras:false, licencia:true, medico:false } }, { nombre:'Lucía Gómez Prieto', cif:'', telefono:'600 000 002', correo:'', calle:'', cp:'', ciudad:'', provincia:'', pais:'España', socio:'Si', cuota:199, estado:'NUEVO', docs:{} }];
+  const F = window.__demoFichas;
+  if (c.accion === 'clientes') return { ok:true, clientes: F, urlArchivo:'https://docs.google.com/spreadsheets/' };
+  if (c.accion === 'cliente') return Object.assign({ ok:true }, F.find(f => f.nombre === c.nombre) || F[0]);
+  if (c.accion === 'guardarCliente') { if (!c.original && !c.forzar && /mario/i.test(c.datos.nombre)) return Promise.reject(new Error('Ya hay un cliente parecido: Mario Ejemplo Ruiz. Si es otra persona, pulsa Guardar otra vez.'));
+    let f = F.find(x => x.nombre === c.original); if (!f) { f = { estado:'NUEVO', docs:{} }; F.push(f); }
+    Object.assign(f, c.datos, { cuota: c.datos.socio === 'Si' ? numero(c.datos.cuota) : null }); if (!c.original) f.estado = 'NUEVO';
+    Object.keys(c.fotos || {}).forEach(k => { f.docs[k] = true; }); (c.borrarFotos || []).forEach(k => { f.docs[k] = false; });
+    return Object.assign({ ok:true }, f); }
+  if (c.accion === 'docCliente') { const cv = document.createElement('canvas'); cv.width = 600; cv.height = 380; const g = cv.getContext('2d'); g.fillStyle = '#eef'; g.fillRect(0, 0, 600, 380); g.fillStyle = '#333'; g.font = '28px sans-serif'; g.fillText('Documento (demostración)', 120, 190); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
+  if (c.accion === 'pdfCliente') return { ok:true, nombre:'Ficha.pdf', datos: btoa('%PDF-1.4 demo') };
+  if (c.accion === 'nuevoCliente') { if (!c.forzar && /mario/i.test(c.cliente.nombre)) return Promise.reject(new Error('Ya hay un cliente parecido: Mario Ejemplo Ruiz. Si es otra persona, pulsa Guardar otra vez.')); return { ok:true, nombre: c.cliente.nombre.replace(/\s+/g, ' ') }; }
+  if (c.accion === 'partesCliente') return Object.assign(res(c.alumno), { maximo: 40, partes: [
+    { numero:'78', fecha:'30/10/2026', matricula:'EC-HF7', horometro_inicial:520.5, horometro_final:521.4, horometro:0.9, minutos:54, nombreEnParte:'MARIO EJEMPLO', funcion:'PILOTO', foto:'demo' },
+    { numero:'52', fecha:'10/10/2026', matricula:'EC-HF7', horometro_inicial:478.4, horometro_final:479.9, horometro:1.5, minutos:90, nombreEnParte:'MARIO EJEMPLO', funcion:'PILOTO', foto:'' } ] });
+  if (c.accion === 'foto') { const cv = document.createElement('canvas'); cv.width = 600; cv.height = 420; const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 600, 420); g.fillStyle = '#333'; g.font = '28px sans-serif'; g.fillText('Foto del parte (demostración)', 90, 210); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
+  if (c.accion === 'editarMovimiento') { Object.values(D).forEach(ms => ms.forEach(m => { if (m.id === c.id) m.minutos = c.horas * 60 + c.minutos; })); return res(Object.keys(D).find(k => D[k].some(m => m.id === c.id))); }
+  if (c.accion === 'borrarMovimiento') { const k = Object.keys(D).find(k => D[k].some(m => m.id === c.id)); D[k] = D[k].filter(m => m.id !== c.id); return res(k); }
+  if (c.accion === 'comprar') { const r0 = res(c.alumno); (D[c.alumno] = D[c.alumno] || []).unshift({ id:'n' + Date.now(), tipo:'COMPRA', signo:1, minutos:c.horas * 60 + c.minutos, fecha:c.fechaPago, numero:'', matricula:'', hi:null, hf:null, comentario:'' }); return Object.assign(res(c.alumno), { antes: r0.saldo, minutos: c.horas * 60 + c.minutos }); }
+  if (c.accion === 'descontar') return { ok:true, hechos: c.items.map(it => { const r0 = res(it.alumno); const m = it.horas * 60 + it.minutos; return { alumno: it.alumno, minutos: m, antes: r0.saldo, saldo: r0.saldo - m }; }) };
+}
+</script>
+</body>
+</html>
