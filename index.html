@@ -276,6 +276,66 @@
   .barra { background:rgba(246,242,234,.96); border-top-color:var(--linea); }
   .aviso { background:#0a0a0a; color:var(--marfil); border:1px solid rgba(184,155,106,.4); }
   @media (min-width: 900px) { .pantalla { max-width:720px; } .tiles { grid-template-columns:repeat(4, 1fr); } }
+  /* ================= v3 ================= */
+  /* barra de pestañas flotante */
+  .pestanas { left:50%; right:auto; transform:translateX(-50%); bottom:calc(env(safe-area-inset-bottom) + 10px); width:min(calc(100% - 24px), 460px);
+    border-radius:26px; padding:7px; gap:2px; background:rgba(16,16,17,.78); border:1px solid rgba(237,230,218,.12);
+    box-shadow:0 10px 30px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.06); -webkit-backdrop-filter:saturate(1.6) blur(18px); backdrop-filter:saturate(1.6) blur(18px); }
+  .pestanas button { flex:1 1 0; max-width:none; flex-direction:row; justify-content:center; gap:7px; height:48px; padding:0 8px; border-radius:20px; color:rgba(237,230,218,.62);
+    font-size:13.5px; font-weight:600; letter-spacing:0; transition:flex-grow .28s ease, background .25s ease, color .2s ease; overflow:hidden; white-space:nowrap; }
+  .pestanas button span { display:none; }
+  .pestanas button.activo { flex-grow:2.3; background:var(--champan); color:#0a0a0a; }
+  .pestanas button.activo span { display:inline; }
+  .pestanas button.activo::before { display:none; }
+  .pestanas button svg { width:23px; height:23px; flex:none; }
+  .pestanas button:active { transform:scale(.96); }
+  body.con-pestanas .pantalla { padding-bottom:calc(env(safe-area-inset-bottom) + 100px); }
+  /* número de factura bien visible */
+  .num-grande { font-family:var(--serif); font-size:22px; color:var(--champan-osc); margin:-8px 0 14px; } .num-grande b { color:#0a0a0a; font-size:28px; font-weight:700; }
+  .num-grande.cargando { font-family:var(--sans); font-size:15px; display:inline-block; }
+  /* inicio: tiempo */
+  .meteo { background:linear-gradient(160deg, #141413 0%, #0a0a0a 70%); color:var(--marfil); border:1px solid rgba(184,155,106,.3); border-radius:20px; padding:16px; }
+  .m-cab { display:flex; align-items:center; gap:12px; }
+  .m-ico { font-size:40px; line-height:1; } .m-temp { font-family:var(--serif); font-size:44px; font-weight:600; line-height:.9; color:#fff; } .m-cielo { color:rgba(237,230,218,.7); font-size:14px; }
+  .m-viento { margin-left:auto; text-align:right; } .m-viento svg { width:30px; height:30px; color:var(--champan); display:block; margin:0 0 2px auto; }
+  .m-viento b { display:block; font-size:16px; color:#fff; } .m-viento small { color:rgba(237,230,218,.6); font-size:12px; }
+  .m-datos { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:14px 0 12px; }
+  .m-datos div { background:rgba(237,230,218,.06); border:1px solid rgba(237,230,218,.08); border-radius:12px; padding:9px 11px; }
+  .m-datos span { display:block; font-size:10.5px; letter-spacing:1.6px; text-transform:uppercase; color:var(--champan); }
+  .m-datos b { display:block; font-size:19px; color:#fff; margin-top:1px; } .m-datos small { color:rgba(237,230,218,.6); font-size:11.5px; }
+  .m-horas { display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; -webkit-overflow-scrolling:touch; }
+  .mh { flex:1 0 64px; text-align:center; background:rgba(237,230,218,.05); border-radius:12px; padding:7px 4px; font-size:12px; color:rgba(237,230,218,.75); }
+  .mh span { display:block; } .mh i { display:block; font-style:normal; font-size:20px; margin:2px 0; } .mh b { display:block; color:#fff; font-size:15px; }
+  .mh small { display:block; font-size:10.5px; } .mh em { display:block; font-style:normal; color:#8ec5ff; font-size:10.5px; }
+  .m-pie { margin-top:10px; font-size:11.5px; color:rgba(237,230,218,.5); }
+  .m-recargar { background:none; border:0; color:var(--champan); font:inherit; font-size:11.5px; padding:0; text-decoration:underline; cursor:pointer; }
+  /* cámaras y accesos a Drive */
+  .enlace-fila.oscura { background:#0a0a0a; color:var(--marfil); border-color:rgba(184,155,106,.35); border-radius:18px; padding:14px; justify-content:flex-start; gap:12px; }
+  .enlace-fila.oscura small { color:rgba(237,230,218,.6); } .enlace-fila.oscura b { font-family:var(--serif); font-size:21px; font-weight:600; }
+  .ef-ico { flex:none; width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:rgba(184,155,106,.14); color:var(--champan); border:1px solid rgba(184,155,106,.3); }
+  .ef-ico svg { width:23px; height:23px; } .enlace-fila.oscura .ag-fl { margin-left:auto; color:rgba(237,230,218,.5); } .enlace-fila.oscura .ag-fl svg { width:20px; height:20px; display:block; }
+  .atajos { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:10px; }
+  .atajo { display:flex; flex-direction:column; align-items:flex-start; gap:6px; background:#fff; border:1px solid var(--linea); border-radius:16px; padding:12px; font:inherit; font-size:13px; font-weight:600; color:var(--tinta); text-align:left; cursor:pointer; min-height:82px; }
+  .atajo svg { width:22px; height:22px; color:var(--champan-osc); } .atajo:active { background:var(--oro-claro); } .atajo:disabled { opacity:.45; }
+  .espacio { margin-bottom:0; }
+  /* buscador de partes */
+  .buscador { display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--linea); border-radius:14px; padding:0 12px; margin:0 0 8px; }
+  .buscador svg { width:20px; height:20px; color:var(--champan-osc); flex:none; }
+  .buscador input { flex:1; border:0; font:inherit; font-size:16px; padding:13px 0; background:none; outline:none; -webkit-appearance:none; min-width:0; }
+  /* borradores */
+  .borrador { display:flex; justify-content:space-between; align-items:center; gap:10px; background:#fff; border:1px solid var(--linea); border-left:5px solid var(--champan); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+  .borrador b { display:block; } .borrador small { display:block; color:var(--suave); font-size:12.5px; }
+  .tipo-chapa.t-borrador { background:var(--oro-claro); color:var(--champan-osc); }
+  /* correo */
+  .correo-prev { border:1px solid var(--linea); border-radius:12px; padding:10px 12px; background:#faf8f3; font-size:13.5px; max-height:42vh; overflow:auto; }
+  .correo-prev > div { padding:3px 0; } .correo-prev span { display:inline-block; width:56px; color:var(--suave); }
+  .correo-prev pre { font:inherit; white-space:pre-wrap; margin:8px 0; padding-top:8px; border-top:1px solid var(--linea); }
+  .correo-prev .adj { color:var(--champan-osc); font-weight:600; }
+  .version { margin:10px 0 0; padding:10px 12px; border:1px dashed var(--linea); border-radius:12px; font-size:13px; color:var(--suave); }
+  .doc-prev img { cursor:zoom-in; }
+  .barra { left:50%; right:auto; transform:translateX(-50%); bottom:calc(env(safe-area-inset-bottom) + 10px); width:min(calc(100% - 24px), 460px); border-radius:24px; padding:8px;
+    background:rgba(246,242,234,.82); border:1px solid var(--linea); box-shadow:0 10px 30px rgba(0,0,0,.14); -webkit-backdrop-filter:saturate(1.6) blur(18px); backdrop-filter:saturate(1.6) blur(18px); }
+  .barra .boton { border-radius:18px; padding:14px 12px; } .barra.tres { padding:8px; }
 </style>
 </head>
 <body>
@@ -297,27 +357,32 @@
     <h1 class="portada-t">Gestión</h1>
     <p class="portada-s" id="saludo">Partes de vuelo, horas, clientes y facturas</p>
   </header>
-  <div id="avisoServidor" class="resumen mal" style="display:none"></div>
-
-  <div class="seccion">
-    <div class="sec-tit">Parte de vuelo</div>
-    <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
-    <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
+  <div class="seccion" id="borradoresSeccion" style="display:none">
+    <div class="sec-tit">Sin terminar</div>
+    <div id="borradoresLista"></div>
   </div>
 
   <div class="seccion">
-    <div class="sec-tit">Accesos rápidos</div>
-    <div class="tiles">
-      <button class="tile" onclick="abrirCompra()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="tile-t">Añadir horas</span><span class="tile-d">Cuando un cliente paga un bono</span></button>
-      <button class="tile" onclick="abrirDescontar()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg></span><span class="tile-t">Descontar horas</span><span class="tile-d">Con parte o sin parte</span></button>
-      <button class="tile" onclick="abrirNuevoCliente()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg></span><span class="tile-t">Añadir cliente</span><span class="tile-d">Datos y documentos</span></button>
-      <button class="tile" onclick="abrirNuevaFactura()"><span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg></span><span class="tile-t">Nueva factura</span><span class="tile-d">Cliente, conceptos e IVA</span></button>
+    <div class="sec-tit">Tiempo en LEMT · Casarrubios del Monte</div>
+    <div class="meteo" id="meteo"><p class="info" style="margin:0">Cargando el tiempo…</p></div>
+  </div>
+
+  <div class="seccion">
+    <div class="sec-tit">Cámaras</div>
+    <button class="enlace-fila oscura" id="botonCamaras" onclick="abrirCamaras()"><span class="ef-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="m15.5 10.5 6-3.5v10l-6-3.5z"/></svg></span><span class="ef-txt"><b>Ver las cámaras</b><small>Abre la app Tapo</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></button>
+  </div>
+
+  <div class="seccion">
+    <div class="sec-tit">Google Drive</div>
+    <div class="espacio" id="espacioSeccion" style="display:none"><div class="espacio-barra"><span id="espacioUso"></span></div><div class="espacio-txt" id="espacioTxt"></div></div>
+    <div class="atajos" id="atajosDrive">
+      <button class="atajo" data-carpeta="partes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Partes</span></button>
+      <button class="atajo" data-carpeta="facturas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Facturas</span></button>
+      <button class="atajo" data-carpeta="clientes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Clientes</span></button>
+      <button class="atajo" data-carpeta="raiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Airía Privé</span></button>
+      <button class="atajo" data-carpeta="hojaPartes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Hoja de partes</span></button>
+      <button class="atajo" data-carpeta="gestion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></svg><span>Horas, clientes y facturas</span></button>
     </div>
-  </div>
-
-  <div class="seccion" id="espacioSeccion" style="display:none">
-    <div class="sec-tit">Espacio en Google Drive</div>
-    <div class="espacio"><div class="espacio-barra"><span id="espacioUso"></span></div><div class="espacio-txt" id="espacioTxt"></div></div>
   </div>
 
   <p class="pie-marca">Airía Privé · Gestión</p>
@@ -329,12 +394,12 @@
 <section id="partes" class="pantalla">
   <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Partes de vuelo</h1>
-  <p class="sub" style="margin-bottom:18px">Haz una foto al parte y la app lo lee, te deja revisarlo y lo guarda en la hoja «Orden cronómetro».</p>
   <label class="accion-grande" for="camara"><span class="ag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h2l2-3h6l2 3h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><b>Hacer foto del parte</b><small>Se puede fotografiar una página con dos partes</small></span><span class="ag-fl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></label>
   <label class="accion-fina" for="galeria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-9 9"/></svg><span>Elegir parte de la galería</span></label>
-  <div class="sec-tit" style="margin-top:26px">Horas de los partes</div>
-  <button class="enlace-fila" onclick="abrirDescontar()"><span><b>Descontar horas de un parte</b><small>Elige el cliente y el parte que todavía no se le ha descontado</small></span><span class="ag-fl oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></button>
-  <p class="pie">Las fotos se guardan en Drive, en Airía Privé › Partes › año › trimestre › mes.</p>
+  <div class="sec-tit" style="margin-top:26px">Buscar un parte</div>
+  <div class="buscador"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="pBuscar" type="search" placeholder="Nº de parte, fecha, nombre o matrícula" autocomplete="off" enterkeyhint="search"></div>
+  <p class="info" id="pInfo">Los más recientes primero.</p>
+  <div id="pLista"></div>
 </section>
 
 <!-- 0. Clave (solo la primera vez) -->
@@ -399,7 +464,6 @@
   <p class="info" id="consultaInfo">Cargando…</p>
   <input id="consultaBuscar" class="buscar" type="search" placeholder="Buscar cliente" autocomplete="off">
   <div id="consultaLista"></div>
-  <p class="pie" id="consultaArchivo"></p>
 </section>
 
 <!-- 3e. Detalle de un alumno -->
@@ -423,8 +487,14 @@
   <div class="campo" style="margin-bottom:10px"><label for="vCliente">Cliente</label><input id="vCliente" type="text" list="lista-clientes" autocomplete="off" placeholder="Escribe o elige el nombre"></div>
   <div class="saldo" id="vSaldo" style="display:none"></div>
   <div id="vError" class="resumen mal" style="display:none"></div>
+  <input id="vFiltro" class="buscar" type="search" placeholder="Buscar por nº de parte, fecha o matrícula" autocomplete="off" style="display:none">
   <p class="info" id="vInfo"></p>
   <div id="vLista"></div>
+  <div id="vSubir" style="display:none;margin-top:16px">
+    <div class="sec-tit">¿No está el parte?</div>
+    <p class="info">Si todavía no lo has subido, súbelo ahora: se guarda en la hoja y después lo unes a este descuento sin descontar otra vez.</p>
+    <div class="acciones-pag"><label class="boton principal" for="camara" onclick="vincularTrasSubir = vVincular">Hacer foto del parte</label><label class="boton" for="galeria" onclick="vincularTrasSubir = vVincular">De la galería</label></div>
+  </div>
   <div id="vSinParte" style="display:none;margin-top:18px">
     <div class="sec-tit">Sin parte</div>
     <button class="boton" id="vSinParteAbrir" style="max-width:none" onclick="abrirSinParte()">Descontar sin parte</button>
@@ -456,6 +526,7 @@
       <div class="campo"><label for="nTelefono">Teléfono</label><input id="nTelefono" type="tel" autocomplete="off"></div>
       <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
       <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Si">Socio</option></select></div>
+      <div class="campo"><label for="nTrato">Saludo en los correos</label><select id="nTrato"><option value="">Automático</option><option>Estimado</option><option>Estimada</option><option>Estimados</option></select><div class="nota gris" id="nTratoAuto"></div></div>
       <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota de socio (€)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="199"></div>
     </div>
   </div>
@@ -505,7 +576,6 @@
   <p class="info" id="clientesInfo">Cargando…</p>
   <input id="clientesBuscar" class="buscar" type="search" placeholder="Buscar por nombre, DNI o teléfono" autocomplete="off">
   <div id="clientesLista"></div>
-  <p class="pie" id="clientesArchivo"></p>
 </section>
 
 
@@ -540,13 +610,14 @@
 
 <!-- Nueva / editar factura -->
 <section id="factura" class="pantalla">
-  <button class="volver" onclick="salirFactura()">‹ Facturas</button>
+  <button class="volver" onclick="BARRAS.factura[1]()">‹ Facturas</button>
   <h1 class="titulo" id="facTitulo">Nueva factura</h1>
+  <div class="num-grande" id="facNumGrande"></div>
   <div id="facError" class="resumen mal" style="display:none"></div>
   <div class="tarjeta">
     <h2 style="margin-bottom:12px">Datos de la factura</h2>
     <div class="rejilla">
-      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off"><div class="nota gris" id="facUltima"></div></div>
+      <div class="campo"><label for="facNumero">Número</label><input id="facNumero" type="text" autocomplete="off" autocapitalize="off" placeholder="Calculando…"><div class="nota gris" id="facUltima"></div></div>
       <div class="campo"><label for="facFecha">Fecha</label><input id="facFecha" type="date"></div>
       <div class="campo ancho"><label for="facCliente">Cliente</label><select id="facCliente"></select><div class="nota" id="facClienteNota"></div></div>
     </div>
@@ -643,7 +714,7 @@
 
 <script>
 const DEMO = /[?&]demo/.test(location.search);
-const VERSION_APP = 2;
+const VERSION_APP = 3;
 const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
 const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
 const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
@@ -677,11 +748,11 @@ let imagen = null, tipoImagen = 'image/jpeg', partes = [], matriculas = [];
 // ---------- utilidades ----------
 const $ = id => document.getElementById(id);
 const BARRAS = {
-  revisar: ['Cancelar', () => volverAlInicio(), 'Guardar', () => guardar()],
+  revisar: ['Cancelar', () => salirConBorrador('parte', () => volverAlInicio()), 'Guardar', () => guardar()],
   horas:    ['No descontar', () => terminar([]), 'Descontar', () => descontar()],
   compra:   ['Cancelar', () => volverAlInicio(), 'Añadir horas', () => comprar()],
-  cliente:  ['Cancelar', () => fichaSalir(), 'Guardar', () => guardarCliente()],
-  factura:  ['Cancelar', () => salirFactura(), 'Guardar', () => guardarFactura()],
+  cliente:  ['Cancelar', () => fichaNombre ? fichaSalir() : salirConBorrador('cliente', fichaSalir), 'Guardar', () => guardarCliente()],
+  factura:  ['Cancelar', () => facEditando ? salirFactura() : salirConBorrador('factura', salirFactura), 'Guardar', () => guardarFactura()],
   ajustes:  ['Cancelar', () => volverAlInicio(), 'Guardar ajustes', () => guardarAjustes()],
 };
 const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>';
@@ -689,7 +760,7 @@ const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 const PESTANA_DE = { inicio:'inicio', partes:'partes', consulta:'horas', detalle:'horas', vuelos:'horas', foto:'horas', clientes:'clientes', facturas:'facturas', papelera:'inicio', hecho:'' };
 function irPestana(t) {
   if (t === 'inicio') volverAlInicio();
-  else if (t === 'partes') mostrar('partes');
+  else if (t === 'partes') { mostrar('partes'); if (!partesEncontrados.length) buscarPartesApp(); }
   else if (t === 'horas') abrirConsulta();
   else if (t === 'clientes') abrirClientes();
   else if (t === 'facturas') abrirFacturas();
@@ -818,19 +889,96 @@ if (DEMO) $('avisoDemo').style.display = 'block';
 if (SIN_CONFIGURAR) { $('urlActual').textContent = API_URL; mostrar('sinConfigurar'); }
 else if (!DEMO && !leerClave()) mostrar('clave');
 else { mostrar('inicio'); api({ accion:'config' }).then(cfg => { guardarLocal('partes-config', cfg); rellenarListas(cfg); pintarEstadoServidor(cfg); }).catch(() => {}); }
+let CFG = leerLocal('partes-config') || {};
 function pintarEstadoServidor(cfg) {
   if (!cfg) return;
-  const viejo = !(cfg.version >= VERSION_APP);
-  $('avisoServidor').style.display = viejo ? 'block' : 'none';
-  if (viejo) $('avisoServidor').innerHTML = '<b>Falta actualizar Apps Script.</b> La app es nueva pero el servidor no: pega el Codigo.gs nuevo y en Implementar → Gestionar implementaciones → ✏️ elige <b>Nueva versión</b>.';
+  CFG = cfg;
   const e = cfg.espacio;
   if (e && e.limite > 0) {
     const pct = Math.min(100, Math.round(e.usado / e.limite * 100)), gb = b => (b / 1e9).toFixed(1).replace('.', ',') + ' GB';
     $('espacioSeccion').style.display = 'block';
     $('espacioUso').style.width = pct + '%'; $('espacioUso').className = pct >= 85 ? 'lleno' : '';
-    $('espacioTxt').innerHTML = `${gb(e.usado)} de ${gb(e.limite)} · <b>${pct}%</b>` + (pct >= 85 ? ' — <span class="txt-rojo">queda poco espacio, libera Drive o Gmail</span>' : '');
+    $('espacioTxt').innerHTML = `<b>${pct}%</b> usado · ${gb(e.usado)} de ${gb(e.limite)}` + (pct >= 85 ? '<br><span class="txt-rojo">Queda poco espacio: libera Drive o Gmail, o lo que hagas se quedará como borrador.</span>' : '');
+  }
+  document.querySelectorAll('#atajosDrive .atajo').forEach(b => { b.disabled = !(cfg.carpetas && cfg.carpetas[b.dataset.carpeta]); });
+}
+pintarEstadoServidor(CFG);
+document.querySelectorAll('#atajosDrive .atajo').forEach(b => b.addEventListener('click', () => {
+  const u = CFG.carpetas && CFG.carpetas[b.dataset.carpeta];
+  if (u) abrirEnlace(u); else avisar('Todavía no tengo esa carpeta. Actualiza Apps Script y vuelve a abrir la app.', 5000);
+}));
+function abrirCamaras() {
+  const u = CFG.camaras || 'https://apps.apple.com/es/app/tp-link-tapo/id1472718009';
+  if (/^https?:/i.test(u)) abrirEnlace(u); else location.href = u;
+}
+
+// ---------- tiempo en LEMT (Open-Meteo, gratis y sin clave) ----------
+const LEMT = { lat: 40.2350, lon: -4.0264, pistas: [80, 260], elevPies: 2050 };
+const CIELO = { 0:'Despejado', 1:'Casi despejado', 2:'Nubes y claros', 3:'Cubierto', 45:'Niebla', 48:'Niebla con escarcha', 51:'Llovizna débil', 53:'Llovizna', 55:'Llovizna fuerte',
+  56:'Llovizna helada', 57:'Llovizna helada', 61:'Lluvia débil', 63:'Lluvia', 65:'Lluvia fuerte', 66:'Lluvia helada', 67:'Lluvia helada', 71:'Nieve débil', 73:'Nieve', 75:'Nieve fuerte',
+  77:'Granizo fino', 80:'Chubascos', 81:'Chubascos', 82:'Chubascos fuertes', 85:'Chubascos de nieve', 86:'Chubascos de nieve', 95:'Tormenta', 96:'Tormenta con granizo', 99:'Tormenta con granizo' };
+const icoCielo = (c, dia) => c === 0 || c === 1 ? (dia ? '☀️' : '🌙') : c === 2 ? '⛅' : c === 3 ? '☁️' : c >= 95 ? '⛈️' : (c >= 71 && c <= 77) || c === 85 || c === 86 ? '🌨️' : c >= 51 ? '🌧️' : c >= 45 ? '🌫️' : '☁️';
+const rumbo = g => ['N','NE','E','SE','S','SO','O','NO'][Math.round(((g % 360) + 360) % 360 / 45) % 8];
+async function cargarTiempo(forzar) {
+  const cache = leerLocal('meteo-lemt');
+  if (cache && !forzar && Date.now() - cache.t < 10 * 60000) return pintarTiempo(cache.d);
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LEMT.lat}&longitude=${LEMT.lon}&timezone=Europe%2FMadrid&wind_speed_unit=kn&forecast_hours=12&forecast_days=1` +
+      '&current=temperature_2m,dew_point_2m,relative_humidity_2m,weather_code,cloud_cover,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,visibility,is_day' +
+      '&hourly=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation_probability,is_day&daily=sunrise,sunset';
+    const r = await fetch(url); if (!r.ok) throw new Error('El servicio del tiempo no responde (' + r.status + ').');
+    const d = await r.json();
+    try { localStorage.setItem('meteo-lemt', JSON.stringify({ t: Date.now(), d })); } catch (e) {}
+    pintarTiempo(d);
+  } catch (e) {
+    if (cache) pintarTiempo(cache.d, true);
+    else $('meteo').innerHTML = `<p class="info" style="margin:0">No se ha podido cargar el tiempo. <button class="mini" onclick="cargarTiempo(true)">Reintentar</button></p>`;
   }
 }
+function pintarTiempo(d, viejo) {
+  const c = d.current || {}, h = d.hourly || {}, dia = d.daily || {};
+  const viento = Math.round(c.wind_speed_10m || 0), racha = Math.round(c.wind_gusts_10m || 0), dir = Math.round(c.wind_direction_10m || 0);
+  const comp = LEMT.pistas.map(p => { const a = (dir - p) * Math.PI / 180; return { p, frente: Math.round(viento * Math.cos(a)), cruzado: Math.round(Math.abs(viento * Math.sin(a))) }; });
+  const mejor = comp.slice().sort((a, b) => b.frente - a.frente)[0];
+  const base = c.temperature_2m !== undefined && c.dew_point_2m !== undefined ? Math.max(0, Math.round((c.temperature_2m - c.dew_point_2m) * 400 / 100) * 100) : null;
+  const vis = c.visibility !== undefined && c.visibility !== null ? (c.visibility >= 10000 ? '10 km o más' : (c.visibility / 1000).toFixed(1).replace('.', ',') + ' km') : '—';
+  const hora = t => String(t || '').slice(11, 16);
+  const horas = (h.time || []).slice(0, 12).filter((_, i) => i % 2 === 0).map((t, k) => { const i = k * 2;
+    return `<div class="mh"><span>${hora(t)}</span><i>${icoCielo(h.weather_code[i], h.is_day ? h.is_day[i] : 1)}</i><b>${Math.round(h.temperature_2m[i])}°</b><small>${rumbo(h.wind_direction_10m[i])} ${Math.round(h.wind_speed_10m[i])}${h.wind_gusts_10m[i] > h.wind_speed_10m[i] + 8 ? 'G' + Math.round(h.wind_gusts_10m[i]) : ''} kt</small>${h.precipitation_probability && h.precipitation_probability[i] >= 30 ? `<em>${h.precipitation_probability[i]}%</em>` : ''}</div>`; }).join('');
+  $('meteo').innerHTML = `
+    <div class="m-cab"><div class="m-ico">${icoCielo(c.weather_code, c.is_day)}</div><div><div class="m-temp">${Math.round(c.temperature_2m)}°</div><div class="m-cielo">${CIELO[c.weather_code] || ''}</div></div>
+      <div class="m-viento"><svg viewBox="0 0 24 24" style="transform:rotate(${dir + 180}deg)"><path d="M12 3 7 19l5-3 5 3z" fill="currentColor"/></svg><b>${String(dir).padStart(3, '0')}° / ${viento} kt</b><small>${racha > viento + 3 ? 'rachas ' + racha + ' kt' : 'sin rachas'}</small></div></div>
+    <div class="m-datos">
+      <div><span>Pista</span><b>${String(mejor.p / 10).padStart(2, '0')}</b><small>${mejor.frente >= 0 ? 'frente ' + mejor.frente : 'cola ' + -mejor.frente} · cruzado ${mejor.cruzado} kt</small></div>
+      <div><span>QNH</span><b>${Math.round(c.pressure_msl || 0)}</b><small>hPa</small></div>
+      <div><span>Visibilidad</span><b>${vis}</b><small>nubes ${c.cloud_cover ?? '—'}%</small></div>
+      <div><span>Base nubes</span><b>${base === null ? '—' : base + ' ft'}</b><small>aprox. sobre el terreno</small></div>
+    </div>
+    <div class="m-horas">${horas}</div>
+    <div class="m-pie">${dia.sunrise ? '☀︎ ' + hora(dia.sunrise[0]) + ' – ' + hora(dia.sunset[0]) + ' · ' : ''}${viejo ? 'sin conexión, datos guardados' : 'Open-Meteo, actualizado ' + hora(c.time)} · <button class="m-recargar" onclick="cargarTiempo(true)">Actualizar</button></div>`;
+}
+cargarTiempo();
+
+// ---------- buscar partes ----------
+let partesEncontrados = [];
+async function buscarPartesApp() {
+  const q = $('pBuscar').value.trim();
+  $('pInfo').textContent = 'Buscando partes…'; $('pLista').innerHTML = '';
+  try {
+    const r = await api({ accion:'buscarPartes', q });
+    partesEncontrados = r.partes || [];
+    $('pInfo').textContent = partesEncontrados.length ? (q ? `${partesEncontrados.length} partes encontrados.` : 'Los últimos partes de la hoja.') : 'No hay partes que coincidan.';
+    $('pLista').innerHTML = partesEncontrados.map((p, i) => `<div class="mov"><div class="cab"><div>
+      <div class="cant">Parte ${esc(p.numero || '¿?')}</div>
+      <div class="det"><b>${esc(p.fecha || '—')}</b> · ${esc(p.matricula || '—')}${p.tipo ? ' · ' + esc(p.tipo) : ''}</div>
+      <div class="det">${esc([p.delante, p.detras].filter(Boolean).join(' / ') || '—')}</div>
+      <div class="det">Horómetro: ${p.horometro_inicial !== null && p.horometro_final !== null ? aTextoNumero(p.horometro_inicial.toFixed(1)) + ' → ' + aTextoNumero(p.horometro_final.toFixed(1)) + (p.minutos ? ' (' + tiempo(p.minutos) + ')' : '') : '—'}</div></div>
+      <div class="botones">${p.foto ? `<button class="mini" onclick="verFotoBuscada(${i})">Ver parte</button>` : '<span class="info" style="font-size:12px">Sin foto</span>'}</div></div></div>`).join('');
+  } catch (e) { if (!e.silencioso) $('pInfo').textContent = e.message; }
+}
+function verFotoBuscada(i) { fotoVolver = () => mostrar('partes'); const p = partesEncontrados[i]; verFoto({ foto: p.foto, fecha: p.fecha, matricula: p.matricula, numero: p.numero }); }
+let tBuscarPartes = null;
+$('pBuscar').addEventListener('input', () => { clearTimeout(tBuscarPartes); tBuscarPartes = setTimeout(buscarPartesApp, 500); });
 
 // ---------- foto ----------
 async function prepararImagen(archivo, max) {
@@ -869,6 +1017,7 @@ async function leer() {
     partes = r.partes.map(p => ({ datos: p.datos, avisos: p.avisos || {}, incluir: !(p.avisos && p.avisos.numero_parte && /ya está en la hoja/.test(p.avisos.numero_parte)) }));
     pintarRevision();
     mostrar('revisar');
+    guardarBorradorParte();
   } catch (e) { if (!e.silencioso) fallo(e.message, leer); }
 }
 
@@ -921,10 +1070,23 @@ function pintarRevision() {
   }));
   document.querySelectorAll('[data-k]').forEach(el => el.addEventListener('input', () => {
     const div = el.closest('.campo'); if (div) div.classList.remove('aviso');
+    clearTimeout(pintarRevision.t); pintarRevision.t = setTimeout(guardarBorradorParte, 800);
   }));
   if (varios) $('guardar').textContent = 'Guardar partes';
 }
 
+function estadoRevision() {
+  return partes.map((p, i) => {
+    const d = Object.assign({}, p.datos);
+    CAMPOS.forEach(c => { const el = $(`p${i}-${c.k}`); if (!el) return; let v = el.value.trim(); if (c.tipo === 'date') v = inputAFecha(v); d[c.k] = v === '' ? null : v; });
+    return { datos: d, avisos: p.avisos, incluir: p.incluir };
+  });
+}
+function guardarBorradorParte() {
+  if (!partes.length) return;
+  const e = estadoRevision();
+  guardarBorrador('parte', `Parte ${e.map(p => p.datos.numero_parte || '¿?').join(' y ')}${e[0].datos.fecha ? ' · ' + e[0].datos.fecha : ''}`, { partes: e, imagen, tipoImagen });
+}
 function recoger() {
   return partes.map((p, i) => {
     const d = Object.assign({}, p.datos);
@@ -949,7 +1111,9 @@ async function guardar() {
     const n = r.filas.length, rev = r.filas.filter(f => f.revisar).length;
     resultadoPartes = (n > 1 ? `${n} partes guardados en la hoja.` : 'Parte guardado en la hoja.') +
       (rev ? ' Lo que no cuadraba queda marcado en amarillo.' : '');
-    if (r.descuentos && r.descuentos.length) pintarHoras(r.descuentos);
+    borrarBorrador('parte');
+    if (vincularTrasSubir) vincularParteSubido(r);
+    else if (r.descuentos && r.descuentos.length) pintarHoras(r.descuentos);
     else terminar([]);
   } catch (e) { if (!e.silencioso) fallo(e.message, guardar, true); }
   finally { btn.disabled = false; }
@@ -1070,7 +1234,6 @@ async function abrirConsulta() {
     const r = await api({ accion:'alumnos' });
     listaAlumnos = r.alumnos || [];
     $('consultaInfo').textContent = listaAlumnos.length ? `${listaAlumnos.length} clientes con horas. Pulsa uno para ver o modificar sus horas.` : 'Todavía no hay clientes con horas. Empieza con "Añadir horas".';
-    $('consultaArchivo').innerHTML = r.urlArchivo ? `<a href="${esc(r.urlArchivo)}" target="_blank" rel="noopener">Abrir el archivo de horas de clientes</a>` : '';
     pintarLista();
   } catch (e) { if (!e.silencioso) $('consultaInfo').textContent = e.message; }
 }
@@ -1153,6 +1316,7 @@ function abrirDescontar(nombre, vincular) {
   $('vVolver').onclick = () => vVolverA();
   $('vCliente').value = nombre || ''; $('vSaldo').style.display = 'none'; $('vError').style.display = 'none';
   $('vInfo').textContent = nombre ? '' : 'Primero elige el cliente.'; $('vLista').innerHTML = ''; $('vSinParte').style.display = 'none'; abrirSinParte(false);
+  $('vSubir').style.display = 'none'; $('vFiltro').value = ''; $('vFiltro').style.display = 'none'; if (!vincular) vincularTrasSubir = null;
   mostrar('vuelos');
   if (nombre) cargarPartesCliente();
 }
@@ -1167,6 +1331,8 @@ async function cargarPartesCliente() {
     $('vInfo').textContent = vPartes.length ? `${vPartes.length} partes sin descontar${vPartes.length >= (r.maximo || 40) ? ' (los más recientes)' : ''}.` : 'No hay partes de este cliente pendientes de descontar.';
     pintarPartesCliente();
     $('vSinParte').style.display = vVincular ? 'none' : 'block';
+    $('vSubir').style.display = vVincular ? 'block' : 'none';
+    $('vFiltro').style.display = vPartes.length > 3 ? 'block' : 'none';
   } catch (e) { if (!e.silencioso) { $('vInfo').textContent = ''; $('vError').style.display = 'block'; $('vError').textContent = e.message; } }
 }
 function abrirSinParte(abrir) {
@@ -1196,6 +1362,20 @@ function descontarSinParte() {
       finally { b.disabled = false; b.textContent = 'Descontar'; } } }]);
 }
 $('vCliente').addEventListener('change', cargarPartesCliente);
+$('vFiltro').addEventListener('input', () => {
+  const q = quitarAcentosJs($('vFiltro').value);
+  vPartes.forEach((p, i) => { const el = $('v' + i); if (el) el.style.display = !q || quitarAcentosJs([p.numero, p.fecha, p.matricula].join(' ')).includes(q) ? '' : 'none'; });
+});
+let vincularTrasSubir = null;
+async function vincularParteSubido(r) {
+  const mov = vincularTrasSubir; vincularTrasSubir = null;
+  const d = (r.descuentos || []).find(x => quitarAcentosJs(x.alumno) === quitarAcentosJs(vCliente)) || (r.descuentos || [])[0];
+  abrirDescontar(vCliente, mov);
+  await cargarPartesCliente();
+  const i = d ? vPartes.findIndex(p => String(p.numero) === String(d.numero_parte || d.numero).replace(/^0+/, '') && (!d.fecha || p.fecha === d.fecha)) : -1;
+  if (i >= 0) vincularA(i);
+  else { $('vError').style.display = 'block'; $('vError').textContent = 'Parte guardado. Si no sale en la lista, puede que en el parte el nombre del cliente esté escrito de otra forma.'; }
+}
 function pintarPartesCliente() {
   $('vLista').innerHTML = vPartes.map((p, i) => {
     const hor = p.horometro_inicial !== null && p.horometro_final !== null
@@ -1263,18 +1443,20 @@ async function descontarParteCliente(i) {
 }
 
 // ---------- clientes: ficha (añadir y modificar) ----------
-const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota' };
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', trato:'nTrato' };
 const DOCS = { dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
 let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
 
 function pintarDocs() {
   Object.keys(DOCS).forEach(k => {
     const img = $('docimg-' + k), est = $('docest-' + k);
+    const mini = !fichaFotos[k] && fichaDocs[k] && !fichaBorrar.has(k) && miniaturas[fichaNombre] && miniaturas[fichaNombre][k];
     if (fichaFotos[k]) { img.src = 'data:image/jpeg;base64,' + fichaFotos[k]; img.style.display = 'block'; est.style.display = 'none'; }
+    else if (mini) { img.src = mini; img.style.display = 'block'; est.style.display = 'none'; }
     else {
       img.style.display = 'none'; img.removeAttribute('src'); est.style.display = '';
       const tiene = fichaDocs[k] && !fichaBorrar.has(k);
-      est.textContent = tiene ? '✓ Guardada' : (fichaBorrar.has(k) ? 'Se quitará al guardar' : 'Sin foto');
+      est.textContent = tiene ? 'Cargando miniatura…' : (fichaBorrar.has(k) ? 'Se quitará al guardar' : 'Sin foto');
       est.className = 'doc-estado' + (tiene ? ' si' : '');
     }
     $('docver-' + k).style.display = (fichaDocs[k] && !fichaBorrar.has(k) && !fichaFotos[k]) ? '' : 'none';
@@ -1291,24 +1473,48 @@ Object.keys(DOCS).forEach(k => {
   $('docquitar-' + k).addEventListener('click', () => { if (fichaFotos[k]) delete fichaFotos[k]; else fichaBorrar.add(k); pintarDocs(); avisoSinGuardar(); });
   $('docver-' + k).addEventListener('click', () => verDocumento(k));
 });
+const miniaturas = {};
+async function cargarMiniaturas(nombre) {
+  const m = miniaturas[nombre] = miniaturas[nombre] || {};
+  await Promise.all(Object.keys(DOCS).filter(k => fichaDocs[k] && !m[k]).map(async k => {
+    try { const r = await api({ accion:'miniatura', nombre, doc: k }); m[k] = `data:${r.tipo || 'image/jpeg'};base64,${r.datos}`; }
+    catch (e) { m[k] = null; const est = $('docest-' + k); if (est && fichaNombre === nombre) est.textContent = '✓ Guardada'; }
+    if (fichaNombre === nombre) pintarDocs();
+  }));
+}
 function avisoSinGuardar() { $('fichaOk').style.display = 'none'; }
+function guardarBorradorCliente() {
+  if (fichaNombre || !$('cliente').classList.contains('activa')) return;
+  const datos = {}; Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { datos[k] = $(id).value.trim(); });
+  if (!datos.nombre && !datos.cif && !datos.telefono && !datos.correo) return;
+  datos.docs = {};
+  guardarBorrador('cliente', `${datos.nombre || 'Sin nombre'}${datos.telefono ? ' · ' + datos.telefono : ''}`, datos);
+}
+['input', 'change'].forEach(ev => $('cliente').addEventListener(ev, () => { clearTimeout(guardarBorradorCliente.t); guardarBorradorCliente.t = setTimeout(guardarBorradorCliente, 700); }));
 
 function rellenarFicha(c) {
   Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { const v = c ? c[k] : ''; $(id).value = v === null || v === undefined ? '' : String(v).replace('.', k === 'cuota' ? ',' : '.'); });
   if (!c || !c.pais) $('nPais').value = c ? '' : 'España';
   $('nSocio').value = c && c.socio === 'Si' ? 'Si' : 'No';
   $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none';
+  $('nTratoAuto').textContent = c && c.tratoAuto && !c.trato ? 'Ahora: ' + c.tratoAuto : '';
   fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
   pintarDocs();
 }
-function abrirNuevoCliente(volverA) {
+function abrirNuevoCliente(volverA, borrador) {
+  if (!borrador && leerBorrador('cliente')) {
+    const b = leerBorrador('cliente');
+    hoja(`<h2>Tienes un cliente sin terminar</h2><p class="info" style="margin:8px 0 0">${esc(b.resumen)}</p>`,
+      [{ t: 'Continuarlo', principal: true, f: () => abrirNuevoCliente(volverA, b.datos) }, { t: 'Empezar otro (se descarta)', peligro: true, f: () => { borrarBorrador('cliente'); abrirNuevoCliente(volverA, null); } }]);
+    return;
+  }
   fichaNombre = ''; forzarCliente = false; fichaVolverA = volverA || null;
-  rellenarFicha(null);
+  rellenarFicha(borrador || null);
   $('fichaTitulo').textContent = 'Añadir cliente';
   $('fichaSub').style.display = '';
   $('fichaExtra').style.display = 'none'; $('fichaBorrar').style.display = 'none';
   $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
-  $('fichaVolver').onclick = () => fichaSalir();
+  $('fichaVolver').onclick = () => BARRAS.cliente[1]();
   mostrar('cliente');
 }
 async function abrirFichaCliente(nombre, volverA) {
@@ -1317,9 +1523,9 @@ async function abrirFichaCliente(nombre, volverA) {
   $('fichaTitulo').textContent = nombre; $('fichaSub').style.display = 'none';
   $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = '';
   $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
-  $('fichaVolver').onclick = () => fichaSalir();
+  $('fichaVolver').onclick = () => BARRAS.cliente[1]();
   mostrar('cliente');
-  try { const c = await api({ accion:'cliente', nombre }); rellenarFicha(c); fichaNombre = c.nombre; $('fichaTitulo').textContent = c.nombre; }
+  try { const c = await api({ accion:'cliente', nombre }); fichaNombre = c.nombre; rellenarFicha(c); $('fichaTitulo').textContent = c.nombre; cargarMiniaturas(c.nombre); }
   catch (e) { if (!e.silencioso) { $('clienteError').style.display = 'block'; $('clienteError').textContent = e.message; } }
 }
 function fichaSalir() { if (fichaVolverA) fichaVolverA(); else volverAlInicio(); }
@@ -1335,8 +1541,12 @@ async function guardarCliente() {
     const r = await api({ accion:'guardarCliente', original: fichaNombre || '', datos, fotos: fichaFotos, borrarFotos: [...fichaBorrar], forzar: forzarCliente });
     if (r.clientes) CLIENTES = r.clientes; else CLIENTES = [r.nombre].concat(CLIENTES.filter(c => c !== r.nombre));
     const eraNuevo = !fichaNombre;
+    if (eraNuevo) borrarBorrador('cliente');
+    const mc = miniaturas[r.nombre] = Object.assign(miniaturas[fichaNombre] || {}, miniaturas[r.nombre] || {});
+    Object.keys(fichaFotos).forEach(k => { mc[k] = 'data:image/jpeg;base64,' + fichaFotos[k]; });
+    fichaBorrar.forEach(k => { delete mc[k]; });
     fichaNombre = r.nombre; forzarCliente = false;
-    rellenarFicha(r);
+    rellenarFicha(r); cargarMiniaturas(r.nombre);
     $('fichaTitulo').textContent = r.nombre; $('fichaSub').style.display = 'none';
     $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = ''; $('clienteError').style.display = 'none';
     if (eraNuevo && !fichaVolverA) fichaVolverA = () => abrirClientes();
@@ -1463,24 +1673,39 @@ async function accionFactura(tipo, id) {
     if (tipo === 'ver') { abrirEnlace(URL.createObjectURL(p.blob)); return; }
     if (tipo === 'pdf') { const a = document.createElement('a'); a.href = URL.createObjectURL(p.blob); a.download = p.nombre; document.body.appendChild(a); a.click(); a.remove(); return; }
     if (tipo === 'correo') {
+      let c = {};
+      try { c = await api({ accion:'correoFactura', id }); } catch (e) { c = { para: p.correo, asunto: `Factura ${p.numero} · Airía Privé`, cuerpo: '' }; }
+      p.para = c.para || p.correo || ''; p.asunto = c.asunto; p.cuerpo = c.cuerpo;
       const puedeCompartir = p.archivo && navigator.canShare && navigator.canShare({ files: [p.archivo] });
-      const texto = `<h2 style="margin-bottom:6px">Enviar factura ${esc(p.numero)}</h2><p class="info" style="margin:0">` +
-        (puedeCompartir ? `Se abrirá el menú de compartir: elige tu app de correo y la factura irá adjunta.` : `Tu navegador no puede adjuntar archivos: se descargará el PDF y se abrirá un correo para que lo adjuntes.`) +
-        (p.correo ? `<br><br>Correo del cliente: <b>${esc(p.correo)}</b> (se copia para que lo pegues en "Para").` : '<br><br>Este cliente no tiene correo en su ficha.') + '</p>';
-      hoja(texto, [{ t: 'Abrir correo', principal: true, f: () => enviarFactura(p, puedeCompartir) }]);
+      const texto = `<h2 style="margin-bottom:6px">Enviar factura ${esc(p.numero)}</h2>
+        <div class="correo-prev"><div><span>Para</span>${p.para ? esc(p.para) : '<i class="txt-rojo">sin correo en su ficha</i>'}</div><div><span>Asunto</span>${esc(p.asunto || '')}</div>
+        <pre>${esc(p.cuerpo || '')}</pre><div class="adj">📎 ${esc(p.nombre)}</div></div>
+        <p class="info" style="margin:8px 0 0"><b>Gmail</b> lo deja preparado en Borradores de airiaprive@gmail.com con todo puesto; solo tienes que abrirlo y pulsar Enviar.</p>`;
+      hoja(texto, [{ t: 'Preparar en Gmail', principal: true, f: () => borradorGmail(id, p) },
+        { t: puedeCompartir ? 'Compartir con otra app (Mail…)' : 'Abrir mi app de correo', f: () => enviarFactura(p, puedeCompartir) }]);
     }
   } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
 }
+async function borradorGmail(id, p) {
+  avisar('Preparando el correo en Gmail…', 30000);
+  try {
+    const r = await api({ accion:'correoFactura', id, borrador: true });
+    $('aviso').style.display = 'none';
+    hoja(`<h2>Correo preparado</h2><p class="info" style="margin:8px 0 0">Está en <b>Borradores</b> de Gmail (airiaprive@gmail.com) con el PDF adjunto${r.para ? ', para <b>' + esc(r.para) + '</b>' : ''}. Ábrelo, revísalo y pulsa <b>Enviar</b>.${r.aviso ? '<br><br><span class="txt-rojo">' + esc(r.aviso) + '</span>' : ''}</p>`,
+      [{ t: 'Abrir la app de Gmail', principal: true, f: () => { location.href = 'googlegmail://'; } }, { t: 'Abrir Gmail en el navegador', f: () => abrirEnlace(r.enlace || 'https://mail.google.com/mail/u/0/#drafts') }]);
+    $('hojaBotones').lastChild.textContent = 'Cerrar';
+  } catch (e) { if (!e.silencioso) avisar(e.message, 7000); }
+}
 async function enviarFactura(p, puedeCompartir) {
-  if (p.correo && navigator.clipboard) { try { await navigator.clipboard.writeText(p.correo); } catch (e) {} }
-  const asunto = `Factura ${p.numero} · Airía Privé`, cuerpo = `Hola,\n\nTe adjunto la factura ${p.numero}.\n\nUn saludo,\nAiría Privé`;
+  if (p.para && navigator.clipboard) { try { await navigator.clipboard.writeText(p.para); } catch (e) {} }
+  const asunto = p.asunto || `Factura ${p.numero} · Airía Privé`, cuerpo = p.cuerpo || `Te hago envío de la factura ${p.numero}.`;
   if (puedeCompartir) {
-    try { await navigator.share({ files: [p.archivo], title: asunto, text: cuerpo }); if (p.correo) avisar('Correo del cliente copiado: ' + p.correo, 5000); }
+    try { await navigator.share({ files: [p.archivo], title: asunto, text: cuerpo }); if (p.para) avisar('Correo del cliente copiado: pégalo en «Para»: ' + p.para, 6000); }
     catch (e) { if (e.name !== 'AbortError') avisar('No se ha podido compartir: ' + e.message, 5000); }
     return;
   }
   const a = document.createElement('a'); a.href = URL.createObjectURL(p.blob); a.download = p.nombre; document.body.appendChild(a); a.click(); a.remove();
-  location.href = `mailto:${encodeURIComponent(p.correo || '')}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+  location.href = `mailto:${encodeURIComponent(p.para || '')}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 }
 function borrarFacturaApp(id) {
   const f = buscarFacturaLocal(id);
@@ -1537,21 +1762,41 @@ function notaClienteFactura() {
   $('facClienteNota').textContent = c && c.socio === 'Si' ? 'Socio' + (c.cuota ? ` · cuota ${euros(c.cuota)}` : '') : '';
 }
 $('facCliente').addEventListener('change', notaClienteFactura);
-async function abrirNuevaFactura(volverA) {
-  facEditando = null; facNumeroTocado = false; facVolverA = volverA || null;
+async function abrirNuevaFactura(volverA, borrador) {
+  if (!borrador && leerBorrador('factura')) {
+    const b = leerBorrador('factura');
+    hoja(`<h2>Tienes una factura sin terminar</h2><p class="info" style="margin:8px 0 0">${esc(b.resumen)}</p>`,
+      [{ t: 'Continuarla', principal: true, f: () => abrirNuevaFactura(volverA, b.datos) }, { t: 'Empezar otra (se descarta)', peligro: true, f: () => { borrarBorrador('factura'); abrirNuevaFactura(volverA, null); } }]);
+    return;
+  }
+  const d = borrador || {};
+  facEditando = null; facNumeroTocado = !!d.numeroTocado; facVolverA = volverA || null;
   $('facTitulo').textContent = 'Nueva factura'; $('facError').style.display = 'none';
-  $('facFecha').value = hoyInput(); $('facNumero').value = ''; $('facIrpf').value = ''; $('facVence').value = ''; $('facPago').value = ''; $('facNotas').value = '';
-  pintarLineas([]); marcarIva(21); facClientes = []; pintarClientesFactura(''); $('facUltima').textContent = '';
+  $('facFecha').value = d.fecha || hoyInput(); $('facNumero').value = d.numeroTocado ? d.numero : ''; $('facIrpf').value = d.irpf || ''; $('facVence').value = d.vence || ''; $('facPago').value = d.pago || ''; $('facNotas').value = d.notas || '';
+  pintarLineas(d.lineas || []); marcarIva(d.iva !== undefined ? d.iva : 21); facClientes = []; pintarClientesFactura(d.cliente || ''); $('facUltima').textContent = '';
+  numeroGrande(d.numeroTocado ? d.numero : '');
   mostrar('factura');
   try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); facClientes = r.clientes || []; pintarClientesFactura($('facCliente').value);
-    if (!facNumeroTocado) $('facNumero').value = r.numero; marcarIva(r.ivaPct);
+    if (!facNumeroTocado) { $('facNumero').value = r.numero; numeroGrande(r.numero); }
+    if (d.iva === undefined) marcarIva(r.ivaPct);
     $('facUltima').textContent = r.ultima ? `Última guardada: ${r.ultima.numero} (${r.ultima.cliente})` : ''; }
-  catch (e) { if (!e.silencioso) { $('facError').style.display = 'block'; $('facError').textContent = e.message; } }
+  catch (e) { if (!e.silencioso) { numeroGrande($('facNumero').value); $('facError').style.display = 'block'; $('facError').textContent = e.message; } }
 }
-$('facNumero').addEventListener('input', () => { facNumeroTocado = true; });
+function numeroGrande(n) { $('facNumGrande').innerHTML = n ? `N.º <b>${esc(n)}</b>` : 'Calculando el número…'; }
+function guardarBorradorFactura() {
+  if (facEditando || !$('factura').classList.contains('activa')) return;
+  const lineas = leerLineas().filter(l => l.descripcion || l.precio);
+  const cliente = $('facCliente').value;
+  if (!cliente && !lineas.length) return;
+  guardarBorrador('factura', `${cliente || 'Sin cliente'} · ${lineas.map(l => l.descripcion).filter(Boolean).join(', ') || 'sin conceptos'} · ${$('facTotal').textContent}`,
+    { fecha: $('facFecha').value, cliente, lineas, iva: ivaElegido(), irpf: $('facIrpf').value, vence: $('facVence').value, pago: $('facPago').value, notas: $('facNotas').value,
+      numero: $('facNumero').value, numeroTocado: facNumeroTocado });
+}
+['input', 'change'].forEach(ev => $('factura').addEventListener(ev, () => { clearTimeout(guardarBorradorFactura.t); guardarBorradorFactura.t = setTimeout(guardarBorradorFactura, 700); }));
+$('facNumero').addEventListener('input', () => { facNumeroTocado = true; numeroGrande($('facNumero').value.trim()); });
 $('facFecha').addEventListener('change', async () => {
   if (facEditando || facNumeroTocado) return;
-  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); if (!facNumeroTocado) $('facNumero').value = r.numero; } catch (e) {}
+  try { const r = await api({ accion:'nuevaFactura', fecha: inputAFecha($('facFecha').value) }); if (!facNumeroTocado) { $('facNumero').value = r.numero; numeroGrande(r.numero); } } catch (e) {}
 });
 async function editarFactura(id, volverA) {
   facVolverA = volverA || null;
@@ -1563,6 +1808,7 @@ async function editarFactura(id, volverA) {
     $('facTitulo').textContent = 'Factura ' + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
     $('facError').style.display = 'none';
     $('facUltima').textContent = n.ultima ? `Última guardada: ${n.ultima.numero} (${n.ultima.cliente})` : '';
+    numeroGrande(f.numero);
     $('facNumero').value = f.numero; $('facFecha').value = fechaAInput(f.fecha); pintarClientesFactura(f.cliente);
     $('facIrpf').value = f.irpfPct ? aTextoNumero(f.irpfPct) : ''; $('facVence').value = fechaAInput(f.vencimiento || ''); $('facPago').value = f.formaPago || ''; $('facNotas').value = f.notas || '';
     pintarLineas(f.lineas || []); marcarIva(f.ivaPct);
@@ -1583,6 +1829,7 @@ async function guardarFactura() {
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando y creando PDF…';
   try {
     const r = await api({ accion:'guardarFactura', factura: f });
+    if (!f.id) borrarBorrador('factura');
     delete pdfCache[r.id];
     const msg = `Factura ${r.numero} guardada (${euros(r.total)}). El PDF está en su carpeta de Drive.`;
     if (facVolverA) { facVolverA(); avisar(msg, 4000); }
@@ -1655,6 +1902,8 @@ const CAMPOS_AJUSTES = [
   ['Datos de contacto', [['empresaTelefono', 'Teléfono'], ['empresaCorreo', 'Correo']]],
   ['Datos bancarios', [['banco', 'Banco'], ['iban', 'IBAN'], ['swift', 'SWIFT / BIC']]],
   ['Facturas', [['ivaDefecto', 'IVA por defecto (%)', 1], ['conceptoMensual', 'Concepto de las facturas mensuales ({mes} y {año} se rellenan solos)'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
+  ['Correo de las facturas', [['correoAsunto', 'Asunto'], ['correoTexto', 'Texto. {saludo} pone Estimado/Estimada/Estimados según la ficha; {nombre}, {concepto}, {numero} y {total} se rellenan solos', 0, 1]]],
+  ['Cámaras', [['enlaceCamaras', 'Enlace del botón Cámaras (la app Tapo o un Atajo de iPhone, ver abajo)']]],
 ];
 async function abrirAjustes() {
   mostrar('ajustes'); $('ajOk').style.display = 'none'; $('ajError').style.display = 'none';
@@ -1662,13 +1911,15 @@ async function abrirAjustes() {
   try {
     const a = await api({ accion:'ajustes' });
     $('ajCampos').innerHTML = CAMPOS_AJUSTES.map(([tit, campos]) => `<div class="sec-tit">${tit}</div><div class="tarjeta"><div class="rejilla">` +
-      campos.map(([k, t, corto]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label><input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}"></div>`).join('') + '</div></div>').join('');
+      campos.map(([k, t, corto, largo]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label>${largo ? `<textarea id="aj-${k}" rows="9">${esc(String(a[k] || '').replace(/\\n/g, '\n'))}</textarea>` : `<input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}">`}</div>`).join('') + '</div></div>').join('') +
+      `<p class="info">Para que el botón Cámaras abra Tapo directamente: en la app <b>Atajos</b> del iPhone crea un atajo llamado <b>Tapo</b> con la acción «Abrir app → Tapo» y aquí pon <b>shortcuts://run-shortcut?name=Tapo</b>.</p>` +
+      `<div class="version">App versión ${VERSION_APP} · Apps Script versión ${CFG.version || 1}${(CFG.version || 1) < VERSION_APP ? ' — <span class="txt-rojo">falta publicar una Nueva versión en Apps Script</span>' : ' ✓'}</div>`;
   } catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
 }
 async function guardarAjustes() {
   const datos = {}; CAMPOS_AJUSTES.forEach(([, c]) => c.forEach(([k]) => { const el = $('aj-' + k); if (el) datos[k] = el.value.trim(); }));
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
-  try { await api({ accion:'guardarAjustes', ajustes: datos }); $('ajOk').style.display = 'block'; $('ajOk').textContent = 'Ajustes guardados. Las facturas nuevas o editadas saldrán con estos datos.'; window.scrollTo(0, 0); }
+  try { await api({ accion:'guardarAjustes', ajustes: datos }); if (datos.enlaceCamaras !== undefined) { CFG.camaras = datos.enlaceCamaras; guardarLocal('partes-config', CFG); } $('ajOk').style.display = 'block'; $('ajOk').textContent = 'Ajustes guardados. Las facturas nuevas o editadas saldrán con estos datos.'; window.scrollTo(0, 0); }
   catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
   finally { btn.disabled = false; btn.textContent = 'Guardar ajustes'; }
 }
@@ -1731,7 +1982,6 @@ async function abrirClientes() {
     const r = await api({ accion:'clientes' });
     listaClientesFichas = r.clientes || [];
     $('clientesInfo').textContent = `${listaClientesFichas.length} clientes. Pulsa uno para ver o modificar su ficha.`;
-    $('clientesArchivo').innerHTML = r.urlArchivo ? `<a href="${esc(r.urlArchivo)}" target="_blank" rel="noopener">Abrir el archivo de clientes</a>` : '';
     pintarClientes();
   } catch (e) { if (!e.silencioso) $('clientesInfo').textContent = e.message; }
 }
@@ -1772,8 +2022,48 @@ function fallo(msg, reintentar, desdeRevision) {
 }
 function volverAlInicio() { imagen = null; partes = []; mostrar('inicio'); }
 
+// ---------- borradores (solo en este móvil) ----------
+const TIPOS_BORRADOR = { parte: 'Parte de vuelo', factura: 'Factura', cliente: 'Cliente' };
+function guardarBorrador(tipo, resumen, datos) {
+  if (DEMO && !window.__permitirBorradores) return;
+  try { localStorage.setItem('borrador-' + tipo, JSON.stringify({ t: Date.now(), resumen, datos })); }
+  catch (e) { if (tipo === 'parte' && datos.imagen) { try { localStorage.setItem('borrador-' + tipo, JSON.stringify({ t: Date.now(), resumen, datos: Object.assign({}, datos, { imagen: null }) })); } catch (e2) {} } }
+  pintarBorradores();
+}
+function leerBorrador(tipo) { try { return JSON.parse(localStorage.getItem('borrador-' + tipo)); } catch (e) { return null; } }
+/** Al cancelar algo a medias: guardarlo como borrador o descartarlo. */
+function salirConBorrador(tipo, salir) {
+  if (tipo === 'factura') guardarBorradorFactura(); if (tipo === 'cliente') guardarBorradorCliente(); if (tipo === 'parte') guardarBorradorParte();
+  const b = leerBorrador(tipo);
+  if (!b) return salir();
+  hoja(`<h2>¿Guardar como borrador?</h2><p class="info" style="margin:8px 0 0">Se queda solo en este móvil y lo verás en Inicio, en «Sin terminar», para continuarlo cuando quieras.</p>`,
+    [{ t: 'Guardar borrador', principal: true, f: () => { if (tipo === 'parte') { imagen = null; partes = []; } salir(); avisar('Guardado como borrador.'); } },
+     { t: 'Descartar', peligro: true, f: () => { borrarBorrador(tipo); salir(); } }]);
+  $('hojaBotones').lastChild.textContent = 'Seguir aquí';
+}
+function borrarBorrador(tipo) { try { localStorage.removeItem('borrador-' + tipo); } catch (e) {} pintarBorradores(); }
+function pintarBorradores() {
+  const l = Object.keys(TIPOS_BORRADOR).map(t => [t, leerBorrador(t)]).filter(x => x[1]);
+  $('borradoresSeccion').style.display = l.length ? 'block' : 'none';
+  $('borradoresLista').innerHTML = l.map(([t, b]) => `<div class="borrador"><div><span class="tipo-chapa t-borrador">${TIPOS_BORRADOR[t]}</span><b>${esc(b.resumen || '')}</b><small>Guardado en este móvil · ${new Date(b.t).toLocaleString('es-ES', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</small></div>
+    <div class="botones"><button class="mini principal" onclick="continuarBorrador('${t}')">Continuar</button><button class="mini peligro" onclick="descartarBorrador('${t}')">Descartar</button></div></div>`).join('');
+}
+function descartarBorrador(t) {
+  hoja(`<h2>¿Descartar el borrador?</h2><p class="info" style="margin:8px 0 0">${esc(TIPOS_BORRADOR[t])}: ${esc((leerBorrador(t) || {}).resumen || '')}. No se podrá recuperar.</p>`, [{ t: 'Descartar', peligro: true, f: () => borrarBorrador(t) }]);
+}
+function continuarBorrador(t) {
+  const b = leerBorrador(t); if (!b) return pintarBorradores();
+  if (t === 'parte') {
+    partes = b.datos.partes || []; imagen = b.datos.imagen; tipoImagen = b.datos.tipoImagen || 'image/jpeg';
+    pintarRevision(); mostrar('revisar');
+    if (!imagen) alerta('Este borrador no tiene la foto (no cabía en el móvil): se guardará el parte sin foto.');
+  } else if (t === 'factura') abrirNuevaFactura(null, b.datos);
+  else if (t === 'cliente') abrirNuevoCliente(null, b.datos);
+}
+pintarBorradores();
+
 // ---------- "Cargando…" en naranja ----------
-const RE_CARGA = /^(Cargando|Buscando|Preparando|Abriendo|Guardando|Generando|Descontando|Comprobando|Leyendo|Añadiendo|Subiendo|Borrando|Recuperando|Vaciando|Enviando)\b[^]*…|cargando la foto…$/;
+const RE_CARGA = /^(Cargando|Calculando|Vinculando|Preparando|Buscando|Preparando|Abriendo|Guardando|Generando|Descontando|Comprobando|Leyendo|Añadiendo|Subiendo|Borrando|Recuperando|Vaciando|Enviando)\b[^]*…|cargando la foto…$/;
 const SEL_CARGA = '.info, .saldo, .aviso, .boton, .mini, .sug-info, h2, .resumen';
 let marcaPendiente = false;
 function marcarCargas() {
@@ -1788,8 +2078,10 @@ new MutationObserver(() => { if (!marcaPendiente) { marcaPendiente = true; reque
 
 // ---------- volver deslizando el dedo desde el borde izquierdo ----------
 const SIN_DESLIZAR = ['inicio', 'clave', 'leyendo', 'sinConfigurar', 'hecho'];
-const PREGUNTAR_AL_SALIR = { revisar: 'el parte sin guardar', horas: 'sin descontar las horas', factura: 'la factura sin guardar', cliente: 'la ficha sin guardar', compra: 'sin añadir las horas', ajustes: 'los ajustes sin guardar' };
+const PREGUNTAR_AL_SALIR = { horas: 'sin descontar las horas', compra: 'sin añadir las horas', ajustes: 'los ajustes sin guardar' };
+const preguntaSalir = id => id === 'factura' ? (facEditando ? 'la factura sin guardar' : null) : id === 'cliente' ? (fichaNombre ? 'la ficha sin guardar' : null) : PREGUNTAR_AL_SALIR[id];
 function accionVolver(id) {
+  if (['revisar', 'factura', 'cliente'].includes(id)) return BARRAS[id][1];
   const p = $(id), v = p && p.querySelector('.volver');
   if (v && v.offsetParent !== null) return () => v.click();
   const b = BARRAS[id]; return b ? b[1] : volverAlInicio;
@@ -1815,7 +2107,7 @@ document.addEventListener('touchend', () => {
   if (dx < Math.min(110, innerWidth * 0.28)) { p.classList.add('soltando'); p.style.transform = ''; setTimeout(() => p.classList.remove('soltando'), 220); return; }
   p.style.transform = '';
   const ir = accionVolver(p.id);
-  if (PREGUNTAR_AL_SALIR[p.id]) hoja(`<h2>¿Salir?</h2><p class="info" style="margin:8px 0 0">Vas a salir con ${PREGUNTAR_AL_SALIR[p.id]}.</p>`, [{ t: 'Salir', principal: true, f: ir }]);
+  if (preguntaSalir(p.id)) hoja(`<h2>¿Salir?</h2><p class="info" style="margin:8px 0 0">Vas a salir con ${preguntaSalir(p.id)}.</p>`, [{ t: 'Salir', principal: true, f: ir }]);
   else ir();
 });
 document.addEventListener('touchcancel', () => { if (toque) { toque.p.style.transform = ''; toque.p.classList.remove('arrastrando'); toque = null; } });
@@ -1823,7 +2115,11 @@ document.addEventListener('touchcancel', () => { if (toque) { toque.p.style.tran
 // ---------- modo demostración (sin servidor) ----------
 async function demo(c) {
   await new Promise(r => setTimeout(r, c.accion === 'config' ? 0 : 1200));
-  if (c.accion === 'config') return { ok:true, version: 2, espacio: { usado: 6.2e9, limite: 15e9 }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'buscarPartes') return { ok:true, partes: [{ numero:'78', fecha:'30/10/2026', matricula:'EC-HF7', delante:'MARIO EJEMPLO', detras:'', tipo:'ESCUELA', horometro_inicial:520.5, horometro_final:521.4, minutos:54, foto:'demo' },
+    { numero:'77', fecha:'29/10/2026', matricula:'EC-HD6', delante:'JUAN PRUEBA', detras:'INSTRUCTOR DEMO', tipo:'PRIVADO', horometro_inicial:310.2, horometro_final:311.0, minutos:48, foto:'' }].filter(p => !c.q || JSON.stringify(p).toLowerCase().includes(c.q.toLowerCase())) };
+  if (c.accion === 'correoFactura') return { ok:true, para:'cliente@ejemplo.com', asunto:'Factura 2026-11_03 · Airía Privé', cuerpo:'Estimados, Empresa Ejemplo S.L:\n\nTe hago envío de la factura de cesión de espacio de hangar.\n\nUn cordial saludo,\n\nNombre Ejemplo', enlace:'https://mail.google.com/' };
+  if (c.accion === 'miniatura') { const cv = document.createElement('canvas'); cv.width = 240; cv.height = 150; const g = cv.getContext('2d'); g.fillStyle = '#dfe7f2'; g.fillRect(0, 0, 240, 150); g.fillStyle = '#334'; g.font = '18px sans-serif'; g.fillText('Foto (demo)', 70, 80); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
+  if (c.accion === 'config') return { ok:true, version: 3, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
   if (c.accion === 'leer') return { ok:true, partes:[
     { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
     { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
