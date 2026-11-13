@@ -64,7 +64,7 @@
   .barra.tres .boton { font-size:15.5px; padding:15px 8px; }
   .barra.tres .boton.secundario { padding:15px 12px; }
   .campo { position:relative; }
-  .sugerencias { position:absolute; left:0; right:0; top:100%; margin-top:4px; z-index:30; background:#fff; border:1px solid var(--linea); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); max-height:300px; overflow-y:auto; display:none; }
+  .sugerencias { position:absolute; left:0; right:0; top:100%; margin-top:4px; z-index:30; background:#fff; border:1px solid var(--linea); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.14); max-height:min(380px, 55vh); overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; display:none; }
   .sug { display:block; width:100%; text-align:left; padding:13px 14px; border:0; border-bottom:1px solid var(--linea); background:#fff; font:inherit; font-size:16px; color:var(--tinta); cursor:pointer; }
   .sug:last-child { border-bottom:0; }
   .sug:active { background:var(--fondo); }
@@ -179,6 +179,34 @@
   .botones { display:flex; flex-direction:column; gap:8px; flex:none; }
   .mov .det b { font-weight:600; color:var(--tinta); }
   .foto-parte { width:100%; border-radius:12px; border:1px solid var(--linea); background:#fff; display:block; }
+  /* Cargando: caja naranja bien visible */
+  :root { --naranja:#ff6a00; }
+  .cargando { background:var(--naranja) !important; color:#fff !important; border-color:var(--naranja) !important; border-radius:12px; font-weight:600; box-shadow:0 0 0 3px rgba(255,106,0,.25); animation:latido 1.1s ease-in-out infinite; }
+  p.cargando, div.cargando:not(.aviso) { padding:11px 14px; }
+  .cargando::before { content:""; display:inline-block; width:14px; height:14px; margin:0 8px -2px 0; border:2.5px solid rgba(255,255,255,.45); border-top-color:#fff; border-radius:50%; animation:g .8s linear infinite; }
+  .boton.cargando::before, .mini.cargando::before { margin-bottom:0; }
+  h2.cargando { display:inline-block; padding:10px 16px; }
+  @keyframes latido { 50% { box-shadow:0 0 0 7px rgba(255,106,0,.12); } }
+  .boton:disabled, .mini:disabled { opacity:1; }
+  /* Volver: más visible */
+  .volver { display:inline-flex; align-items:center; gap:4px; background:#fff; border:1px solid var(--linea); color:var(--marino-2); font:inherit; font-size:16px; font-weight:600; padding:9px 15px 9px 11px; border-radius:999px; margin:0 0 12px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .volver:active { background:var(--fondo); }
+  /* Botón Inicio de la barra */
+  #barraIzq.es-inicio { background:var(--marino); border-color:var(--marino); color:#fff; font-weight:700; }
+  #barraIzq.es-inicio svg { width:20px; height:20px; color:var(--oro); }
+  /* Ventanas de confirmación */
+  .hoja { align-items:center; padding:20px; }
+  .hoja-caja { border-radius:20px; padding:22px 20px 18px; max-width:420px; box-shadow:0 20px 50px rgba(0,0,0,.25); }
+  .hoja-botones .boton.peligro { background:var(--rojo); border-color:var(--rojo); color:#fff; }
+  /* Papelera por tipos */
+  .pap { border-left:5px solid var(--linea); }
+  .pap.t-factura { border-left-color:#2f6fd6; } .pap.t-cliente { border-left-color:#2c9a4b; }
+  .tipo-chapa { display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:2px 8px; border-radius:999px; margin-bottom:4px; }
+  .tipo-chapa.t-factura { background:#e3edfc; color:#1d4f9e; } .tipo-chapa.t-cliente { background:#e2f4e7; color:#1f6b35; }
+  .chips.filtro { margin:0 0 12px; } .chips.filtro button.activo { background:var(--marino-2); }
+  .aviso-sin-parte { background:var(--amarillo); color:var(--amarillo-texto); border:1px solid var(--amarillo-borde); border-radius:12px; padding:11px 13px; font-size:14px; margin:0 0 12px; }
+  .pantalla.arrastrando { transition:none; }
+  .pantalla.soltando { transition:transform .2s ease; }
 </style>
 </head>
 <body>
@@ -273,6 +301,7 @@
 
 <!-- 3c. Añadir horas compradas -->
 <section id="compra" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
   <h1 class="titulo">Añadir horas</h1>
   <p class="sub" style="margin-bottom:16px">Cuando un cliente te paga un bono de horas.</p>
   <div id="compraError" class="resumen mal" style="display:none"></div>
@@ -291,6 +320,7 @@
 
 <!-- 3d. Consultar horas de alumnos -->
 <section id="consulta" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
   <h1 class="titulo">Horas de clientes</h1>
   <p class="info" id="consultaInfo">Cargando…</p>
   <input id="consultaBuscar" class="buscar" type="search" placeholder="Buscar cliente" autocomplete="off">
@@ -313,12 +343,27 @@
 <section id="vuelos" class="pantalla">
   <button class="volver" id="vVolver">‹ Volver</button>
   <h1 class="titulo">Descontar horas</h1>
-  <p class="info">Elige el parte del vuelo que quieres descontar. Solo salen los partes de este cliente que todavía no se le han descontado.</p>
+  <p class="info">Elige el parte del vuelo que quieres descontar. Solo salen los partes de este cliente que todavía no se le han descontado. Abajo puedes descontar también sin parte.</p>
   <div class="campo" style="margin-bottom:10px"><label for="vCliente">Cliente</label><input id="vCliente" type="text" list="lista-clientes" autocomplete="off" placeholder="Escribe o elige el nombre"></div>
   <div class="saldo" id="vSaldo" style="display:none"></div>
   <div id="vError" class="resumen mal" style="display:none"></div>
   <p class="info" id="vInfo"></p>
   <div id="vLista"></div>
+  <div id="vSinParte" style="display:none;margin-top:18px">
+    <div class="sec-tit">Sin parte</div>
+    <button class="boton" id="vSinParteAbrir" style="max-width:none" onclick="abrirSinParte()">Descontar sin parte</button>
+    <div class="tarjeta" id="vSinParteForm" style="display:none">
+      <div class="aviso-sin-parte"><b>Ojo:</b> este descuento no queda unido a ningún parte, así que no tendrá foto ni horómetro. Si más adelante subes el parte de ese vuelo, seguirá saliendo aquí como «sin descontar»: no lo descuentes otra vez.</div>
+      <div class="rejilla">
+        <div class="campo"><label for="spH">Horas</label><input id="spH" type="text" inputmode="numeric" placeholder="0"></div>
+        <div class="campo"><label for="spM">Minutos</label><input id="spM" type="text" inputmode="numeric" placeholder="0"></div>
+        <div class="campo ancho"><label for="spFecha">Fecha del vuelo</label><input id="spFecha" type="date"></div>
+        <div class="campo ancho"><label for="spMotivo">Motivo (opcional)</label><input id="spMotivo" type="text" autocomplete="off" placeholder="Vuelo sin parte, corrección…"></div>
+        <div class="campo ancho"><div class="cuenta" id="spCuenta"></div></div>
+      </div>
+      <div class="acciones"><button class="mini principal" id="spOk" onclick="descontarSinParte()">Descontar</button><button class="mini" onclick="abrirSinParte(false)">Cancelar</button></div>
+    </div>
+  </div>
 </section>
 
 <section id="cliente" class="pantalla">
@@ -336,7 +381,6 @@
       <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
       <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Si">Socio</option></select></div>
       <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota de socio (€)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="199"></div>
-      <div class="campo" id="nEstadoCampo" style="display:none"><label for="nEstado">Estado</label><select id="nEstado"><option>NUEVO</option><option>EN FACTURACIÓN</option></select></div>
     </div>
   </div>
   <div class="tarjeta">
@@ -466,7 +510,8 @@
 <section id="papelera" class="pantalla">
   <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
   <h1 class="titulo">Papelera</h1>
-  <p class="info">Las facturas y clientes borrados se guardan aquí 30 días. Después se borran solos.</p>
+  <p class="info">Las facturas y clientes borrados se guardan aquí 30 días. Después se borran solos, también de Drive.</p>
+  <div class="chips filtro" id="papFiltro"></div>
   <div id="papError" class="resumen mal" style="display:none"></div>
   <div id="papLista"></div>
 </section>
@@ -475,6 +520,7 @@
 <div id="aviso" class="aviso"></div>
 
 <section id="foto" class="pantalla">
+  <button class="volver" onclick="BARRAS.foto[1]()">‹ Volver</button>
   <h1 class="titulo" id="fotoTitulo">Parte</h1>
   <p class="info" id="fotoInfo">Cargando la foto…</p>
   <img id="fotoImg" class="foto-parte" alt="Foto del parte" style="display:none">
@@ -556,13 +602,16 @@ const BARRAS = {
   detalle:  ['Volver', () => abrirConsulta(), 'Añadir horas', () => abrirCompra(detalleAlumno), 'Descontar horas', () => abrirDescontar(detalleAlumno)],
   foto:     ['Volver', () => (fotoVolver || (() => abrirDetalle(detalleAlumno)))(), 'Inicio', () => volverAlInicio()],
 };
+const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>';
 function mostrar(id) {
   document.querySelectorAll('.pantalla').forEach(s => s.classList.toggle('activa', s.id === id));
   activarSelectores();
   const b = BARRAS[id];
   $('barra').classList.toggle('activa', !!b);
   if (b) {
-    $('barraIzq').textContent = b[0]; $('barraIzq').onclick = b[1];
+    const esInicio = b[0] === 'Inicio';
+    $('barraIzq').classList.toggle('es-inicio', esInicio);
+    $('barraIzq').innerHTML = esInicio ? ICO_CASA + 'Inicio' : esc(b[0]); $('barraIzq').onclick = b[1];
     const tres = b.length > 4;
     $('barra').classList.toggle('tres', tres);
     $('barraMedio').style.display = tres ? '' : 'none';
@@ -604,13 +653,13 @@ function guardarClave(c) { claveMemoria = c; try { c ? localStorage.setItem('par
 let claveMemoria = '';
 
 async function api(cuerpo, clave) {
-  if (DEMO) return demo(cuerpo);
+  if (DEMO) { const j = await demo(cuerpo); if (j && j.ok === false) throw Object.assign(new Error(j.error), { datos: j }); return j; }
   const r = await fetch(API_URL, { method:'POST', body: JSON.stringify(Object.assign({ clave: clave || leerClave() }, cuerpo)) });
   if (!r.ok) throw new Error('El servidor ha respondido con un error (' + r.status + ').');
   const j = await r.json();
   if (!j.ok) {
     if (/clave incorrecta/i.test(j.error || '') && !clave) { guardarClave(''); mostrar('clave'); throw Object.assign(new Error('Clave incorrecta.'), { silencioso: true }); }
-    throw new Error(j.error || 'Error desconocido.');
+    throw Object.assign(new Error(j.error || 'Error desconocido.'), { datos: j });
   }
   return j;
 }
@@ -644,13 +693,12 @@ function activarSelector(input) {
   const pintar = () => {
     const q = input.value.trim();
     const todos = q ? buscarClientes(q) : CLIENTES;
-    const lista = todos.slice(0, 30);
+    const lista = todos;
     let html = '';
     if (!CLIENTES.length) html = '<div class="sug-info">Cargando la lista de clientes… Si no aparece, escribe el nombre completo.</div>';
-    else if (!q) html = `<div class="sug-info">${CLIENTES.length} clientes. Escribe parte del nombre para filtrar.</div>`;
+    else if (!q) html = `<div class="sug-info">${CLIENTES.length} clientes. Desliza para verlos todos o escribe para filtrar.</div>`;
     else if (!lista.length) html = `<div class="sug-info">No está en tu lista. Si es un cliente nuevo, escribe su nombre completo: se creará al guardar.</div>`;
     html += lista.map(c => `<button type="button" class="sug">${esc(c)}</button>`).join('');
-    if (todos.length > lista.length) html += `<div class="sug-info">… y ${todos.length - lista.length} más. Sigue escribiendo para afinar.</div>`;
     caja.innerHTML = html; caja.style.display = 'block';
     caja.querySelectorAll('.sug').forEach(b => {
       b.addEventListener('pointerdown', e => e.preventDefault());
@@ -989,7 +1037,7 @@ function abrirDescontar(nombre) {
   vVolverA = nombre ? () => abrirDetalle(nombre) : () => abrirConsulta();
   $('vVolver').onclick = () => vVolverA();
   $('vCliente').value = nombre || ''; $('vSaldo').style.display = 'none'; $('vError').style.display = 'none';
-  $('vInfo').textContent = nombre ? '' : 'Primero elige el cliente.'; $('vLista').innerHTML = '';
+  $('vInfo').textContent = nombre ? '' : 'Primero elige el cliente.'; $('vLista').innerHTML = ''; $('vSinParte').style.display = 'none'; abrirSinParte(false);
   mostrar('vuelos');
   if (nombre) cargarPartesCliente();
 }
@@ -1003,7 +1051,34 @@ async function cargarPartesCliente() {
     $('vSaldo').style.display = 'block'; $('vSaldo').innerHTML = textoSaldo(r);
     $('vInfo').textContent = vPartes.length ? `${vPartes.length} partes sin descontar${vPartes.length >= (r.maximo || 40) ? ' (los más recientes)' : ''}.` : 'No hay partes de este cliente pendientes de descontar.';
     pintarPartesCliente();
+    $('vSinParte').style.display = 'block';
   } catch (e) { if (!e.silencioso) { $('vInfo').textContent = ''; $('vError').style.display = 'block'; $('vError').textContent = e.message; } }
+}
+function abrirSinParte(abrir) {
+  const ver = abrir === undefined ? $('vSinParteForm').style.display === 'none' : abrir;
+  $('vSinParteForm').style.display = ver ? 'block' : 'none'; $('vSinParteAbrir').style.display = ver ? 'none' : '';
+  if (ver) { $('spH').value = ''; $('spM').value = ''; $('spMotivo').value = ''; $('spFecha').value = hoyInput(); cuentaSinParte(); setTimeout(() => $('vSinParteForm').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
+}
+function cuentaSinParte() {
+  const min = leerMinutos('spH', 'spM'), c = $('spCuenta'), saldo = vInfo && vInfo.tieneHoras ? vInfo.saldo : 0;
+  if (min === null || isNaN(min) || !min) { c.textContent = 'Escribe las horas y minutos a descontar'; c.className = 'cuenta negativa'; return; }
+  c.textContent = `${tiempo(saldo)} − ${tiempo(min)} = le quedarán ${tiempo(saldo - min)}`;
+  c.className = 'cuenta' + (saldo - min < 0 ? ' negativa' : '');
+}
+['spH', 'spM'].forEach(id => $(id).addEventListener('input', cuentaSinParte));
+function descontarSinParte() {
+  const min = leerMinutos('spH', 'spM'), fecha = inputAFecha($('spFecha').value), motivo = $('spMotivo').value.trim();
+  if (!(min > 0)) { $('vError').style.display = 'block'; $('vError').textContent = 'Escribe las horas o los minutos a descontar.'; window.scrollTo(0, 0); return; }
+  hoja(`<h2>¿Descontar ${esc(tiempo(min))} sin parte?</h2><p class="info" style="margin:8px 0 0">A <b>${esc(vCliente)}</b>${fecha ? ', vuelo del ' + esc(fecha) : ''}.<br><br>No quedará unido a ningún parte. Si luego subes el parte de ese vuelo, no lo descuentes otra vez.</p>`,
+    [{ t: 'Descontar sin parte', principal: true, f: async () => {
+      const b = $('spOk'); b.disabled = true; b.textContent = 'Descontando…';
+      try {
+        const r = await api({ accion:'descontar', items: [{ alumno: vCliente, horas: Math.floor(min / 60), minutos: min % 60, fecha, comentario: 'Sin parte' + (motivo ? ' · ' + motivo : '') }] });
+        const h = (r.hechos || [])[0];
+        await abrirDetalle(vCliente);
+        if (h) { $('detalleOk').style.display = 'block'; $('detalleOk').textContent = `Descontado sin parte: ${tiempo(h.antes)} − ${tiempo(h.minutos)} → le quedan ${tiempo(h.saldo)}.`; }
+      } catch (e) { if (!e.silencioso) { $('vError').style.display = 'block'; $('vError').textContent = e.message; window.scrollTo(0, 0); } }
+      finally { b.disabled = false; b.textContent = 'Descontar'; } } }]);
 }
 $('vCliente').addEventListener('change', cargarPartesCliente);
 function pintarPartesCliente() {
@@ -1053,7 +1128,7 @@ async function descontarParteCliente(i) {
 }
 
 // ---------- clientes: ficha (añadir y modificar) ----------
-const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', estado:'nEstado' };
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota' };
 const DOCS = { dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
 let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
 
@@ -1088,7 +1163,6 @@ function rellenarFicha(c) {
   if (!c || !c.pais) $('nPais').value = c ? '' : 'España';
   $('nSocio').value = c && c.socio === 'Si' ? 'Si' : 'No';
   $('nCuotaCampo').style.display = $('nSocio').value === 'Si' ? '' : 'none';
-  if (c && c.estado) $('nEstado').value = c.estado;
   fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
   pintarDocs();
 }
@@ -1097,7 +1171,7 @@ function abrirNuevoCliente(volverA) {
   rellenarFicha(null);
   $('fichaTitulo').textContent = 'Añadir cliente';
   $('fichaSub').style.display = '';
-  $('nEstadoCampo').style.display = 'none'; $('fichaExtra').style.display = 'none'; $('fichaBorrar').style.display = 'none';
+  $('fichaExtra').style.display = 'none'; $('fichaBorrar').style.display = 'none';
   $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
   $('fichaVolver').onclick = () => fichaSalir();
   mostrar('cliente');
@@ -1106,7 +1180,7 @@ async function abrirFichaCliente(nombre, volverA) {
   fichaNombre = nombre; forzarCliente = false; fichaVolverA = volverA || (() => abrirClientes());
   rellenarFicha(null); $('nNombre').value = nombre;
   $('fichaTitulo').textContent = nombre; $('fichaSub').style.display = 'none';
-  $('nEstadoCampo').style.display = ''; $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = '';
+  $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = '';
   $('fichaOk').style.display = 'none'; $('clienteError').style.display = 'none';
   $('fichaVolver').onclick = () => fichaSalir();
   mostrar('cliente');
@@ -1119,7 +1193,6 @@ $('nNombre').addEventListener('input', () => { forzarCliente = false; $('cliente
 
 async function guardarCliente() {
   const datos = {}; Object.entries(CAMPOS_CLIENTE).forEach(([k, id]) => { datos[k] = $(id).value.trim(); });
-  if (!fichaNombre) delete datos.estado;
   const err = t => { $('clienteError').style.display = 'block'; $('clienteError').textContent = t; $('fichaOk').style.display = 'none'; window.scrollTo(0, 0); };
   if (datos.nombre.length < 2) return err('Escribe el nombre del cliente.');
   const btn = $('guardar'); btn.disabled = true; btn.textContent = Object.keys(fichaFotos).length ? 'Subiendo fotos…' : 'Guardando…';
@@ -1130,10 +1203,10 @@ async function guardarCliente() {
     fichaNombre = r.nombre; forzarCliente = false;
     rellenarFicha(r);
     $('fichaTitulo').textContent = r.nombre; $('fichaSub').style.display = 'none';
-    $('nEstadoCampo').style.display = ''; $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = ''; $('clienteError').style.display = 'none';
+    $('fichaExtra').style.display = 'flex'; $('fichaBorrar').style.display = ''; $('clienteError').style.display = 'none';
     if (eraNuevo && !fichaVolverA) fichaVolverA = () => abrirClientes();
     $('fichaOk').style.display = 'block';
-    $('fichaOk').textContent = eraNuevo ? 'Cliente añadido. Está marcado como NUEVO en la pestaña "Clientes" para que lo pases a la app de facturas.'
+    $('fichaOk').textContent = eraNuevo ? 'Cliente añadido.'
       : 'Cambios guardados.' + (r.horasRenombradas ? ' También se ha cambiado el nombre en sus horas.' : '');
     window.scrollTo(0, 0);
   } catch (e) {
@@ -1175,7 +1248,7 @@ function avisar(t, ms) { const a = $('aviso'); a.textContent = t; a.style.displa
 function hoja(texto, botones) {
   $('hojaTexto').innerHTML = texto;
   $('hojaBotones').innerHTML = '';
-  botones.concat([{ t: 'Cancelar' }]).forEach(b => { const el = document.createElement('button'); el.className = 'boton' + (b.principal ? ' principal' : ''); el.textContent = b.t; el.onclick = () => { $('hoja').classList.remove('activa'); if (b.f) b.f(); }; $('hojaBotones').appendChild(el); });
+  botones.concat([{ t: 'Cancelar' }]).forEach(b => { const el = document.createElement('button'); el.className = 'boton' + (b.principal ? ' principal' : '') + (b.peligro ? ' peligro' : ''); el.textContent = b.t; el.onclick = () => { $('hoja').classList.remove('activa'); if (b.f) b.f(); }; $('hojaBotones').appendChild(el); });
   $('hoja').classList.add('activa');
 }
 $('hoja').addEventListener('click', e => { if (e.target.id === 'hoja') $('hoja').classList.remove('activa'); });
@@ -1223,7 +1296,7 @@ function htmlFactura(f) {
       <button onclick="accionFactura('carpeta','${esc(f.id)}')">${ICO.carpeta}Carpeta</button>
       <button onclick="accionFactura('correo','${esc(f.id)}')">${ICO.correo}Correo</button>
       <button onclick="accionFactura('pdf','${esc(f.id)}')">${ICO.pdf}PDF</button>
-      <button class="rojo" data-borrar="${esc(f.id)}" onclick="borrarFacturaApp('${esc(f.id)}', this)">${ICO.borrar}Borrar</button>
+      <button class="rojo" data-borrar="${esc(f.id)}" onclick="borrarFacturaApp('${esc(f.id)}')">${ICO.borrar}Borrar</button>
     </div></div>`;
 }
 function pintarFacturas() {
@@ -1268,10 +1341,13 @@ async function enviarFactura(p, puedeCompartir) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(p.blob); a.download = p.nombre; document.body.appendChild(a); a.click(); a.remove();
   location.href = `mailto:${encodeURIComponent(p.correo || '')}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 }
-async function borrarFacturaApp(id, boton) {
-  if (!boton.classList.contains('listo')) { boton.classList.add('listo'); boton.lastChild.textContent = '¿Seguro?'; setTimeout(() => { if (boton.isConnected) { boton.classList.remove('listo'); boton.lastChild.textContent = 'Borrar'; } }, 4000); return; }
-  try { await api({ accion:'borrarFactura', id }); delete pdfCache[id]; avisar('Factura movida a la papelera (30 días para recuperarla).'); verPestanaFacturas(pestanaFacturas); }
-  catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+function borrarFacturaApp(id) {
+  const f = buscarFacturaLocal(id);
+  hoja(`<h2>¿Borrar la factura ${esc(f.numero || '')}?</h2><p class="info" style="margin:8px 0 0">${esc(f.cliente || '')}${f.total !== undefined ? ' · ' + euros(f.total) : ''}<br><br>Irá a la papelera de la app 30 días y su PDF a la papelera de Drive. Su número queda libre para la siguiente factura.</p>`,
+    [{ t: 'Borrar factura', peligro: true, f: async () => {
+      avisar('Borrando la factura…', 20000);
+      try { await api({ accion:'borrarFactura', id }); delete pdfCache[id]; avisar('Factura movida a la papelera.'); verPestanaFacturas(pestanaFacturas); }
+      catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
 }
 
 // ---------- facturas: formulario ----------
@@ -1368,7 +1444,15 @@ async function guardarFactura() {
     const msg = `Factura ${r.numero} guardada (${euros(r.total)}). El PDF está en su carpeta de Drive.`;
     if (facVolverA) { facVolverA(); avisar(msg, 4000); }
     else { pestanaFacturas = r.tipo === 'MENSUAL' ? 'MENSUAL' : 'MANUAL'; abrirFacturas(msg); }
-  } catch (e) { if (!e.silencioso) err(e.message); }
+  } catch (e) {
+    if (e.silencioso) return;
+    if (e.datos && e.datos.repetido) {
+      const libre = e.datos.numeroLibre;
+      hoja(`<h2>Número repetido</h2><p class="info" style="margin:8px 0 0">${esc(e.message)}<br><br>No puede haber dos facturas con el mismo número.${libre ? ` El siguiente libre es <b>${esc(libre)}</b>.` : ''}</p>`,
+        libre ? [{ t: 'Usar el ' + libre + ' y guardar', principal: true, f: () => { $('facNumero').value = libre; guardarFactura(); } }] : []);
+      $('hojaBotones').lastChild.textContent = 'Cambiarlo yo';
+    } else err(e.message);
+  }
   finally { btn.disabled = false; if ($('factura').classList.contains('activa')) btn.textContent = 'Guardar'; }
 }
 
@@ -1406,6 +1490,11 @@ async function generarMensuales() {
   const fecha = inputAFecha($('mFecha').value);
   if (!clientes.length) return;
   if (!fecha) { avisar('Elige la fecha de las facturas.'); return; }
+  if (!generarMensuales.ok) {
+    hoja(`<h2>¿Generar ${clientes.length} factura${clientes.length > 1 ? 's' : ''}?</h2><p class="info" style="margin:8px 0 0">De ${esc(mensualesInfo.nombreMes)}, con fecha ${esc(fecha)}. Cada una gasta un número.<br><br>Si te equivocas, puedes editarlas (fecha, concepto, importe) o borrarlas: al borrarlas su número vuelve a quedar libre.</p>`,
+      [{ t: 'Generar', principal: true, f: () => { generarMensuales.ok = true; generarMensuales().finally(() => { generarMensuales.ok = false; }); } }]);
+    return;
+  }
   const b = $('mGenerar'); b.disabled = true; b.textContent = `Generando ${clientes.length} facturas…`;
   try {
     const r = await api({ accion:'generarMensuales', mes: $('mMes').value, fecha, clientes });
@@ -1442,37 +1531,52 @@ async function guardarAjustes() {
 }
 
 // ---------- papelera ----------
-let elementosPapelera = [];
+let elementosPapelera = [], filtroPapelera = '';
+const TIPOS_PAPELERA = { factura: 'Factura', cliente: 'Cliente' };
 async function abrirPapelera() {
-  mostrar('papelera'); $('papError').style.display = 'none'; $('papLista').innerHTML = '<p class="info">Cargando…</p>';
+  mostrar('papelera'); $('papError').style.display = 'none'; $('papLista').innerHTML = '<p class="info">Cargando…</p>'; $('papFiltro').innerHTML = '';
   try {
     const r = await api({ accion:'papelera' }); elementosPapelera = r.elementos || [];
-    $('papLista').innerHTML = elementosPapelera.length ? elementosPapelera.map((x, i) => `<div class="pap"><div><b>${esc(x.titulo)}</b><small>${esc(x.detalle)} · quedan ${x.dias} días</small></div>
-      <div class="botones"><button class="mini" onclick="restaurarPapelera(${i})">Recuperar</button><button class="mini peligro" onclick="borrarPapelera(${i}, this)">Borrar ya</button></div></div>`).join('')
-      : '<p class="info">La papelera está vacía.</p>';
-  } catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+    pintarPapelera();
+  } catch (e) { if (!e.silencioso) { $('papLista').innerHTML = ''; $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+}
+function pintarPapelera() {
+  const cuenta = t => elementosPapelera.filter(x => !t || x.tipo === t).length;
+  $('papFiltro').innerHTML = elementosPapelera.length ? [['', 'Todo'], ['factura', 'Facturas'], ['cliente', 'Clientes']]
+    .map(([t, n]) => `<button type="button" class="${filtroPapelera === t ? 'activo' : ''}" onclick="filtroPapelera='${t}';pintarPapelera()">${n} (${cuenta(t)})</button>`).join('') : '';
+  const lista = elementosPapelera.map((x, i) => [x, i]).filter(([x]) => !filtroPapelera || x.tipo === filtroPapelera);
+  $('papLista').innerHTML = lista.length ? lista.map(([x, i]) => `<div class="pap t-${esc(x.tipo)}"><div><span class="tipo-chapa t-${esc(x.tipo)}">${TIPOS_PAPELERA[x.tipo] || esc(x.tipo)}</span><b style="display:block">${esc(x.titulo)}</b><small>${esc(x.detalle)} · quedan ${x.dias} días</small></div>
+      <div class="botones"><button class="mini" onclick="restaurarPapelera(${i})">Recuperar</button><button class="mini peligro" onclick="borrarPapelera(${i})">Borrar ya</button></div></div>`).join('')
+    : `<p class="info">${elementosPapelera.length ? 'No hay nada de este tipo.' : 'La papelera está vacía.'}</p>`;
 }
 async function restaurarPapelera(i) {
   const x = elementosPapelera[i];
-  try { await api({ accion:'restaurar', tipo: x.tipo, id: x.id }); avisar(x.titulo + ' recuperado.'); abrirPapelera(); }
-  catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+  avisar('Recuperando…', 20000);
+  try {
+    const r = await api({ accion:'restaurar', tipo: x.tipo, id: x.id });
+    if (r.aviso) { $('aviso').style.display = 'none'; hoja(`<h2>${esc(x.titulo)} recuperada</h2><p class="info" style="margin:8px 0 0">${esc(r.aviso)}</p>`, []); $('hojaBotones').lastChild.textContent = 'Entendido'; }
+    else avisar(x.titulo + ' recuperado.');
+    abrirPapelera();
+  } catch (e) { if (!e.silencioso) { $('aviso').style.display = 'none'; $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
 }
-async function borrarPapelera(i, b) {
-  if (!b.dataset.seguro) { b.dataset.seguro = '1'; b.textContent = '¿Seguro?'; return; }
+function borrarPapelera(i) {
   const x = elementosPapelera[i];
-  try { await api({ accion:'borrarDefinitivo', tipo: x.tipo, id: x.id }); abrirPapelera(); }
-  catch (e) { if (!e.silencioso) { $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
+  hoja(`<h2>¿Borrar para siempre?</h2><p class="info" style="margin:8px 0 0"><b>${esc(x.titulo)}</b><br>${esc(x.detalle)}<br><br>Se borrará de la app y de Drive (también de la papelera de Drive). No se podrá recuperar.</p>`,
+    [{ t: 'Borrar para siempre', peligro: true, f: async () => {
+      avisar('Borrando…', 20000);
+      try { await api({ accion:'borrarDefinitivo', tipo: x.tipo, id: x.id }); avisar('Borrado para siempre.'); abrirPapelera(); }
+      catch (e) { if (!e.silencioso) { $('aviso').style.display = 'none'; $('papError').style.display = 'block'; $('papError').textContent = e.message; } } } }]);
 }
 function vaciarPapelera() {
   if (!elementosPapelera.length) { avisar('La papelera ya está vacía.'); return; }
-  hoja(`<h2>¿Vaciar la papelera?</h2><p class="info" style="margin:6px 0 0">Se borrarán para siempre ${elementosPapelera.length} elementos. No se podrán recuperar.</p>`,
-    [{ t: 'Vaciar papelera', principal: true, f: async () => { try { await api({ accion:'vaciarPapelera' }); abrirPapelera(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
+  hoja(`<h2>¿Vaciar la papelera?</h2><p class="info" style="margin:8px 0 0">Se borrarán para siempre ${elementosPapelera.length} elementos, de la app y de Drive. No se podrán recuperar.</p>`,
+    [{ t: 'Vaciar papelera', peligro: true, f: async () => { avisar('Vaciando la papelera…', 30000); try { await api({ accion:'vaciarPapelera' }); avisar('Papelera vaciada.'); abrirPapelera(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
 }
 
 // ---------- borrar cliente (a la papelera) ----------
 function borrarClienteFicha() {
-  hoja(`<h2>¿Borrar a ${esc(fichaNombre)}?</h2><p class="info" style="margin:6px 0 0">Irá a la papelera 30 días; podrás recuperarlo desde allí. Sus horas y sus facturas no se borran.</p>`,
-    [{ t: 'Borrar cliente', principal: true, f: async () => { try { await api({ accion:'borrarCliente', nombre: fichaNombre }); CLIENTES = CLIENTES.filter(c => c !== fichaNombre); avisar('Cliente movido a la papelera.'); abrirClientes(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
+  hoja(`<h2>¿Borrar a ${esc(fichaNombre)}?</h2><p class="info" style="margin:6px 0 0">Irá a la papelera 30 días; podrás recuperarlo desde allí. Sus fotos y su ficha PDF irán a la papelera de Drive. Sus horas y sus facturas no se borran.</p>`,
+    [{ t: 'Borrar cliente', peligro: true, f: async () => { try { await api({ accion:'borrarCliente', nombre: fichaNombre }); CLIENTES = CLIENTES.filter(c => c !== fichaNombre); avisar('Cliente movido a la papelera.'); abrirClientes(); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); } } }]);
 }
 
 // ---------- clientes: lista ----------
@@ -1483,8 +1587,7 @@ async function abrirClientes() {
   try {
     const r = await api({ accion:'clientes' });
     listaClientesFichas = r.clientes || [];
-    const nuevos = listaClientesFichas.filter(c => c.estado === 'NUEVO').length;
-    $('clientesInfo').textContent = `${listaClientesFichas.length} clientes` + (nuevos ? ` · ${nuevos} NUEVO${nuevos > 1 ? 'S' : ''} pendiente${nuevos > 1 ? 's' : ''} de pasar a facturación` : '') + '. Pulsa uno para ver o modificar su ficha.';
+    $('clientesInfo').textContent = `${listaClientesFichas.length} clientes. Pulsa uno para ver o modificar su ficha.`;
     $('clientesArchivo').innerHTML = r.urlArchivo ? `<a href="${esc(r.urlArchivo)}" target="_blank" rel="noopener">Abrir el archivo de clientes</a>` : '';
     pintarClientes();
   } catch (e) { if (!e.silencioso) $('clientesInfo').textContent = e.message; }
@@ -1493,7 +1596,7 @@ function pintarClientes() {
   const q = quitarAcentosJs($('clientesBuscar').value);
   $('clientesLista').innerHTML = listaClientesFichas.filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
     const docs = Object.values(c.docs || {}).filter(Boolean).length;
-    const chapa = c.estado === 'NUEVO' ? '<span class="chapa nuevo">NUEVO</span>' : (c.socio === 'Si' ? '<span class="chapa socio">Socio</span>' : '');
+    const chapa = c.socio === 'Si' ? '<span class="chapa socio">Socio</span>' : '';
     return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · ${docs}/4 documentos</small></span>${chapa}</button>`;
   }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
   document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
@@ -1509,11 +1612,13 @@ async function guardarEdicion(i) {
   try { pintarDetalle(await api(cuerpo)); $('detalleError').style.display = 'none'; }
   catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; window.scrollTo(0, 0); } }
 }
-async function borrarMov(i) {
-  const b = $(`ed${i}-borrar`);
-  if (!b.dataset.seguro) { b.dataset.seguro = '1'; b.textContent = '¿Seguro? Pulsa otra vez'; return; }
-  try { pintarDetalle(await api({ accion:'borrarMovimiento', id: detalleMovs[i].id })); }
-  catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; window.scrollTo(0, 0); } }
+function borrarMov(i) {
+  const m = detalleMovs[i];
+  const que = m.tipo === 'COMPRA' ? 'esta compra de horas' : (m.numero ? 'el descuento del parte ' + m.numero : 'este descuento');
+  hoja(`<h2>¿Borrar ${esc(que)}?</h2><p class="info" style="margin:8px 0 0">${esc(tiempo(m.minutos))}${m.fecha ? ' · ' + esc(m.fecha) : ''}<br><br>Se quita de sus horas. El parte de la hoja no se toca.</p>`,
+    [{ t: 'Borrar', peligro: true, f: async () => {
+      try { pintarDetalle(await api({ accion:'borrarMovimiento', id: m.id })); avisar('Borrado.'); }
+      catch (e) { if (!e.silencioso) { $('detalleError').style.display = 'block'; $('detalleError').textContent = e.message; window.scrollTo(0, 0); } } } }]);
 }
 
 function alerta(t) { const r = $('resumen'); r.className = 'resumen mal'; r.textContent = t; window.scrollTo(0, 0); }
@@ -1523,6 +1628,54 @@ function fallo(msg, reintentar, desdeRevision) {
   mostrar('fallo');
 }
 function volverAlInicio() { imagen = null; partes = []; mostrar('inicio'); }
+
+// ---------- "Cargando…" en naranja ----------
+const RE_CARGA = /^(Cargando|Buscando|Preparando|Abriendo|Guardando|Generando|Descontando|Comprobando|Leyendo|Añadiendo|Subiendo|Borrando|Recuperando|Vaciando|Enviando)\b[^]*…|cargando la foto…$/;
+const SEL_CARGA = '.info, .saldo, .aviso, .boton, .mini, .sug-info, h2, .resumen';
+let marcaPendiente = false;
+function marcarCargas() {
+  marcaPendiente = false;
+  document.querySelectorAll(SEL_CARGA).forEach(el => {
+    const t = (el.textContent || '').trim();
+    el.classList.toggle('cargando', t.length < 140 && RE_CARGA.test(t));
+  });
+}
+new MutationObserver(() => { if (!marcaPendiente) { marcaPendiente = true; requestAnimationFrame(marcarCargas); } })
+  .observe(document.body, { childList: true, characterData: true, subtree: true });
+
+// ---------- volver deslizando el dedo desde el borde izquierdo ----------
+const SIN_DESLIZAR = ['inicio', 'clave', 'leyendo', 'sinConfigurar', 'hecho'];
+const PREGUNTAR_AL_SALIR = { revisar: 'el parte sin guardar', horas: 'sin descontar las horas', factura: 'la factura sin guardar', cliente: 'la ficha sin guardar', compra: 'sin añadir las horas', ajustes: 'los ajustes sin guardar' };
+function accionVolver(id) {
+  const p = $(id), v = p && p.querySelector('.volver');
+  if (v && v.offsetParent !== null) return () => v.click();
+  const b = BARRAS[id]; return b ? b[1] : volverAlInicio;
+}
+let toque = null;
+document.addEventListener('touchstart', e => {
+  const p = document.querySelector('.pantalla.activa');
+  if (!p || SIN_DESLIZAR.includes(p.id) || $('hoja').classList.contains('activa') || e.touches.length !== 1) { toque = null; return; }
+  const t = e.touches[0];
+  toque = t.clientX < 28 ? { x: t.clientX, y: t.clientY, p, dx: 0, activo: false } : null;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!toque) return;
+  const t = e.touches[0], dx = t.clientX - toque.x, dy = t.clientY - toque.y;
+  if (!toque.activo) { if (Math.abs(dy) > 14 && Math.abs(dy) > dx) { toque = null; return; } if (dx > 10) toque.activo = true; else return; }
+  toque.dx = Math.max(0, dx); toque.p.classList.add('arrastrando'); toque.p.style.transform = `translateX(${toque.dx}px)`;
+}, { passive: true });
+document.addEventListener('touchend', () => {
+  if (!toque) return;
+  const { p, dx, activo } = toque; toque = null;
+  p.classList.remove('arrastrando');
+  if (!activo) return;
+  if (dx < Math.min(110, innerWidth * 0.28)) { p.classList.add('soltando'); p.style.transform = ''; setTimeout(() => p.classList.remove('soltando'), 220); return; }
+  p.style.transform = '';
+  const ir = accionVolver(p.id);
+  if (PREGUNTAR_AL_SALIR[p.id]) hoja(`<h2>¿Salir?</h2><p class="info" style="margin:8px 0 0">Vas a salir con ${PREGUNTAR_AL_SALIR[p.id]}.</p>`, [{ t: 'Salir', principal: true, f: ir }]);
+  else ir();
+});
+document.addEventListener('touchcancel', () => { if (toque) { toque.p.style.transform = ''; toque.p.classList.remove('arrastrando'); toque = null; } });
 
 // ---------- modo demostración (sin servidor) ----------
 async function demo(c) {
@@ -1551,7 +1704,7 @@ async function demo(c) {
   if (c.accion === 'nuevaFactura') return { ok:true, numero: sigNum(mesDe(c.fecha || '13/11/2026')), ivaPct:21, clientes:[{ nombre:'Empresa Ejemplo S.L', socio:'No' }, { nombre:'Lucía Gómez Prieto', socio:'Si', cuota:199 }, { nombre:'Mario Ejemplo Ruiz', socio:'No' }] };
   if (c.accion === 'facturas') { const l = DF.lista.filter(f => (!c.tipo || f.tipo === c.tipo) && (!c.mes || f.mes === c.mes)).sort((a, b) => b.numero.localeCompare(a.numero)); return { ok:true, facturas:l, total:l.length }; }
   if (c.accion === 'factura') return Object.assign({ ok:true }, DF.lista.find(f => f.id === c.id));
-  if (c.accion === 'guardarFactura') { const f = c.factura; const base = f.lineas.reduce((s, l) => s + l.cantidad * l.precio, 0); const iva = base * f.ivaPct / 100, irpf = base * (f.irpfPct || 0) / 100;
+  if (c.accion === 'guardarFactura') { const f = c.factura; const rep = f.numero && DF.lista.find(y => y.numero === f.numero && y.id !== f.id); if (rep) return { ok:false, repetido:true, numeroLibre: sigNum(rep.mes), error: `Ya existe la factura ${rep.numero} (${rep.cliente}, ${rep.fecha}).` }; const base = f.lineas.reduce((s, l) => s + l.cantidad * l.precio, 0); const iva = base * f.ivaPct / 100, irpf = base * (f.irpfPct || 0) / 100;
     let x = DF.lista.find(y => y.id === f.id); if (!x) { x = { id:'d' + Date.now(), tipo:f.tipo || 'MANUAL', mes: f.mes || mesDe(f.fecha) }; DF.lista.push(x); }
     Object.assign(x, { numero: f.numero || sigNum(x.mes), fecha:f.fecha, cliente:f.cliente, lineas:f.lineas, base, ivaPct:f.ivaPct, iva, irpfPct:f.irpfPct, irpf, total: base + iva - irpf, formaPago:f.formaPago, vencimiento:f.vencimiento, notas:f.notas, carpeta:'https://drive.google.com/' });
     return Object.assign({ ok:true }, x); }
