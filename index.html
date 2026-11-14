@@ -203,9 +203,9 @@
   .hoja-botones .boton.peligro { background:var(--rojo); border-color:var(--rojo); color:#fff; }
   /* Papelera por tipos */
   .pap { border-left:5px solid var(--linea); }
-  .pap.t-factura { border-left-color:#2f6fd6; } .pap.t-cliente { border-left-color:#2c9a4b; }
+  .pap.t-factura { border-left-color:#2f6fd6; } .pap.t-cliente { border-left-color:#2c9a4b; } .pap.t-presupuesto { border-left-color:#b89b6a; }
   .tipo-chapa { display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:2px 8px; border-radius:999px; margin-bottom:4px; }
-  .tipo-chapa.t-factura { background:#e3edfc; color:#1d4f9e; } .tipo-chapa.t-cliente { background:#e2f4e7; color:#1f6b35; }
+  .tipo-chapa.t-factura { background:#e3edfc; color:#1d4f9e; } .tipo-chapa.t-cliente { background:#e2f4e7; color:#1f6b35; } .tipo-chapa.t-presupuesto { background:#f3ead9; color:#7a5a20; }
   .chips.filtro { margin:0 0 12px; } .chips.filtro button.activo { background:var(--marino-2); }
   .aviso-sin-parte { background:var(--amarillo); color:var(--amarillo-texto); border:1px solid var(--amarillo-borde); border-radius:12px; padding:11px 13px; font-size:14px; margin:0 0 12px; }
   .pantalla.arrastrando { transition:none; }
@@ -336,6 +336,36 @@
   .cuota-campos input.especial { border-color:var(--champan); background:var(--oro-claro); font-weight:600; }
   .cuota-total { flex:1 1 100%; font-size:13.5px; color:var(--suave); } .cuota-total b { color:var(--tinta); }
   .resumen.aviso-amarillo { background:#fff6d6; border:1px solid #f0d478; color:#5a4500; }
+  .acciones-pag .boton { min-width:0; white-space:normal; line-height:1.15; }
+  .aviso-item { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--linea); border-left:5px solid #cfc6b6; border-radius:14px; padding:10px 12px; margin-bottom:8px; cursor:pointer; }
+  .aviso-item.rojo { border-left-color:#d93025; } .aviso-item.naranja { border-left-color:#f29900; }
+  .cuenta-atras { flex:none; width:50px; text-align:center; font-family:var(--serif); font-size:26px; font-weight:700; line-height:1; color:#0a0a0a; }
+  .aviso-item.rojo .cuenta-atras { color:#b3261e; } .aviso-item.naranja .cuenta-atras { color:#a35a00; }
+  .cuenta-atras small { display:block; font-family:var(--sans); font-size:10.5px; font-weight:600; color:var(--suave); letter-spacing:.3px; margin-top:2px; }
+  .aviso-txt { flex:1; min-width:0; } .aviso-txt b { display:block; font-size:15px; line-height:1.25; } .aviso-txt small { display:block; color:var(--suave); font-size:12.5px; margin-top:1px; }
+  .tipo-chapa.t-av-fiscal { background:#0a0a0a; color:var(--champan); } .tipo-chapa.t-av-caducidad { background:#efe6fb; color:#5b2d91; } .tipo-chapa.t-av-aparato { background:#e1eef8; color:#13507e; } .tipo-chapa.t-av-horas { background:#fff1dc; color:#a35a00; }
+  .tri { position:relative; background:#0a0a0a; color:var(--marfil); border-radius:16px; padding:12px 16px; margin-bottom:8px; }
+  .tri span { display:block; color:var(--champan); font-size:11px; letter-spacing:2px; } .tri b { font-family:var(--serif); font-size:26px; color:#fff; } .tri small { display:block; color:rgba(237,230,218,.7); font-size:12.5px; }
+  .tri .mini { position:absolute; top:12px; right:12px; }
+  .aparato { display:flex; gap:12px; background:#fff; border:1px solid var(--linea); border-radius:16px; padding:12px; margin-bottom:8px; } .aparato.inactivo { opacity:.55; }
+  .ap-foto { flex:none; width:132px; height:92px; border:1px solid var(--linea); border-radius:12px; background:var(--oro-claro); overflow:hidden; display:flex; align-items:center; justify-content:center; color:var(--champan-osc); }
+  .ap-foto img { width:100%; height:100%; object-fit:contain; background:#fff; } .ap-foto svg { width:38px; height:38px; }
+  .ap-txt { flex:1; min-width:0; } .ap-txt small { display:block; color:var(--suave); font-size:12.5px; margin-top:2px; } .ap-txt .acciones { margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; }
+  .cad.verde { background:#e2f4e7; color:#1f6b35; }
+  .hoja-caja { max-height:88vh; overflow-y:auto; }
+  .copia-info { display:flex; flex-wrap:wrap; align-items:center; gap:8px; justify-content:space-between; margin:-4px 0 16px; font-size:13.5px; color:var(--suave); }
+  .destino { display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#fff; border:1px dashed var(--champan); border-radius:12px; padding:9px 12px; margin:0 0 14px; font-size:13.5px; color:var(--suave); }
+  .destino svg { width:18px; height:18px; color:var(--champan-osc); flex:none; } .destino span { flex:1; min-width:150px; } .destino b { color:var(--tinta); } .destino i { font-style:normal; color:var(--champan-osc); }
+  .migas { font-size:13px; color:var(--suave); margin:4px 0 10px; line-height:1.6; } .migas a { color:var(--champan-osc); }
+  .lista-carpetas { max-height:46vh; overflow-y:auto; border:1px solid var(--linea); border-radius:12px; }
+  .carpeta-fila { display:flex; align-items:center; gap:10px; width:100%; background:#fff; border:0; border-bottom:1px solid var(--linea); padding:12px; font:inherit; font-size:15px; text-align:left; cursor:pointer; color:var(--tinta); }
+  .carpeta-fila:last-child { border-bottom:0; } .carpeta-fila svg { width:20px; height:20px; color:var(--champan-osc); flex:none; } .carpeta-fila span { margin-left:auto; color:var(--suave); }
+  button.accion-fina { width:100%; font:inherit; font-weight:600; font-size:15.5px; color:var(--tinta); cursor:pointer; }
+  .mini svg { width:15px; height:15px; vertical-align:-2px; margin-right:4px; flex:none; } .mini { display:inline-flex; align-items:center; justify-content:center; }
+  .portada-logo { overflow:hidden; background:#fff; padding:0; } .portada-logo img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.3); }
+  .etq { display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.3px; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .etq.auto { background:#0a0a0a; color:var(--champan); } .etq.barco { background:#e1eef8; color:#13507e; } .etq.ulm { background:#efe6fb; color:#5b2d91; }
+  .portada-iconos button.con-numero { position:relative; } .portada-iconos button i { position:absolute; top:-4px; right:-4px; min-width:18px; height:18px; border-radius:9px; background:var(--champan); color:#0a0a0a; font-style:normal; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; padding:0 4px; }
   .cad { display:inline-block; margin-top:4px; font-size:12.5px; font-weight:700; padding:2px 8px; border-radius:999px; }
   .cad.roja { background:#fdecea; color:#b3261e; } .cad.naranja { background:#fff1dc; color:#a35a00; }
   .cad-caja { margin-top:10px; padding:10px 12px; border-radius:12px; font-size:13.5px; line-height:1.4; }
@@ -391,7 +421,7 @@
 <!-- 1. Inicio -->
 <section id="inicio" class="pantalla inicio activa">
   <header class="portada">
-    <div class="portada-iconos"><button aria-label="Papelera" onclick="abrirPapelera()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg></button><button aria-label="Ajustes" onclick="abrirAjustes()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+    <div class="portada-iconos"><button aria-label="Avisos" onclick="abrirAvisos()" class="con-numero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i id="numAvisos" style="display:none"></i></button><button aria-label="Borradores" onclick="abrirBorradores()" class="con-numero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15l5.5-5.5 2 2L11 17H9z"/></svg><i id="numBorradores"></i></button><button aria-label="Papelera" onclick="abrirPapelera()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg></button><button aria-label="Ajustes" onclick="abrirAjustes()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
     <div class="portada-logo"><img src="icon-512.png" alt=""></div>
     <div class="marca">Airía Privé</div>
     <h1 class="portada-t">Gestión</h1>
@@ -403,7 +433,7 @@
   </div>
 
   <div class="seccion" id="vigilarSeccion" style="display:none">
-    <div class="sec-tit">Horas a vigilar</div>
+    <div class="sec-tit">Avisos</div>
     <div id="vigilarLista"></div>
   </div>
 
@@ -433,6 +463,26 @@
   <p class="pie-marca">Airía Privé · Gestión</p>
   <input id="camara" type="file" accept="image/*" capture="environment">
   <input id="galeria" type="file" accept="image/*">
+</section>
+
+<!-- Avisos -->
+<section id="avisos" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <div class="marca oscura">Airía Privé</div>
+  <h1 class="titulo">Avisos</h1>
+  <div class="chips filtro desliza" id="avisosFiltro"></div>
+  <p class="info" id="avisosInfo">Cargando…</p>
+  <div id="avisosCab"></div>
+  <div id="avisosLista"></div>
+</section>
+
+<!-- Borradores -->
+<section id="borradores" class="pantalla">
+  <button class="volver" onclick="volverAlInicio()">‹ Inicio</button>
+  <div class="marca oscura">Airía Privé</div>
+  <h1 class="titulo">Borradores</h1>
+  <p class="info">Lo que dejaste a medias. Se guarda solo en este móvil hasta que lo continúes y lo guardes, o lo descartes.</p>
+  <div id="borradoresTodos"></div>
 </section>
 
 <!-- Partes de vuelo -->
@@ -472,6 +522,7 @@
 <!-- 3. Revisar -->
 <section id="revisar" class="pantalla">
   <div id="resumen" class="resumen"></div>
+  <div class="destino" id="parteDestino" style="display:none"></div>
   <div id="tarjetas"></div>
 </section>
 
@@ -574,6 +625,8 @@
       <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
       <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Autogiro">Socio autogiro</option><option value="Barco">Socio barco</option><option value="Ambos">Socio autogiro y barco</option></select></div>
       <div class="campo"><label for="nCursoUlm">Curso ULM</label><select id="nCursoUlm"><option value="No">No</option><option value="Si">Sí, está haciendo el curso</option></select></div>
+      <div class="campo"><label for="nLicCad">Caduca la licencia</label><input id="nLicCad" type="date"><div class="nota gris" id="nLicCadNota"></div></div>
+      <div class="campo"><label for="nMedCad">Caduca el certificado médico</label><input id="nMedCad" type="date"><div class="nota gris" id="nMedCadNota"></div></div>
       <div class="campo"><label for="nTrato">Saludo en los correos</label><select id="nTrato"><option value="">Automático</option><option>Estimado</option><option>Estimada</option><option>Estimados</option></select><div class="nota gris" id="nTratoAuto"></div></div>
       <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota autogiro (€ sin IVA)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
       <div class="campo" id="nCuotaBarcoCampo" style="display:none"><label for="nCuotaBarco">Cuota barco (€ sin IVA)</label><input id="nCuotaBarco" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
@@ -638,7 +691,7 @@
   <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Facturas</h1>
   <div class="segmento tres"><button id="segManual" class="activo" onclick="verPestanaFacturas('MANUAL')">Manuales</button><button id="segMensual" onclick="verPestanaFacturas('MENSUAL')">Mensuales</button><button id="segPresupuesto" onclick="verPestanaFacturas('PRESUPUESTO')">Presupuestos</button></div>
-  <div class="acciones-pag" id="facturasAcciones"><button class="boton principal" id="facturasNueva" onclick="nuevoSegunPestana()">+ Nueva factura</button></div>
+  <div class="acciones-pag" id="facturasAcciones"><button class="boton principal" id="facturasNueva" onclick="nuevoSegunPestana()">+ Nueva factura</button><button class="boton" id="facturasExportar" onclick="abrirExportar()">Exportar trimestre</button></div>
   <div class="ultima" id="facturasUltima" style="display:none"></div>
   <div id="facturasOk" class="resumen ok" style="display:none"></div>
   <div id="facturasError" class="resumen mal" style="display:none"></div>
@@ -670,6 +723,7 @@
   <button class="volver" onclick="BARRAS.factura[1]()">‹ Facturas</button>
   <h1 class="titulo" id="facTitulo">Nueva factura</h1>
   <div class="num-grande" id="facNumGrande"></div>
+  <div class="destino" id="facDestino"></div>
   <div id="facError" class="resumen mal" style="display:none"></div>
   <div class="tarjeta">
     <h2 style="margin-bottom:12px" id="facDatosTit">Datos de la factura</h2>
@@ -794,7 +848,7 @@
 
 <script>
 const DEMO = /[?&]demo/.test(location.search);
-const VERSION_APP = 5;
+const VERSION_APP = 11;
 const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
 const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
 const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
@@ -838,7 +892,7 @@ const BARRAS = {
 };
 const ICO_CASA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>';
 // Pestaña de abajo que se marca en cada pantalla (las pantallas con formulario llevan Cancelar/Guardar en su lugar)
-const PESTANA_DE = { inicio:'inicio', partes:'partes', consulta:'horas', detalle:'horas', vuelos:'horas', foto:'horas', clientes:'clientes', facturas:'facturas', papelera:'inicio', hecho:'' };
+const PESTANA_DE = { avisos:'inicio', borradores:'inicio', inicio:'inicio', partes:'partes', consulta:'horas', detalle:'horas', vuelos:'horas', foto:'horas', clientes:'clientes', facturas:'facturas', papelera:'inicio', hecho:'' };
 function irPestana(t) {
   if (t === 'inicio') volverAlInicio();
   else if (t === 'partes') { mostrar('partes'); if (!partesEncontrados.length) buscarPartesApp(); }
@@ -846,7 +900,11 @@ function irPestana(t) {
   else if (t === 'clientes') abrirClientes();
   else if (t === 'facturas') abrirFacturas();
 }
+// Qué pantallas tienen cambios sin guardar (para no preguntar "¿Salir?" si ya está todo guardado)
+const sucio = {};
+['input', 'change'].forEach(ev => document.addEventListener(ev, e => { const p = e.target && e.target.closest && e.target.closest('.pantalla'); if (p && e.isTrusted) sucio[p.id] = true; }, true));
 function mostrar(id) {
+  sucio[id] = false;
   document.querySelectorAll('.pantalla').forEach(s => { s.classList.toggle('activa', s.id === id); s.style.transform = ''; });
   activarSelectores();
   const b = BARRAS[id];
@@ -900,6 +958,7 @@ function guardarClave(c) { claveMemoria = c; try { c ? localStorage.setItem('par
 let claveMemoria = '';
 
 async function api(cuerpo, clave) {
+  if (cuerpo && SOLO_LECTURA && SOLO_LECTURA.indexOf(cuerpo.accion) < 0) vaciarCache();
   if (DEMO) { const j = await demo(cuerpo); if (j && j.ok === false) throw Object.assign(new Error(j.error), { datos: j }); return j; }
   const r = await fetch(API_URL, { method:'POST', body: JSON.stringify(Object.assign({ clave: clave || leerClave() }, cuerpo)) });
   if (!r.ok) throw new Error('El servidor ha respondido con un error (' + r.status + ').');
@@ -976,10 +1035,11 @@ function pintarEstadoServidor(cfg) {
   CFG = cfg;
   const e = cfg.espacio;
   if (e && e.limite > 0) {
-    const pct = Math.min(100, Math.round(e.usado / e.limite * 100)), gb = b => (b / 1e9).toFixed(1).replace('.', ',') + ' GB';
+    const exacto = Math.min(100, e.usado / e.limite * 100), pct = Math.round(exacto), gb = b => b < 1e9 ? Math.round(b / 1e6).toLocaleString('es-ES') + ' MB' : (b / 1e9).toFixed(1).replace('.', ',') + ' GB';
+    const pctTxt = exacto < 10 ? exacto.toFixed(exacto < 1 ? 2 : 1).replace('.', ',') : String(pct);
     $('espacioSeccion').style.display = 'block';
-    $('espacioUso').style.width = pct + '%'; $('espacioUso').className = pct >= 85 ? 'lleno' : '';
-    $('espacioTxt').innerHTML = `<b>${pct}%</b> usado · ${gb(e.usado)} de ${gb(e.limite)}` + (pct >= 85 ? '<br><span class="txt-rojo">Queda poco espacio: libera Drive o Gmail, o lo que hagas se quedará como borrador.</span>' : '');
+    $('espacioUso').style.width = Math.max(exacto, 1) + '%'; $('espacioUso').className = pct >= 85 ? 'lleno' : '';
+    $('espacioTxt').innerHTML = `<b>${pctTxt} %</b> usado · ${gb(e.usado)} de ${gb(e.limite)}` + (pct >= 85 ? '<br><span class="txt-rojo">Queda poco espacio: libera Drive o Gmail, o lo que hagas se quedará como borrador.</span>' : '');
   }
   document.querySelectorAll('#atajosDrive .atajo').forEach(b => { b.disabled = !(cfg.carpetas && cfg.carpetas[b.dataset.carpeta]); });
 }
@@ -988,9 +1048,12 @@ document.querySelectorAll('#atajosDrive .atajo').forEach(b => b.addEventListener
   const u = CFG.carpetas && CFG.carpetas[b.dataset.carpeta];
   if (u) abrirEnlace(u); else avisar('Todavía no tengo esa carpeta. Actualiza Apps Script y vuelve a abrir la app.', 5000);
 }));
+function modoCamaras() { try { return localStorage.getItem('camaras-modo') || 'appstore'; } catch (e) { return 'appstore'; } }
+function pintarBotonCamaras() { const s = $('botonCamaras').closest('.seccion'); if (s) s.style.display = modoCamaras() === 'ocultar' ? 'none' : ''; }
+pintarBotonCamaras();
 function abrirCamaras() {
-  const u = CFG.camaras && !/apps\.apple\.com/.test(CFG.camaras) ? CFG.camaras : 'shortcuts://run-shortcut?name=Tapo';
-  if (/^https?:/i.test(u)) abrirEnlace(u); else location.href = u;
+  if (modoCamaras() === 'atajo') { location.href = 'shortcuts://run-shortcut?name=Tapo'; return; }
+  abrirEnlace('https://apps.apple.com/es/app/tp-link-tapo/id1472718009');
 }
 
 // ---------- tiempo en LEMT (Open-Meteo, gratis y sin clave) ----------
@@ -1041,18 +1104,169 @@ function pintarTiempo(d, viejo) {
       <button class="m-recargar" aria-label="Actualizar el tiempo" onclick="this.classList.add('girando'); cargarTiempo(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg></button></div>`;
 }
 cargarTiempo();
-/** Inicio: clientes con horas pasadas de plazo o a punto de vencer */
-async function cargarVigilar() {
-  try {
-    const r = await api({ accion:'alumnos' });
-    const l = (r.alumnos || []).filter(a => a.caducadas > 0 || a.caducanPronto > 0).sort((a, b) => (b.caducadas || 0) - (a.caducadas || 0));
-    $('vigilarSeccion').style.display = l.length ? 'block' : 'none';
-    $('vigilarLista').innerHTML = l.slice(0, 6).map(a => `<button class="fila-alumno ${a.caducadas > 0 ? 'borde-rojo' : 'borde-naranja'}" data-vigilar="${esc(a.alumno)}"><span><b>${esc(a.alumno)}</b>${avisoCaducidad(a, true)}<small>${a.ultimoVuelo ? 'Último vuelo ' + esc(a.ultimoVuelo) : 'Sin vuelos'}</small></span><span class="chapa ${claseSaldo(a.saldo)}">${tiempo(a.saldo)}</span></button>`).join('') +
-      (l.length > 6 ? `<button class="enlace-fila" onclick="filtroHoras='vigilar'; abrirConsulta()"><span><b>Ver los ${l.length}</b></span></button>` : '');
-    document.querySelectorAll('[data-vigilar]').forEach(b => b.addEventListener('click', () => abrirDetalle(b.dataset.vigilar)));
-  } catch (e) { /* sin aviso */ }
+// ---------- avisos: fiscal, caducidades, aparatos y horas ----------
+let AVISOS = null, filtroAvisos = '', fotosAparatos = {};
+const hoy0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const diasHasta = d => Math.round((d - hoy0()) / 86400000);
+const fechaTxt = d => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+/** Calendario fiscal general de una S.L. con ejercicio = año natural. Si el día cae en fin de semana pasa al lunes. */
+function avisosFiscales() {
+  const l = [], y0 = new Date().getFullYear();
+  const pon = (y, m, d, clave, titulo, detalle, sinMover) => {
+    const f = new Date(y, m - 1, d);
+    if (!sinMover) { if (f.getDay() === 6) f.setDate(f.getDate() + 2); else if (f.getDay() === 0) f.setDate(f.getDate() + 1); }
+    l.push({ tipo: 'fiscal', clave, titulo, detalle, fecha: fechaTxt(f), dias: diasHasta(f) });
+  };
+  [y0, y0 + 1].forEach(y => {
+    pon(y, 1, 20, 'ret', `Retenciones 4T ${y - 1}`, 'Modelos 111 y 115');
+    pon(y, 1, 30, 'iva', `IVA 4T ${y - 1} y resumen anual`, 'Modelos 303 y 390');
+    pon(y, 1, 31, 'ret', `Resúmenes anuales de retenciones ${y - 1}`, 'Modelos 190 y 180');
+    pon(y, 3, 0, '347', `Operaciones con terceros ${y - 1}`, 'Modelo 347 (clientes o proveedores de más de 3.005,06 €)');
+    pon(y, 3, 31, 'cuentas', `Formular las cuentas anuales ${y - 1}`, 'Los administradores, en los 3 meses tras el cierre');
+    pon(y, 4, 20, 'iva', `IVA 1T ${y}`, 'Modelo 303'); pon(y, 4, 20, 'ret', `Retenciones 1T ${y}`, 'Modelos 111 y 115'); pon(y, 4, 20, '202', 'Pago fraccionado de Sociedades (1.º)', 'Modelo 202');
+    pon(y, 4, 30, 'cuentas', `Legalizar los libros ${y - 1}`, 'Registro Mercantil');
+    pon(y, 6, 30, 'cuentas', `Aprobar las cuentas anuales ${y - 1}`, 'Junta general, en los 6 meses tras el cierre');
+    pon(y, 6, 30, 'renta', `Fin de la campaña de la Renta ${y - 1}`, 'Tu declaración personal (IRPF). La campaña empieza en abril');
+    pon(y, 7, 20, 'iva', `IVA 2T ${y}`, 'Modelo 303'); pon(y, 7, 20, 'ret', `Retenciones 2T ${y}`, 'Modelos 111 y 115');
+    pon(y, 7, 25, '200', `Impuesto sobre Sociedades ${y - 1}`, 'Modelo 200');
+    pon(y, 7, 30, 'cuentas', `Depositar las cuentas ${y - 1}`, 'Registro Mercantil, un mes desde la aprobación');
+    pon(y, 10, 20, 'iva', `IVA 3T ${y}`, 'Modelo 303'); pon(y, 10, 20, 'ret', `Retenciones 3T ${y}`, 'Modelos 111 y 115'); pon(y, 10, 20, '202', 'Pago fraccionado de Sociedades (2.º)', 'Modelo 202');
+    pon(y, 12, 20, '202', 'Pago fraccionado de Sociedades (3.º)', 'Modelo 202');
+    [[3, 31, 1], [6, 30, 2], [9, 30, 3], [12, 31, 4]].forEach(([m, d, t]) => pon(y, m, d, 'trimestre', `Termina el ${t}T ${y}`, 'Deja hechas las facturas del trimestre y expórtalo para la gestora', true));
+  });
+  const ocultos = String((AVISOS && AVISOS.fiscalOcultos) || '').split(',').filter(Boolean);
+  return l.filter(a => a.dias >= -3 && a.dias <= 120 && ocultos.indexOf(a.clave) < 0);
 }
-if (!SIN_CONFIGURAR && (DEMO || leerClave())) setTimeout(cargarVigilar, 400);
+function listaAvisos() {
+  const l = avisosFiscales(), A = AVISOS || {};
+  (A.caducidades || []).filter(c => c.dias <= 60).forEach(c => l.push({ tipo: 'caducidad', titulo: `${c.tipo} de ${c.nombre}`, detalle: (c.dias < 0 ? 'Caducó el ' : 'Caduca el ') + c.fecha + (c.deHojaAntigua ? ' (fecha de la hoja antigua)' : ''), fecha: c.fecha, dias: c.dias, cliente: c.nombre }));
+  (A.aparatos || []).filter(a => a.activo).forEach(a => {
+    if (a.faltan !== null && a.faltan <= 25) l.push({ tipo: 'aparato', titulo: `Revisión de ${a.matricula}`, detalle: a.faltan <= 0 ? `Pasada ${aTextoNumero(-a.faltan)} h (tocaba a ${aTextoNumero(a.proxima)})` : `Faltan ${aTextoNumero(a.faltan)} h (toca a ${aTextoNumero(a.proxima)})`, dias: a.faltan <= 0 ? -1 : a.faltan <= 10 ? 5 : 20, horas: true });
+    [['anual', 'Revisión anual'], ['seguro', 'Seguro']].forEach(([k, t]) => { const d = a[k + 'Dias']; if (d !== null && d <= 60) l.push({ tipo: 'aparato', titulo: `${t} de ${a.matricula}`, detalle: (d < 0 ? 'Caducó el ' : 'Caduca el ') + a[k], dias: d }); });
+  });
+  (A.alumnos || []).filter(a => a.caducadas > 0 || a.caducanPronto > 0).forEach(a => l.push({ tipo: 'horas', titulo: a.alumno, detalle: a.caducadas > 0 ? `${tiempo(a.caducadas)} pasadas de plazo desde el ${a.caducadasDesde}` : `${tiempo(a.caducanPronto)} vencen el ${a.caducanEl}`, dias: a.caducadas > 0 ? -1 : 20, alumno: a.alumno, horas: true }));
+  return l.sort((a, b) => a.dias - b.dias);
+}
+const TIPOS_AVISO = { fiscal: 'Fiscal', caducidad: 'Caducidad', aparato: 'Aparato', horas: 'Horas' };
+function htmlAviso(a, i, corto) {
+  const color = a.dias <= 7 ? 'rojo' : a.dias <= 30 ? 'naranja' : 'gris';
+  return `<div class="aviso-item ${color}" data-aviso="${i}"><div class="cuenta-atras">${a.horas ? (a.dias < 0 ? '!' : '⏳') : (a.dias < 0 ? '!' : a.dias)}<small>${a.horas ? '' : (a.dias < 0 ? 'pasado' : a.dias === 1 ? 'día' : 'días')}</small></div>
+    <div class="aviso-txt"><span class="tipo-chapa t-av-${a.tipo}">${TIPOS_AVISO[a.tipo]}</span><b>${esc(a.titulo)}</b><small>${esc(a.detalle)}${a.tipo === 'fiscal' ? ' · hasta el ' + esc(a.fecha) : ''}</small></div>
+    ${!corto && a.tipo === 'fiscal' ? `<button type="button" class="mini" data-ocultar="${esc(a.clave)}">No me aplica</button>` : ''}</div>`;
+}
+function alPulsarAviso(a) {
+  if (a.tipo === 'caducidad') abrirFichaCliente(a.cliente);
+  else if (a.tipo === 'horas') abrirDetalle(a.alumno);
+  else if (a.tipo === 'aparato') { filtroAvisos = 'aparato'; abrirAvisos(); }
+  else if (a.clave === 'trimestre' || a.clave === 'iva') abrirExportar();
+  else { filtroAvisos = 'fiscal'; abrirAvisos(); }
+}
+function pintarResumenAvisos() {
+  const l = listaAvisos().filter(a => a.dias <= 30);
+  $('numAvisos').textContent = l.length || ''; $('numAvisos').style.display = l.length ? '' : 'none';
+  $('vigilarSeccion').style.display = 'block';
+  $('vigilarLista').innerHTML = (l.length ? l.slice(0, 5).map((a, i) => htmlAviso(a, i, true)).join('') : `<p class="info" style="margin:0 0 8px">${AVISOS && AVISOS.ok ? 'Nada urgente en los próximos 30 días.' : 'Cargando avisos…'}</p>`) +
+    `<button class="enlace-fila" onclick="filtroAvisos=''; abrirAvisos()"><span><b>${l.length > 5 ? 'Ver los ' + l.length + ' avisos' : 'Ver todos los avisos'}</b><small>Calendario fiscal, caducidades, aparatos y horas</small></span><span class="ag-fl oscuro">›</span></button>`;
+  document.querySelectorAll('#vigilarLista [data-aviso]').forEach(el => el.addEventListener('click', () => alPulsarAviso(l[+el.dataset.aviso])));
+}
+async function cargarVigilar() {
+  await conCache('avisos', { accion:'avisos' }, r => { AVISOS = r; if (r.alumnos) guardarCache('alumnos', { ok: true, alumnos: r.alumnos }); pintarResumenAvisos(); if ($('avisos').classList.contains('activa')) pintarAvisos(); },
+    () => { AVISOS = AVISOS || {}; pintarResumenAvisos(); }, () => {}, null);
+}
+function abrirAvisos() { mostrar('avisos'); if (AVISOS && AVISOS.ok) pintarAvisos(); else $('avisosInfo').textContent = 'Cargando…'; cargarVigilar(); }
+function pintarAvisos() {
+  const todos = listaAvisos();
+  $('avisosFiltro').innerHTML = [['', 'Todo'], ['fiscal', 'Fiscal'], ['caducidad', 'Caducidades'], ['aparato', 'Aparatos'], ['horas', 'Horas']].map(([k, t]) =>
+    `<button type="button" class="${filtroAvisos === k ? 'activo' : ''}" onclick="filtroAvisos='${k}';pintarAvisos()">${t} (${k === 'aparato' ? (AVISOS.aparatos || []).filter(a => a.activo).length : todos.filter(a => !k || a.tipo === k).length})</button>`).join('');
+  const l = todos.filter(a => !filtroAvisos || a.tipo === filtroAvisos);
+  let cab = '', info = '';
+  if (filtroAvisos === 'fiscal') {
+    const ocultos = String(AVISOS.fiscalOcultos || '').split(',').filter(Boolean);
+    info = 'Plazos generales de una S.L. Si caen en fin de semana pasan al lunes; los festivos pueden moverlos. Confírmalos con tu gestora.';
+    cab = (AVISOS.trimestres || []).map(t => `<div class="tri"><span>${t.trimestre}T ${t.anio}</span><b>${euros(t.total)}</b><small>${t.facturas} facturas · base ${euros(t.base)} · IVA ${euros(t.iva)}${t.irpf ? ' · IRPF ' + euros(t.irpf) : ''}</small>
+      <button type="button" class="mini" onclick="abrirExportar(${t.anio}, ${t.trimestre})">Exportar</button></div>`).join('') +
+      (ocultos.length ? `<p class="info">Hay ${ocultos.length} tipo${ocultos.length > 1 ? 's' : ''} de aviso oculto${ocultos.length > 1 ? 's' : ''}. <button type="button" class="mini" onclick="ocultarFiscal('')">Volver a mostrarlos</button></p>` : '');
+  } else if (filtroAvisos === 'aparato') {
+    info = 'El horómetro sale del último parte de cada aparato. Pon cada cuántas horas toca la revisión y en qué horómetro se hizo la última. También está en la pestaña «Aparatos» del archivo de gestión.';
+    cab = (AVISOS.aparatos || []).map((a, i) => { const f = fotosAparatos[a.matricula];
+      const est = !a.activo ? '' : a.faltan === null ? '<span class="cad naranja">Falta poner la última revisión</span>' : a.faltan <= 0 ? `<span class="cad roja">⚠ Revisión pasada ${aTextoNumero(-a.faltan)} h</span>` : `<span class="cad ${a.faltan <= 10 ? 'roja' : a.faltan <= 25 ? 'naranja' : 'verde'}">Faltan ${aTextoNumero(a.faltan)} h para la revisión</span>`;
+      return `<div class="aparato${a.activo ? '' : ' inactivo'}"><div class="ap-foto">${f ? `<img src="${f}" alt="">` : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h13l3-3M9 12l-2 5h8l3-5M4 7h14"/></svg>'}</div>
+        <div class="ap-txt"><b>${esc(a.matricula)}</b>${a.modelo ? ' · ' + esc(a.modelo) : ''}${a.activo ? '' : ' · <i>no activo</i>'}
+        <small>Horómetro ${a.horometro === null ? '—' : aTextoNumero(a.horometro)}${a.ultimoParte ? ' (' + esc(a.ultimoParte) + ')' : ''} · revisión cada ${a.cada || '—'} h${a.proxima !== null ? ' · próxima a ' + aTextoNumero(a.proxima) : ''}</small>
+        ${est}${a.anual ? `<small class="${a.anualDias <= 30 ? 'txt-rojo' : ''}">Revisión anual: ${esc(a.anual)}</small>` : ''}${a.seguro ? `<small class="${a.seguroDias <= 30 ? 'txt-rojo' : ''}">Seguro: ${esc(a.seguro)}</small>` : ''}
+        <div class="acciones"><button type="button" class="mini" onclick="editarAparato(${i})">Editar</button>${a.activo && a.horometro !== null ? `<button type="button" class="mini principal" onclick="revisionHecha(${i})">Revisión hecha</button>` : ''}</div></div></div>`; }).join('');
+    (AVISOS.aparatos || []).filter(a => a.tieneFoto && fotosAparatos[a.matricula] === undefined).forEach(a => { fotosAparatos[a.matricula] = '';
+      api({ accion:'fotoAparato', matricula: a.matricula }).then(r => { fotosAparatos[a.matricula] = `data:${r.tipo};base64,${r.datos}`; if (filtroAvisos === 'aparato' && $('avisos').classList.contains('activa')) pintarAvisos(); }).catch(() => {}); });
+  } else if (filtroAvisos === 'caducidad') info = 'Licencias y certificados médicos caducados o que caducan en 60 días. Las fechas se ponen en la ficha de cada cliente.';
+  else if (filtroAvisos === 'horas') info = 'Clientes con horas fuera de plazo o a punto de vencer. No se quita nada.';
+  $('avisosInfo').textContent = info; $('avisosInfo').style.display = info ? '' : 'none';
+  $('avisosCab').innerHTML = cab;
+  $('avisosLista').innerHTML = l.length ? l.map((a, i) => htmlAviso(a, i)).join('') : (filtroAvisos === 'aparato' ? '' : '<p class="info">No hay avisos.</p>');
+  document.querySelectorAll('#avisosLista [data-aviso]').forEach(el => el.addEventListener('click', ev => { if (ev.target.closest('[data-ocultar]')) return; alPulsarAviso(l[+el.dataset.aviso]); }));
+  document.querySelectorAll('#avisosLista [data-ocultar]').forEach(b => b.addEventListener('click', () => {
+    hoja(`<h2>¿Ocultar estos avisos?</h2><p class="info" style="margin:8px 0 0">No volverán a salir los avisos de este tipo. Podrás volver a mostrarlos desde Avisos › Fiscal.</p>`, [{ t: 'Ocultar', principal: true, f: () => ocultarFiscal(b.dataset.ocultar) }]); }));
+}
+async function ocultarFiscal(clave) {
+  const l = clave ? String(AVISOS.fiscalOcultos || '').split(',').filter(Boolean).concat([clave]) : [];
+  AVISOS.fiscalOcultos = l.join(','); pintarAvisos(); pintarResumenAvisos();
+  try { await api({ accion:'guardarAjustes', ajustes: { fiscalOcultos: AVISOS.fiscalOcultos } }); } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+// ----- aparatos -----
+function editarAparato(i) {
+  const a = AVISOS.aparatos[i]; let foto = null;
+  hoja(`<h2>${esc(a.matricula)}</h2><div class="rejilla" style="margin-top:10px">
+    <div class="campo ancho"><label for="apModelo">Modelo</label><input id="apModelo" type="text" value="${esc(a.modelo)}" autocomplete="off"></div>
+    <div class="campo"><label for="apCada">Revisión cada (horas)</label><input id="apCada" type="text" inputmode="decimal" value="${a.cada || ''}"></div>
+    <div class="campo"><label for="apUltH">Última revisión (horómetro)</label><input id="apUltH" type="text" inputmode="decimal" value="${a.ultimaH === null ? '' : aTextoNumero(a.ultimaH)}"></div>
+    <div class="campo"><label for="apUltF">Fecha de la última</label><input id="apUltF" type="date" value="${esc(fechaAInput(a.ultimaFecha))}"></div>
+    <div class="campo"><label for="apAnual">Revisión anual (caduca)</label><input id="apAnual" type="date" value="${esc(fechaAInput(a.anual))}"></div>
+    <div class="campo"><label for="apSeguro">Seguro (caduca)</label><input id="apSeguro" type="date" value="${esc(fechaAInput(a.seguro))}"></div>
+    <div class="campo"><label for="apActivo">¿Lo tienes?</label><select id="apActivo"><option value="1" ${a.activo ? 'selected' : ''}>Sí, activo</option><option value="0" ${a.activo ? '' : 'selected'}>No</option></select></div>
+    <div class="campo ancho"><label for="apNotas">Notas</label><input id="apNotas" type="text" value="${esc(a.notas)}" autocomplete="off"></div>
+    <div class="campo ancho"><label class="mini" for="apFoto">${a.tieneFoto ? 'Cambiar la foto' : 'Añadir foto'}</label><input id="apFoto" type="file" accept="image/*" style="display:none"><span class="nota gris" id="apFotoNota"></span></div></div>`,
+    [{ t: 'Guardar', principal: true, f: () => guardarAparatoApp(a.matricula, { modelo: $('apModelo').value, cada: numero($('apCada').value), ultimaH: numero($('apUltH').value), ultimaFecha: inputAFecha($('apUltF').value) || '',
+        anual: inputAFecha($('apAnual').value) || '', seguro: inputAFecha($('apSeguro').value) || '', activo: $('apActivo').value === '1', notas: $('apNotas').value }, foto) }]);
+  $('apFoto').addEventListener('change', async ev => { const f = ev.target.files && ev.target.files[0]; if (!f) return;
+    try { foto = (await prepararImagen(f)).split(',')[1]; $('apFotoNota').textContent = ' Foto elegida ✓'; } catch (e) { $('apFotoNota').textContent = ' ' + e.message; } });
+}
+function revisionHecha(i) {
+  const a = AVISOS.aparatos[i];
+  hoja(`<h2>¿Revisión hecha a ${esc(a.matricula)}?</h2><p class="info" style="margin:8px 0 0">Se apunta como hecha hoy, con el horómetro en <b>${aTextoNumero(a.horometro)}</b>. La próxima tocará a ${a.cada ? aTextoNumero(Math.round((a.horometro + a.cada) * 10) / 10) : '—'}. Si se hizo en otro momento, usa Editar.</p>`,
+    [{ t: 'Revisión hecha', principal: true, f: () => guardarAparatoApp(a.matricula, { ultimaH: a.horometro, ultimaFecha: fechaTxt(new Date()) }) }]);
+}
+async function guardarAparatoApp(matricula, datos, foto) {
+  avisar('Guardando el aparato…', 30000);
+  try { const r = await api({ accion:'guardarAparato', matricula, datos, foto: foto || undefined }); AVISOS.aparatos = r.aparatos; if (foto) delete fotosAparatos[matricula]; avisar('Guardado.'); pintarAvisos(); pintarResumenAvisos(); }
+  catch (e) { if (!e.silencioso) avisar(e.message, 7000); }
+}
+// ----- exportar el trimestre -----
+function abrirExportar(anio, tri) {
+  const d = new Date(), ops = []; let y = d.getFullYear(), t = Math.floor(d.getMonth() / 3) + 1;
+  for (let k = 0; k < 6; k++) { ops.push([y, t]); t--; if (!t) { t = 4; y--; } }
+  if (!anio) { const diaTri = d.getDate() + (d.getMonth() % 3) * 30; [anio, tri] = diaTri <= 30 ? ops[1] : ops[0]; }
+  hoja(`<h2>Exportar para la gestora</h2><div class="campo" style="margin-top:10px"><label for="expTri">Trimestre</label><select id="expTri">${ops.map(([a, q]) => `<option value="${a}-${q}" ${a === anio && q === tri ? 'selected' : ''}>${q}T ${a}</option>`).join('')}</select></div>
+    <p class="info" style="margin:10px 0 0">Entran las facturas con <b>fecha</b> en ese trimestre (no los presupuestos). El archivo se queda también en Drive › Airía Privé › Exportaciones.</p>`,
+    [{ t: 'ZIP: Excel + todas las facturas en PDF', principal: true, f: () => exportarTrimestreApp(true) }, { t: 'Solo el Excel con el listado', f: () => exportarTrimestreApp(false) }]);
+  const sel = $('expTri'); abrirExportar.valor = sel.value; sel.addEventListener('change', () => { abrirExportar.valor = sel.value; });
+}
+async function exportarTrimestreApp(conPdf) {
+  const [anio, trimestre] = abrirExportar.valor.split('-').map(Number);
+  avisar('Preparando el trimestre… puede tardar un poco', 120000);
+  try {
+    const r = await api({ accion:'exportarTrimestre', anio, trimestre, conPdf });
+    $('aviso').style.display = 'none';
+    const archivo = new File([base64ABlob(r.datos, r.tipo)], r.nombre, { type: r.tipo });
+    const puede = navigator.canShare && navigator.canShare({ files: [archivo] });
+    hoja(`<h2>${trimestre}T ${anio} listo</h2><p class="info" style="margin:8px 0 0"><b>${esc(r.nombre)}</b> · ${(archivo.size / 1e6).toFixed(1).replace('.', ',')} MB<br>${r.resumen.facturas} facturas · base ${euros(r.resumen.base)} · IVA ${euros(r.resumen.iva)} · total ${euros(r.resumen.total)}${r.sinPdf && r.sinPdf.length ? '<br><span class="txt-rojo">Sin PDF: ' + esc(r.sinPdf.join(', ')) + '</span>' : ''}</p>`,
+      [{ t: puede ? 'Enviar (WhatsApp, correo…)' : 'Descargar', principal: true, f: async () => {
+          if (puede) { try { await navigator.share({ files: [archivo], title: r.nombre }); return; } catch (e) { if (e.name === 'AbortError') return; } }
+          const a = document.createElement('a'); a.href = URL.createObjectURL(archivo); a.download = r.nombre; document.body.appendChild(a); a.click(); a.remove(); } },
+       { t: 'Abrirlo en Drive', f: () => abrirEnlace(r.enlace) }]);
+    $('hojaBotones').lastChild.textContent = 'Cerrar';
+  } catch (e) { if (!e.silencioso) avisar(e.message, 8000); }
+}
+if (!SIN_CONFIGURAR && (DEMO || leerClave())) setTimeout(() => { cargarVigilar(); precargar(); }, 400);
+
 
 // ---------- buscar partes ----------
 let partesEncontrados = [];
@@ -1164,7 +1378,9 @@ function pintarRevision() {
     const i = +el.dataset.incluir; partes[i].incluir = el.checked;
     $('tarjeta' + i).classList.toggle('apagada', !el.checked);
   }));
+  setTimeout(pintarDestinoParte, 0);
   document.querySelectorAll('[data-k]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+    if (el.dataset.k === 'fecha' && +el.dataset.p === 0) pintarDestinoParte();
     const div = el.closest('.campo'); if (div) div.classList.remove('aviso');
     if (['total_horometro', 'tiempo_total_min', 'horometro_inicial'].includes(el.dataset.k)) el.dataset.auto = '';
     autoCalculos(+el.dataset.p, el.dataset.k);
@@ -1218,6 +1434,15 @@ function autoCalculos(i, k) {
     const a = m(v('hora_salida')), b = m(v('hora_regreso'));
     if (a !== null && b !== null && b > a) pon('tiempo_total_min', String(b - a));
   }
+}
+let parteCarpeta = null;
+function pintarDestinoParte() {
+  const el = $('parteDestino');
+  const ver = !!imagen && !editandoParte;
+  el.style.display = ver ? '' : 'none';
+  if (!ver) return;
+  const f = $('p0-fecha') ? inputAFecha($('p0-fecha').value) : '';
+  pintarDestino(el, parteCarpeta, 'la foto: ' + rutaAuto('Partes', f), () => elegirCarpeta(c => { parteCarpeta = c; pintarDestinoParte(); }), () => { parteCarpeta = null; pintarDestinoParte(); });
 }
 function estadoRevision() {
   return partes.map((p, i) => {
@@ -1283,7 +1508,8 @@ async function guardar() {
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando…';
   resultadoPartes = '';
   try {
-    const r = await api({ accion:'guardar', partes: lista, imagen, tipo: tipoImagen });
+    const r = await api({ accion:'guardar', partes: lista, imagen, tipo: tipoImagen, carpetaId: parteCarpeta ? parteCarpeta.id : '' });
+    parteCarpeta = null;
     const n = r.filas.length, rev = r.filas.filter(f => f.revisar).length;
     resultadoPartes = (n > 1 ? `${n} partes guardados en la hoja.` : 'Parte guardado en la hoja.') +
       (rev ? ' Lo que no cuadraba queda marcado en amarillo.' : '');
@@ -1405,13 +1631,11 @@ async function comprar() {
 let listaAlumnos = [], detalleAlumno = '', detalleMovs = [];
 async function abrirConsulta() {
   mostrar('consulta');
-  $('consultaInfo').textContent = 'Cargando…'; $('consultaLista').innerHTML = '';
-  try {
-    const r = await api({ accion:'alumnos' });
+  await conCache('alumnos', { accion:'alumnos' }, r => {
     listaAlumnos = r.alumnos || [];
     $('consultaInfo').textContent = listaAlumnos.length ? `${listaAlumnos.length} clientes con horas. Pulsa uno para ver o modificar sus horas.` : 'Todavía no hay clientes con horas. Empieza con "Añadir horas".';
     pintarLista();
-  } catch (e) { if (!e.silencioso) $('consultaInfo').textContent = e.message; }
+  }, () => { $('consultaInfo').textContent = 'Cargando…'; $('consultaLista').innerHTML = ''; }, m => { $('consultaInfo').textContent = m; }, () => $('consulta').classList.contains('activa'));
 }
 /** Aviso de horas que han pasado su plazo (no se quitan: solo para vigilar) */
 function avisoCaducidad(a, corto) {
@@ -1638,7 +1862,7 @@ async function descontarParteCliente(i) {
 }
 
 // ---------- clientes: ficha (añadir y modificar) ----------
-const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', cuotaBarco:'nCuotaBarco', cursoUlm:'nCursoUlm', trato:'nTrato' };
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', cuotaBarco:'nCuotaBarco', cursoUlm:'nCursoUlm', licenciaCad:'nLicCad', medicoCad:'nMedCad', trato:'nTrato' };
 const NOMBRE_SOCIO = { Si:'Socio autogiro', Autogiro:'Socio autogiro', Barco:'Socio barco', Ambos:'Socio autogiro y barco' };
 const DOCS = { fichaAlumno:'Ficha de alumno piloto', dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
 let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
@@ -1694,6 +1918,9 @@ function rellenarFicha(c) {
   $('nSocio').value = c ? (c.socio === 'Si' ? 'Autogiro' : (['Autogiro', 'Barco', 'Ambos'].includes(c.socio) ? c.socio : 'No')) : 'No';
   camposCuota();
   $('nCursoUlm').value = c && /^s/i.test(c.cursoUlm || '') ? 'Si' : 'No';
+  $('nLicCad').value = c && c.licenciaCad ? fechaAInput(c.licenciaCad) : ''; $('nMedCad').value = c && c.medicoCad ? fechaAInput(c.medicoCad) : '';
+  $('nLicCadNota').textContent = c && !c.licenciaCad && c.licenciaCadAntigua ? 'En la hoja antigua: ' + c.licenciaCadAntigua : '';
+  $('nMedCadNota').textContent = c && !c.medicoCad && c.medicoCadAntigua ? 'En la hoja antigua: ' + c.medicoCadAntigua : '';
   $('nTratoAuto').textContent = c && c.tratoAuto && !c.trato ? 'Ahora: ' + c.tratoAuto : '';
   fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
   pintarDocs();
@@ -1740,6 +1967,7 @@ async function guardarCliente() {
     if (r.clientes) CLIENTES = r.clientes; else CLIENTES = [r.nombre].concat(CLIENTES.filter(c => c !== r.nombre));
     const eraNuevo = !fichaNombre;
     if (eraNuevo) borrarBorrador('cliente');
+    sucio.cliente = false;
     const mc = miniaturas[r.nombre] = Object.assign(miniaturas[fichaNombre] || {}, miniaturas[r.nombre] || {});
     Object.keys(fichaFotos).forEach(k => { mc[k] = 'data:image/jpeg;base64,' + fichaFotos[k]; });
     fichaBorrar.forEach(k => { delete mc[k]; });
@@ -1823,18 +2051,16 @@ function pintarUltima(u) {
   if (u) $('facturasUltima').innerHTML = `<span>Última guardada</span><b>N.º ${esc(u.numero)}</b> · ${esc(u.cliente)} · ${esc(u.fecha || '')}`;
 }
 async function cargarFacturas() {
-  $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = ''; listaFacturas = [];
-  try {
-    const tipo = pestanaFacturas === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL';
-    const r = await api({ accion:'facturas', tipo });
-    if (pestanaFacturas !== tipo) return;
+  const tipo = pestanaFacturas === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL';
+  await conCache('facturas-' + tipo, { accion:'facturas', tipo }, r => {
     listaFacturas = r.facturas || [];
     if (tipo === 'MANUAL') pintarUltima(r.ultima); else $('facturasUltima').style.display = 'none';
     $('facturasInfo').textContent = tipo === 'PRESUPUESTO'
       ? (listaFacturas.length ? `${r.total} presupuestos. Se guardan en Drive › Airía Privé › Presupuestos.` : 'Todavía no hay presupuestos. Pulsa "Nuevo presupuesto".')
       : (listaFacturas.length ? `${r.total} facturas manuales.` : 'Todavía no hay facturas. Pulsa "Nueva factura".');
     pintarFacturas();
-  } catch (e) { if (!e.silencioso) $('facturasInfo').textContent = e.message; }
+  }, () => { $('facturasInfo').textContent = 'Cargando…'; $('facturasLista').innerHTML = ''; listaFacturas = []; }, m => { $('facturasInfo').textContent = m; },
+  () => $('facturas').classList.contains('activa') && pestanaFacturas === tipo);
 }
 $('facturasBuscar').addEventListener('input', pintarFacturas);
 const ICO = {
@@ -1972,6 +2198,15 @@ function notaClienteFactura() {
   $('facClienteNota').textContent = c && c.socio && c.socio !== 'No' ? NOMBRE_SOCIO[c.socio] + (c.cuota ? ` · cuota ${euros(c.cuota)}` : '') : '';
 }
 $('facCliente').addEventListener('change', notaClienteFactura);
+let facCarpeta = null;
+function pintarDestinoFactura() {
+  const el = $('facDestino');
+  el.style.display = facModo === 'MENSUAL' ? 'none' : '';
+  if (facModo === 'MENSUAL') return;
+  pintarDestino(el, facCarpeta, rutaAuto(facModo === 'PRESUPUESTO' ? 'Presupuestos' : 'Facturas', inputAFecha($('facFecha').value)),
+    () => elegirCarpeta(c => { facCarpeta = c; pintarDestinoFactura(); }), () => { facCarpeta = null; pintarDestinoFactura(); });
+}
+$('facFecha').addEventListener('change', () => pintarDestinoFactura());
 let facModo = 'FACTURA', facMensual = null; // FACTURA | PRESUPUESTO | MENSUAL (editar una mensual antes de generarla)
 function prepararFormulario(modo) {
   facModo = modo;
@@ -1981,6 +2216,7 @@ function prepararFormulario(modo) {
   $('facNumeroCampo').style.display = mens ? 'none' : '';
   $('facCliente').disabled = mens;
   $('facUltimoCliente').style.display = 'none'; $('facError').className = 'resumen mal';
+  facCarpeta = null; setTimeout(pintarDestinoFactura, 0);
   document.querySelector('#factura .volver').textContent = mens ? '‹ Mensuales' : (pres ? '‹ Presupuestos' : '‹ Facturas');
 }
 async function abrirNuevaFactura(volverA, borrador, modo, titulo) {
@@ -2047,6 +2283,7 @@ async function editarFactura(id, volverA) {
     $('aviso').style.display = 'none';
     facEditando = f; facNumeroTocado = true; facClientes = n.clientes || [];
     prepararFormulario(f.tipo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'FACTURA');
+    facCarpeta = f.carpetaElegida ? { id: f.carpetaElegida, nombre: f.carpetaElegidaNombre || 'carpeta elegida' } : null;
     $('facTitulo').textContent = (f.tipo === 'PRESUPUESTO' ? 'Presupuesto ' : 'Factura ') + f.numero + (f.tipo === 'MENSUAL' ? ' (mensual)' : '');
     $('facError').style.display = 'none';
     $('facUltima').textContent = f.tipo === 'PRESUPUESTO' ? '' : (n.ultima ? `Última guardada: ${n.ultima.numero} (${n.ultima.cliente})` : '');
@@ -2073,7 +2310,7 @@ async function guardarFactura() {
     avisar('Cambios guardados para ' + facMensual + '. Se aplicarán al generar.', 3500);
     return;
   }
-  const f = { id: facEditando ? facEditando.id : undefined, tipo: facEditando ? facEditando.tipo : (facModo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL'), mes: facEditando ? facEditando.mes : undefined,
+  const f = { carpetaId: facCarpeta ? facCarpeta.id : '', id: facEditando ? facEditando.id : undefined, tipo: facEditando ? facEditando.tipo : (facModo === 'PRESUPUESTO' ? 'PRESUPUESTO' : 'MANUAL'), mes: facEditando ? facEditando.mes : undefined,
     numero: $('facNumero').value.trim(), fecha, cliente, lineas, ivaPct: ivaElegido(), irpfPct: numero($('facIrpf').value) || 0,
     formaPago: $('facPago').value.trim(), vencimiento: inputAFecha($('facVence').value) || '', notas: $('facNotas').value.trim() };
   const btn = $('guardar'); btn.disabled = true; btn.textContent = 'Guardando y creando PDF…';
@@ -2253,21 +2490,32 @@ const CAMPOS_AJUSTES = [
   ['Datos de contacto', [['empresaTelefono', 'Teléfono'], ['empresaCorreo', 'Correo']]],
   ['Datos bancarios', [['banco', 'Banco'], ['iban', 'IBAN'], ['swift', 'SWIFT / BIC']]],
   ['Facturas', [['ivaDefecto', 'IVA por defecto de las facturas (%)', 1], ['conceptoMensual', 'Concepto cuota socio autogiro ({mes} y {año} se rellenan solos)'], ['conceptoBarco', 'Concepto cuota socio barco'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
+  ['Copias de seguridad', [['copiaFrecuencia', 'Copia automática de las hojas', 0, 0, ['semanal', 'diaria', 'no']], ['copiaCorreo', 'Enviar cada copia también a este correo (otra cuenta tuya; vacío = solo en Drive)', 0]]],
   ['Horas de vuelo', [['mesesHoras', 'Meses que valen las horas compradas, contando el del pago (solo es un aviso, no se quita nada)', 1]]],
   ['Correo de las facturas', [['correoAsunto', 'Asunto'], ['correoTexto', 'Texto. {saludo} pone Estimado/Estimada/Estimados según la ficha; {nombre}, {concepto}, {numero} y {total} se rellenan solos', 0, 1]]],
-  ['Cámaras', [['enlaceCamaras', 'Enlace del botón Cámaras (la app Tapo o un Atajo de iPhone, ver abajo)']]],
 ];
 async function abrirAjustes() {
-  mostrar('ajustes'); $('ajOk').style.display = 'none'; $('ajError').style.display = 'none';
+  mostrar('ajustes');
+ $('ajOk').style.display = 'none'; $('ajError').style.display = 'none';
   $('ajCampos').innerHTML = '<p class="info">Cargando…</p>';
   try {
     const a = await api({ accion:'ajustes' });
     $('ajCampos').innerHTML = CAMPOS_AJUSTES.map(([tit, campos]) => `<div class="sec-tit">${tit}</div><div class="tarjeta"><div class="rejilla">` +
-      campos.map(([k, t, corto, largo]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label>${largo ? `<textarea id="aj-${k}" rows="9">${esc(String(a[k] || '').replace(/\\n/g, '\n'))}</textarea>` : `<input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}">`}</div>`).join('') + '</div></div>').join('') +
+      campos.map(([k, t, corto, largo, opciones]) => `<div class="campo${corto ? '' : ' ancho'}"><label for="aj-${k}">${t}</label>${opciones ? `<select id="aj-${k}">${opciones.map(o => `<option value="${o}" ${String(a[k] || 'semanal') === o ? 'selected' : ''}>${{ semanal: 'Semanal (domingos de madrugada)', diaria: 'Diaria (de madrugada)', no: 'Desactivada' }[o]}</option>`).join('')}</select>` : largo ? `<textarea id="aj-${k}" rows="9">${esc(String(a[k] || '').replace(/\\n/g, '\n'))}</textarea>` : `<input id="aj-${k}" type="text" autocomplete="off" value="${esc(a[k] || '')}">`}</div>`).join('') + '</div></div>').join('') +
       `<button type="button" class="enlace-fila" style="margin:4px 0 14px" onclick="abrirCuotas(abrirAjustes)"><span><b>Cuotas de socios</b><small>Precio general, precio de cada socio e IVA de las cuotas</small></span><span class="ag-fl oscuro">›</span></button>` +
-      `<p class="info"><b>Cámaras:</b> Tapo no deja abrir su app con un enlace, así que se hace con un atajo: en la app <b>Atajos</b> del iPhone pulsa <b>+</b>, añade la acción <b>Abrir app</b>, elige <b>Tapo</b> y llama al atajo exactamente <b>Tapo</b>. Deja aquí <b>shortcuts://run-shortcut?name=Tapo</b>.</p>` +
-      `<div class="version">App versión ${VERSION_APP} · Apps Script versión ${CFG.version || 1}${(CFG.version || 1) < VERSION_APP ? ' — <span class="txt-rojo">falta publicar una Nueva versión en Apps Script</span>' : ' ✓'}</div>`;
+      `<div class="sec-tit">Botón Cámaras (en este móvil)</div><div class="tarjeta"><div class="campo"><label for="ajCamaras">Al pulsar «Ver las cámaras»</label><select id="ajCamaras">
+        <option value="appstore">Abrir la página de Tapo (y pulsar «Abrir»)</option><option value="atajo">Abrir Tapo directamente con un atajo de iPhone</option><option value="ocultar">Quitar el botón del inicio</option></select>
+        <div class="nota gris">Tapo no deja que otras apps la abran directamente. Con «atajo», crea una vez en la app Atajos un atajo llamado <b>Tapo</b> con la acción «Abrir app → Tapo».</div></div></div>` +
+      `<div class="copia-info">${a.ultimaCopia ? `Última copia: <b>${esc(a.ultimaCopia.fecha.split('-').reverse().join('/'))}</b>${a.ultimaCopia.enviado ? ' · enviada a ' + esc(a.ultimaCopia.enviado) : ' · solo en Drive'}` : 'Todavía no se ha hecho ninguna copia.'}${a.copiasProgramadas ? '' : ' <span class="txt-rojo">La copia automática no está activada: guarda los ajustes o ejecuta probarConfiguracion.</span>'}
+        <button type="button" class="mini" onclick="copiaAhora(this)">Hacer copia ahora</button></div>` +
+      '' + `<div class="version">App versión ${VERSION_APP} · Apps Script versión ${CFG.version || 1}${(CFG.version || 1) < VERSION_APP ? ' — <span class="txt-rojo">falta publicar una Nueva versión en Apps Script</span>' : ' ✓'}</div>`;
+    const cm = $('ajCamaras'); cm.value = modoCamaras(); cm.onchange = () => { try { localStorage.setItem('camaras-modo', cm.value); } catch (e) {} pintarBotonCamaras(); avisar('Guardado en este móvil.'); };
   } catch (e) { if (!e.silencioso) { $('ajError').style.display = 'block'; $('ajError').textContent = e.message; } }
+}
+async function copiaAhora(b) {
+  b.disabled = true; b.textContent = 'Haciendo la copia…';
+  try { const r = await api({ accion:'copiaAhora' }); avisar(`Copia hecha (${Math.round(r.tamano / 1e5) / 10} MB)` + (r.enviado ? ' y enviada a ' + r.enviado : '') + '. Está en Drive › Airía Privé › Copias de seguridad.', 6000); abrirAjustes(); }
+  catch (e) { if (!e.silencioso) avisar(e.message, 7000); b.disabled = false; b.textContent = 'Hacer copia ahora'; }
 }
 async function guardarAjustes() {
   const datos = {}; CAMPOS_AJUSTES.forEach(([, c]) => c.forEach(([k]) => { const el = $('aj-' + k); if (el) datos[k] = el.value.trim(); }));
@@ -2279,7 +2527,8 @@ async function guardarAjustes() {
 
 // ---------- papelera ----------
 let elementosPapelera = [], filtroPapelera = '';
-const TIPOS_PAPELERA = { factura: 'Factura', cliente: 'Cliente' };
+const TIPOS_PAPELERA = { factura: 'Factura', presupuesto: 'Presupuesto', cliente: 'Cliente' };
+const clasePap = x => x.clase || x.tipo;
 async function abrirPapelera() {
   mostrar('papelera'); $('papError').style.display = 'none'; $('papLista').innerHTML = '<p class="info">Cargando…</p>'; $('papFiltro').innerHTML = '';
   try {
@@ -2288,11 +2537,11 @@ async function abrirPapelera() {
   } catch (e) { if (!e.silencioso) { $('papLista').innerHTML = ''; $('papError').style.display = 'block'; $('papError').textContent = e.message; } }
 }
 function pintarPapelera() {
-  const cuenta = t => elementosPapelera.filter(x => !t || x.tipo === t).length;
-  $('papFiltro').innerHTML = elementosPapelera.length ? [['', 'Todo'], ['factura', 'Facturas'], ['cliente', 'Clientes']]
+  const cuenta = t => elementosPapelera.filter(x => !t || clasePap(x) === t).length;
+  $('papFiltro').innerHTML = elementosPapelera.length ? [['', 'Todo'], ['factura', 'Facturas'], ['presupuesto', 'Presupuestos'], ['cliente', 'Clientes']]
     .map(([t, n]) => `<button type="button" class="${filtroPapelera === t ? 'activo' : ''}" onclick="filtroPapelera='${t}';pintarPapelera()">${n} (${cuenta(t)})</button>`).join('') : '';
-  const lista = elementosPapelera.map((x, i) => [x, i]).filter(([x]) => !filtroPapelera || x.tipo === filtroPapelera);
-  $('papLista').innerHTML = lista.length ? lista.map(([x, i]) => `<div class="pap t-${esc(x.tipo)}"><div><span class="tipo-chapa t-${esc(x.tipo)}">${TIPOS_PAPELERA[x.tipo] || esc(x.tipo)}</span><b style="display:block">${esc(x.titulo)}</b><small>${esc(x.detalle)} · quedan ${x.dias} días</small></div>
+  const lista = elementosPapelera.map((x, i) => [x, i]).filter(([x]) => !filtroPapelera || clasePap(x) === filtroPapelera);
+  $('papLista').innerHTML = lista.length ? lista.map(([x, i]) => `<div class="pap t-${esc(clasePap(x))}"><div><span class="tipo-chapa t-${esc(clasePap(x))}">${TIPOS_PAPELERA[clasePap(x)] || esc(x.tipo)}</span><b style="display:block">${esc(x.titulo)}</b><small>${esc(x.detalle)} · quedan ${x.dias} días</small></div>
       <div class="botones"><button class="mini" onclick="restaurarPapelera(${i})">Recuperar</button><button class="mini peligro" onclick="borrarPapelera(${i})">Borrar ya</button></div></div>`).join('')
     : `<p class="info">${elementosPapelera.length ? 'No hay nada de este tipo.' : 'La papelera está vacía.'}</p>`;
 }
@@ -2330,13 +2579,11 @@ function borrarClienteFicha() {
 let listaClientesFichas = [];
 async function abrirClientes() {
   mostrar('clientes');
-  $('clientesInfo').textContent = 'Cargando…'; $('clientesLista').innerHTML = '';
-  try {
-    const r = await api({ accion:'clientes' });
+  await conCache('clientes', { accion:'clientes' }, r => {
     listaClientesFichas = r.clientes || [];
     $('clientesInfo').textContent = `${listaClientesFichas.length} clientes. Pulsa uno para ver o modificar su ficha.`;
     pintarClientes();
-  } catch (e) { if (!e.silencioso) $('clientesInfo').textContent = e.message; }
+  }, () => { $('clientesInfo').textContent = 'Cargando…'; $('clientesLista').innerHTML = ''; }, m => { $('clientesInfo').textContent = m; }, () => $('clientes').classList.contains('activa'));
 }
 // Filtros de la lista de clientes (los de autogiro y barco salen en Autogiro y en Barco)
 const FILTROS_CLIENTES = [
@@ -2354,7 +2601,8 @@ function pintarClientes() {
   const pasa = FILTROS_CLIENTES.find(x => x[0] === filtroClientes)[2];
   $('clientesLista').innerHTML = listaClientesFichas.filter(pasa).filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
     const docs = Object.values(c.docs || {}).filter(Boolean).length;
-    const chapas = (c.socio && c.socio !== 'No' ? `<span class="chapa socio">${NOMBRE_SOCIO[c.socio] || 'Socio'}</span>` : '') + (/^s/i.test(c.cursoUlm || '') ? '<span class="chapa ulm">Curso ULM</span>' : '');
+    const so = c.socio === 'Si' ? 'Autogiro' : c.socio;
+    const chapas = (so === 'Autogiro' || so === 'Ambos' ? '<span class="etq auto">Autogiro</span>' : '') + (so === 'Barco' || so === 'Ambos' ? '<span class="etq barco">Barco</span>' : '') + (/^s/i.test(c.cursoUlm || '') ? '<span class="etq ulm">Curso ULM</span>' : '');
     return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 5 ? 'txt-rojo' : 'txt-verde'}">${docs}/5 documentos</span></small></span><span class="chapas">${chapas}</span></button>`;
   }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
   document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
@@ -2388,6 +2636,53 @@ function fallo(msg, reintentar, desdeRevision) {
 }
 function volverAlInicio() { imagen = null; partes = []; parteManual = false; mostrar('inicio'); }
 
+// ---------- elegir carpeta de Drive (opcional; si no, va a la automática) ----------
+const MESES_JS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function rutaAuto(base, fecha) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(fecha || '') || [];
+  if (!m[3]) return base;
+  if (base === 'Presupuestos') return `Presupuestos › ${m[3]}`;
+  return `${base} › ${m[3]} › ${Math.ceil(+m[2] / 3)}T › ${MESES_JS[+m[2] - 1]}`;
+}
+function pintarDestino(el, elegida, auto, cambiar, quitar) {
+  el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    <span>Se guardará en <b>${esc(elegida ? elegida.nombre : auto)}</b>${elegida ? ' <i>(elegida a mano)</i>' : ''}</span>
+    <button type="button" class="mini">Cambiar</button>${elegida ? '<button type="button" class="mini">Automática</button>' : ''}`;
+  const b = el.querySelectorAll('button'); b[0].onclick = cambiar; if (b[1]) b[1].onclick = quitar;
+}
+/** Navegador de carpetas: empieza en Airía Privé; se puede subir y bajar. */
+async function elegirCarpeta(alElegir, desde) {
+  avisar('Abriendo carpetas…', 20000);
+  try {
+    const r = await api({ accion:'carpetas', id: desde || '' });
+    $('aviso').style.display = 'none';
+    const migas = r.ruta.map((c, i) => i === r.ruta.length - 1 ? `<b>${esc(c.nombre)}</b>` : `<a href="#" data-c="${esc(c.id)}">${esc(c.nombre)}</a>`).join(' › ');
+    hoja(`<h2>Elegir carpeta</h2><div class="migas">${migas}</div><div class="lista-carpetas">${r.hijas.map(h => `<button type="button" class="carpeta-fila" data-c="${esc(h.id)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>${esc(h.nombre)}<span>›</span></button>`).join('') || '<p class="info" style="margin:6px 0">No tiene subcarpetas.</p>'}</div>`,
+      [{ t: `Guardar en «${r.nombre}»`, principal: true, f: () => alElegir({ id: r.id, nombre: r.ruta.slice(1).map(c => c.nombre).join(' › ') || r.nombre }) }]);
+    document.querySelectorAll('#hojaTexto [data-c]').forEach(x => x.addEventListener('click', ev => { ev.preventDefault(); elegirCarpeta(alElegir, x.dataset.c); }));
+  } catch (e) { if (!e.silencioso) avisar(e.message, 6000); }
+}
+
+// ---------- velocidad: lo último que se cargó se enseña al instante y se actualiza por detrás ----------
+var USAR_CACHE = !DEMO || !!window.__cache;
+var SOLO_LECTURA = ['config', 'alumnos', 'clientes', 'cliente', 'facturas', 'factura', 'mensuales', 'movimientos', 'saldo', 'partesCliente', 'buscarPartes', 'parte', 'ayudaManual', 'avisos', 'ajustes', 'papelera', 'foto', 'miniatura', 'fotoAparato', 'pdfFactura', 'nuevaFactura', 'carpetas', 'correoFactura', 'leer', 'pdfCliente', 'exportarTrimestre', 'copiaAhora'];
+function leerCache(k) { if (!USAR_CACHE) return null; try { const c = JSON.parse(localStorage.getItem('cache-' + k)); return c && c.d ? c.d : null; } catch (e) { return null; } }
+function guardarCache(k, d) { if (!USAR_CACHE) return; try { localStorage.setItem('cache-' + k, JSON.stringify({ t: Date.now(), d })); } catch (e) {} }
+function vaciarCache() { try { Object.keys(localStorage).filter(k => k.indexOf('cache-') === 0).forEach(k => localStorage.removeItem(k)); } catch (e) {} }
+/** Pinta primero lo guardado (si lo hay) y después lo nuevo. `vigente()` dice si la pantalla sigue siendo la misma. */
+async function conCache(clave, cuerpo, pinta, cargando, error, vigente) {
+  const c = leerCache(clave);
+  if (c) pinta(c, true); else cargando();
+  try { const r = await api(cuerpo); guardarCache(clave, r); if (!vigente || vigente()) pinta(r, false); }
+  catch (e) { if (!e.silencioso && !c) error(e.message); }
+}
+/** Al abrir la app se van trayendo las listas, para que la primera pulsación ya sea instantánea. */
+function precargar() {
+  if (!USAR_CACHE) return;
+  [['clientes', { accion:'clientes' }], ['facturas-MANUAL', { accion:'facturas', tipo:'MANUAL' }]].forEach(([k, c], i) =>
+    setTimeout(() => api(c).then(r => guardarCache(k, r)).catch(() => {}), 2500 + i * 1500));
+}
+
 // ---------- borradores (solo en este móvil) ----------
 const TIPOS_BORRADOR = { parte: 'Parte de vuelo', factura: 'Factura', presupuesto: 'Presupuesto', cliente: 'Cliente' };
 function guardarBorrador(tipo, resumen, datos) {
@@ -2408,11 +2703,15 @@ function salirConBorrador(tipo, salir) {
   $('hojaBotones').lastChild.textContent = 'Seguir aquí';
 }
 function borrarBorrador(tipo) { try { localStorage.removeItem('borrador-' + tipo); } catch (e) {} pintarBorradores(); }
+function abrirBorradores() { mostrar('borradores'); pintarBorradores(); }
 function pintarBorradores() {
   const l = Object.keys(TIPOS_BORRADOR).map(t => [t, leerBorrador(t)]).filter(x => x[1]);
   $('borradoresSeccion').style.display = l.length ? 'block' : 'none';
-  $('borradoresLista').innerHTML = l.map(([t, b]) => `<div class="borrador"><div><span class="tipo-chapa t-borrador">${TIPOS_BORRADOR[t]}</span><b>${esc(b.resumen || '')}</b><small>Guardado en este móvil · ${new Date(b.t).toLocaleString('es-ES', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</small></div>
+  $('numBorradores').textContent = l.length || ''; $('numBorradores').style.display = l.length ? '' : 'none';
+  const html = l.map(([t, b]) => `<div class="borrador"><div><span class="tipo-chapa t-borrador">${TIPOS_BORRADOR[t]}</span><b>${esc(b.resumen || '')}</b><small>Guardado en este móvil · ${new Date(b.t).toLocaleString('es-ES', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</small></div>
     <div class="botones"><button class="mini principal" onclick="continuarBorrador('${t}')">Continuar</button><button class="mini peligro" onclick="descartarBorrador('${t}')">Descartar</button></div></div>`).join('');
+  $('borradoresLista').innerHTML = html;
+  $('borradoresTodos').innerHTML = html || '<p class="info">No tienes nada a medias.</p>';
 }
 function descartarBorrador(t) {
   hoja(`<h2>¿Descartar el borrador?</h2><p class="info" style="margin:8px 0 0">${esc(TIPOS_BORRADOR[t])}: ${esc((leerBorrador(t) || {}).resumen || '')}. No se podrá recuperar.</p>`, [{ t: 'Descartar', peligro: true, f: () => borrarBorrador(t) }]);
@@ -2430,7 +2729,7 @@ function continuarBorrador(t) {
 pintarBorradores();
 
 // ---------- "Cargando…" en naranja ----------
-const RE_CARGA = /^(Cargando|Calculando|Vinculando|Preparando|Buscando|Preparando|Abriendo|Guardando|Generando|Descontando|Comprobando|Leyendo|Añadiendo|Subiendo|Borrando|Recuperando|Vaciando|Enviando)\b[^]*…|cargando la foto…$/;
+const RE_CARGA = /^(Cargando|Guardando el aparato|Calculando|Vinculando|Preparando|Buscando|Preparando|Abriendo|Guardando|Generando|Descontando|Comprobando|Leyendo|Añadiendo|Subiendo|Borrando|Recuperando|Vaciando|Enviando)\b[^]*…|cargando la foto…$/;
 const SEL_CARGA = '.info, .saldo, .aviso, .boton, .mini, .sug-info, h2, .resumen';
 let marcaPendiente = false;
 function marcarCargas() {
@@ -2446,7 +2745,7 @@ new MutationObserver(() => { if (!marcaPendiente) { marcaPendiente = true; reque
 // ---------- volver deslizando el dedo desde el borde izquierdo ----------
 const SIN_DESLIZAR = ['inicio', 'clave', 'leyendo', 'sinConfigurar', 'hecho'];
 const PREGUNTAR_AL_SALIR = { horas: 'sin descontar las horas', compra: 'sin añadir las horas', ajustes: 'los ajustes sin guardar' };
-const preguntaSalir = id => id === 'factura' ? (facEditando ? 'la factura sin guardar' : null) : id === 'cliente' ? (fichaNombre ? 'la ficha sin guardar' : null) : PREGUNTAR_AL_SALIR[id];
+const preguntaSalir = id => id === 'horas' ? PREGUNTAR_AL_SALIR.horas : (!sucio[id] ? null : id === 'factura' ? (facEditando ? 'la factura sin guardar' : null) : id === 'cliente' ? (fichaNombre ? 'la ficha sin guardar' : null) : PREGUNTAR_AL_SALIR[id]);
 function accionVolver(id) {
   if (['revisar', 'factura', 'cliente'].includes(id)) return BARRAS[id][1];
   const p = $(id), v = p && p.querySelector('.volver');
@@ -2484,6 +2783,16 @@ async function demo(c) {
   await new Promise(r => setTimeout(r, c.accion === 'config' ? 0 : 1200));
   if (c.accion === 'cuotas') { window.__cu = window.__cu || { general: { cuotaAutogiro: 199, cuotaBarco: 60, ivaCuotas: 21 }, socios: [{ nombre:'Lucía Gómez Prieto', tipo:'Ambos', cuota:null, cuotaBarco:null }, { nombre:'Socio Ejemplo Dos', tipo:'Barco', cuota:null, cuotaBarco:null }, { nombre:'Socio Ejemplo Uno', tipo:'Autogiro', cuota:180, cuotaBarco:null }] }; return Object.assign({ ok:true }, JSON.parse(JSON.stringify(window.__cu))); }
   if (c.accion === 'guardarCuotas') { window.__cu = { general: c.general, socios: c.socios.filter(s => s.tipo !== 'No') }; return { ok:true, cambiados: 1 }; }
+  if (c.accion === 'carpetas') { const ar = { '':['Airía Privé',['Facturas','Partes','Presupuestos','Clientes - documentos']], Facturas:['Facturas',['2026']], '2026':['2026',['3T','4T']], '4T':['4T',['octubre','noviembre','diciembre']] };
+    const k = c.id || ''; const [n, h] = ar[k] || [c.id, []]; const ruta = [{ id:'raiz', nombre:'Mi unidad' }, { id:'', nombre:'Airía Privé' }]; if (k) ruta.push({ id:k, nombre:n });
+    return { ok:true, id:k || 'ap', nombre:n, ruta, hijas: h.map(x => ({ id:x, nombre:x })) }; }
+  if (c.accion === 'avisos') return { ok:true, fiscalOcultos:'', caducidades: [{ nombre:'Mario Ejemplo Ruiz', tipo:'Certificado médico', fecha:'02/12/2026', dias:18 }, { nombre:'Ana Demo Gil', tipo:'Licencia', fecha:'01/10/2026', dias:-44, deHojaAntigua:true }],
+    aparatos: window.__ap || (window.__ap = [{ matricula:'EC-HF7', modelo:'ELA 07 Cougar', activo:true, cada:100, ultimaH:440, ultimaFecha:'10/08/2026', anual:'15/12/2026', anualDias:31, seguro:'01/03/2027', seguroDias:107, tieneFoto:false, notas:'', horometro:521.4, ultimoParte:'30/10/2026', proxima:540, faltan:18.6 },
+      { matricula:'EC-HD6', modelo:'', activo:true, cada:100, ultimaH:null, ultimaFecha:'', anual:'', anualDias:null, seguro:'', seguroDias:null, tieneFoto:false, notas:'', horometro:311, ultimoParte:'29/10/2026', proxima:null, faltan:null }]),
+    alumnos: (await demo({ accion:'alumnos' })).alumnos, trimestres: [{ anio:2026, trimestre:4, facturas:5, base:1500, iva:315, irpf:0, total:1815 }, { anio:2026, trimestre:3, facturas:12, base:4200, iva:882, irpf:0, total:5082 }] };
+  if (c.accion === 'guardarAparato') { const a = window.__ap.find(x => x.matricula === c.matricula); Object.assign(a, c.datos); if (a.ultimaH !== null && a.cada) { a.proxima = a.ultimaH + a.cada; a.faltan = Math.round((a.proxima - a.horometro) * 10) / 10; } return { ok:true, aparatos: window.__ap }; }
+  if (c.accion === 'exportarTrimestre') return { ok:true, nombre:`Airía Privé ${c.trimestre}T ${c.anio}${c.conPdf ? '.zip' : ' · facturas.xlsx'}`, tipo: c.conPdf ? 'application/zip' : 'application/vnd.ms-excel', datos:'UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA==', resumen:{ facturas:5, base:1500, iva:315, irpf:0, total:1815 }, sinPdf:[], enlace:'https://drive.google.com/' };
+  if (c.accion === 'copiaAhora') return { ok:true, fecha:'2026-11-14', enviado:'', tamano: 2.4e6 };
   if (c.accion === 'ayudaManual') return { ok:true, siguienteNumero:'79', ultimos: { 'EC-HF7': { hf:521.4, numero:'78', fecha:'30/10/2026' }, 'EC-HD6': { hf:311.0, numero:'77', fecha:'29/10/2026' } } };
   if (c.accion === 'parte') return { ok:true, fila: c.fila, datos: { numero_parte:'78', fecha:'30/10/2020', matricula:'EC-HF7', tipo_vuelo:'ESCUELA', delante_nombre:'MARIO EJEMPLO', delante_funcion:'ALUMNO', detras_nombre:'INSTRUCTOR DEMO', detras_funcion:'INSTRUCTOR', autorizado_por:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'10:05', hora_regreso:'11:00', tiempo_total_min:55, total_horometro:0.9, horometro_inicial:520.5, horometro_final:521.4, importe_gasolina:null, total_pagado:null, forma_pago:null, tomas:4, comentarios:null, foto:'demo' } };
   if (c.accion === 'editarParte') return { ok:true, fila: c.fila, datos: c.datos, cambios: ['foto renombrada: Parte 78 ' + String(c.datos.fecha).replace(/\//g, '-') + '.jpg', 'foto movida a Partes › 2026 › 4T › octubre', 'su descuento de horas también'], aviso: '' };
@@ -2491,7 +2800,7 @@ async function demo(c) {
     { fila: 2050, numero:'77', fecha:'29/10/2026', matricula:'EC-HD6', delante:'JUAN PRUEBA', detras:'INSTRUCTOR DEMO', tipo:'PRIVADO', horometro_inicial:310.2, horometro_final:311.0, minutos:48, foto:'' }].filter(p => !c.q || JSON.stringify(p).toLowerCase().includes(c.q.toLowerCase())) };
   if (c.accion === 'correoFactura') return { ok:true, para:'cliente@ejemplo.com', asunto:'Factura 2026-11_03 · Airía Privé', cuerpo:'Estimados, Empresa Ejemplo S.L:\n\nTe hago envío de la factura de cesión de espacio de hangar.\n\nUn cordial saludo,\n\nNombre Ejemplo', enlace:'https://mail.google.com/' };
   if (c.accion === 'miniatura') { const cv = document.createElement('canvas'); cv.width = 240; cv.height = 150; const g = cv.getContext('2d'); g.fillStyle = '#dfe7f2'; g.fillRect(0, 0, 240, 150); g.fillStyle = '#334'; g.font = '18px sans-serif'; g.fillText('Foto (demo)', 70, 80); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
-  if (c.accion === 'config') return { ok:true, version: 5, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'config') return { ok:true, version: 11, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
   if (c.accion === 'leer') return { ok:true, partes:[
     { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
     { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
