@@ -336,6 +336,18 @@
   .cuota-campos input.especial { border-color:var(--champan); background:var(--oro-claro); font-weight:600; }
   .cuota-total { flex:1 1 100%; font-size:13.5px; color:var(--suave); } .cuota-total b { color:var(--tinta); }
   .resumen.aviso-amarillo { background:#fff6d6; border:1px solid #f0d478; color:#5a4500; }
+  .cad { display:inline-block; margin-top:4px; font-size:12.5px; font-weight:700; padding:2px 8px; border-radius:999px; }
+  .cad.roja { background:#fdecea; color:#b3261e; } .cad.naranja { background:#fff1dc; color:#a35a00; }
+  .cad-caja { margin-top:10px; padding:10px 12px; border-radius:12px; font-size:13.5px; line-height:1.4; }
+  .cad-caja.roja { background:#fdecea; color:#7d1d17; border:1px solid #efb7b1; } .cad-caja.naranja { background:#fff1dc; color:#6b3c00; border:1px solid #f3c98b; }
+  .fila-alumno.borde-rojo { border-left:5px solid #d93025; } .fila-alumno.borde-naranja { border-left:5px solid #f29900; }
+  .fila-alumno > span:first-child { min-width:0; } .fila-alumno .cad { display:block; width:fit-content; }
+  .chapas { display:flex; flex-direction:column; gap:4px; align-items:flex-end; flex:none; }
+  .chapa.ulm { background:#e6f0fb; color:#1d4f9e; }
+  .chips.desliza { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:2px; } .chips.desliza button { flex:none; }
+  .m-total { background:#0a0a0a; color:var(--marfil); border-radius:16px; padding:12px 16px; margin:6px 0 10px; }
+  .m-total:empty { display:none; } .m-total span { display:block; color:var(--champan); font-size:11px; letter-spacing:2px; text-transform:uppercase; }
+  .m-total b { display:block; font-family:var(--serif); font-size:30px; color:#fff; line-height:1.1; } .m-total small { color:rgba(237,230,218,.7); font-size:13px; }
   .fac-acc.siete { flex-wrap:wrap; row-gap:4px; } .fac-acc.siete button { flex:0 0 25%; }
   /* cámaras y accesos a Drive */
   .enlace-fila.oscura { background:#0a0a0a; color:var(--marfil); border-color:rgba(184,155,106,.35); border-radius:18px; padding:14px; justify-content:flex-start; gap:12px; }
@@ -388,6 +400,11 @@
   <div class="seccion" id="borradoresSeccion" style="display:none">
     <div class="sec-tit">Sin terminar</div>
     <div id="borradoresLista"></div>
+  </div>
+
+  <div class="seccion" id="vigilarSeccion" style="display:none">
+    <div class="sec-tit">Horas a vigilar</div>
+    <div id="vigilarLista"></div>
   </div>
 
   <div class="seccion">
@@ -490,6 +507,7 @@
   <div class="marca oscura">Airía Privé</div>
   <h1 class="titulo">Horas de clientes</h1>
   <div class="acciones-pag"><button class="boton principal" id="consultaAnadir" onclick="abrirCompra()">+ Añadir horas</button><button class="boton" id="consultaDescontar" onclick="abrirDescontar()">Descontar horas</button></div>
+  <div class="chips filtro" id="consultaFiltro"></div>
   <p class="info" id="consultaInfo">Cargando…</p>
   <input id="consultaBuscar" class="buscar" type="search" placeholder="Buscar cliente" autocomplete="off">
   <div id="consultaLista"></div>
@@ -555,6 +573,7 @@
       <div class="campo"><label for="nTelefono">Teléfono</label><input id="nTelefono" type="tel" autocomplete="off"></div>
       <div class="campo ancho"><label for="nCorreo">Correo electrónico</label><input id="nCorreo" type="email" autocomplete="off" autocapitalize="off"></div>
       <div class="campo"><label for="nSocio">Tipo</label><select id="nSocio"><option value="No">Cliente</option><option value="Autogiro">Socio autogiro</option><option value="Barco">Socio barco</option><option value="Ambos">Socio autogiro y barco</option></select></div>
+      <div class="campo"><label for="nCursoUlm">Curso ULM</label><select id="nCursoUlm"><option value="No">No</option><option value="Si">Sí, está haciendo el curso</option></select></div>
       <div class="campo"><label for="nTrato">Saludo en los correos</label><select id="nTrato"><option value="">Automático</option><option>Estimado</option><option>Estimada</option><option>Estimados</option></select><div class="nota gris" id="nTratoAuto"></div></div>
       <div class="campo" id="nCuotaCampo" style="display:none"><label for="nCuota">Cuota autogiro (€ sin IVA)</label><input id="nCuota" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
       <div class="campo" id="nCuotaBarcoCampo" style="display:none"><label for="nCuotaBarco">Cuota barco (€ sin IVA)</label><input id="nCuotaBarco" type="text" inputmode="decimal" placeholder="Vacío = precio general"></div>
@@ -609,6 +628,7 @@
   <div class="acciones-pag"><button class="boton principal" id="clientesAnadir" onclick="abrirNuevoCliente(() => abrirClientes())">+ Añadir cliente</button></div>
   <p class="info" id="clientesInfo">Cargando…</p>
   <input id="clientesBuscar" class="buscar" type="search" placeholder="Buscar por nombre, DNI o teléfono" autocomplete="off">
+  <div class="chips filtro desliza" id="clientesFiltro"></div>
   <div id="clientesLista"></div>
 </section>
 
@@ -638,6 +658,7 @@
     <button type="button" class="enlace-fila" style="margin-bottom:12px" onclick="abrirCuotas(() => { mostrar('facturas'); cargarMensuales(); })"><span><b>Cuotas y precios de socios</b><small>Cambiar lo que paga cada socio y el IVA</small></span><span class="ag-fl oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></button>
     <div class="m-sel"><span id="mSelInfo"></span><button type="button" class="mini" id="mSelTodo" onclick="seleccionarTodosMensuales()">Deseleccionar todo</button></div>
     <div id="mSocios"></div>
+    <div class="m-total" id="mTotal"></div>
     <button class="boton principal" id="mGenerar" style="max-width:none;margin:6px 0 18px" onclick="generarMensuales()">Generar facturas</button>
     <div class="sec-tit" id="mHechasTit" style="display:none">Facturas de este mes</div>
     <div id="mHechas"></div>
@@ -773,7 +794,7 @@
 
 <script>
 const DEMO = /[?&]demo/.test(location.search);
-const VERSION_APP = 4;
+const VERSION_APP = 5;
 const SIN_CONFIGURAR = !DEMO && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(API_URL.trim());
 const FUNCIONES = ['', 'PILOTO', 'ALUMNO', 'INSTRUCTOR', 'PASAJERO'];
 const TIPOS = ['', 'PRIVADO', 'ESCUELA', 'DEMO', 'FERRY', 'EXCURSION', 'EXAMEN', 'MANTENIMIENTO'];
@@ -1020,6 +1041,18 @@ function pintarTiempo(d, viejo) {
       <button class="m-recargar" aria-label="Actualizar el tiempo" onclick="this.classList.add('girando'); cargarTiempo(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg></button></div>`;
 }
 cargarTiempo();
+/** Inicio: clientes con horas pasadas de plazo o a punto de vencer */
+async function cargarVigilar() {
+  try {
+    const r = await api({ accion:'alumnos' });
+    const l = (r.alumnos || []).filter(a => a.caducadas > 0 || a.caducanPronto > 0).sort((a, b) => (b.caducadas || 0) - (a.caducadas || 0));
+    $('vigilarSeccion').style.display = l.length ? 'block' : 'none';
+    $('vigilarLista').innerHTML = l.slice(0, 6).map(a => `<button class="fila-alumno ${a.caducadas > 0 ? 'borde-rojo' : 'borde-naranja'}" data-vigilar="${esc(a.alumno)}"><span><b>${esc(a.alumno)}</b>${avisoCaducidad(a, true)}<small>${a.ultimoVuelo ? 'Último vuelo ' + esc(a.ultimoVuelo) : 'Sin vuelos'}</small></span><span class="chapa ${claseSaldo(a.saldo)}">${tiempo(a.saldo)}</span></button>`).join('') +
+      (l.length > 6 ? `<button class="enlace-fila" onclick="filtroHoras='vigilar'; abrirConsulta()"><span><b>Ver los ${l.length}</b></span></button>` : '');
+    document.querySelectorAll('[data-vigilar]').forEach(b => b.addEventListener('click', () => abrirDetalle(b.dataset.vigilar)));
+  } catch (e) { /* sin aviso */ }
+}
+if (!SIN_CONFIGURAR && (DEMO || leerClave())) setTimeout(cargarVigilar, 400);
 
 // ---------- buscar partes ----------
 let partesEncontrados = [];
@@ -1380,11 +1413,21 @@ async function abrirConsulta() {
     pintarLista();
   } catch (e) { if (!e.silencioso) $('consultaInfo').textContent = e.message; }
 }
+/** Aviso de horas que han pasado su plazo (no se quitan: solo para vigilar) */
+function avisoCaducidad(a, corto) {
+  if (a.caducadas > 0) return `<span class="cad roja">⚠ ${tiempo(a.caducadas)} pasadas de plazo${corto ? '' : ' (desde el ' + esc(a.caducadasDesde) + ')'}</span>`;
+  if (a.caducanPronto > 0) return `<span class="cad naranja">⏳ ${tiempo(a.caducanPronto)} vencen el ${esc(a.caducanEl)}</span>`;
+  return '';
+}
+let filtroHoras = '';
 function pintarLista() {
   const q = quitarAcentosJs($('consultaBuscar').value);
-  $('consultaLista').innerHTML = listaAlumnos.filter(a => !q || quitarAcentosJs(a.alumno).includes(q)).map(a => `
-    <button class="fila-alumno" data-alumno="${esc(a.alumno)}">
-      <span><b>${esc(a.alumno)}</b><small>Compradas ${tiempo(a.compradas)} · voladas ${tiempo(a.voladas)}${a.fechaPago ? ' · último pago ' + esc(a.fechaPago) : ''}</small></span>
+  const nCad = listaAlumnos.filter(a => a.caducadas > 0).length, nPronto = listaAlumnos.filter(a => !(a.caducadas > 0) && a.caducanPronto > 0).length;
+  $('consultaFiltro').innerHTML = nCad + nPronto ? [['', 'Todos'], ['vigilar', `A vigilar (${nCad + nPronto})`]].map(([k, t]) => `<button type="button" class="${filtroHoras === k ? 'activo' : ''}" onclick="filtroHoras='${k}';pintarLista()">${t}</button>`).join('') : '';
+  const lista = listaAlumnos.filter(a => !filtroHoras || a.caducadas > 0 || a.caducanPronto > 0);
+  $('consultaLista').innerHTML = lista.filter(a => !q || quitarAcentosJs(a.alumno).includes(q)).map(a => `
+    <button class="fila-alumno${a.caducadas > 0 ? ' borde-rojo' : (a.caducanPronto > 0 ? ' borde-naranja' : '')}" data-alumno="${esc(a.alumno)}">
+      <span><b>${esc(a.alumno)}</b><small>Compradas ${tiempo(a.compradas)} · voladas ${tiempo(a.voladas)}${a.ultimoVuelo ? ' · último vuelo ' + esc(a.ultimoVuelo) + (a.diasSinVolar > 30 ? ` <span class="txt-rojo">(hace ${a.diasSinVolar} días)</span>` : '') : ' · <span class="txt-rojo">sin vuelos</span>'}</small>${avisoCaducidad(a, true)}</span>
       <span class="chapa ${claseSaldo(a.saldo)}">${tiempo(a.saldo)}</span>
     </button>`).join('');
   document.querySelectorAll('.fila-alumno').forEach(b => b.addEventListener('click', () => abrirDetalle(b.dataset.alumno)));
@@ -1403,7 +1446,9 @@ async function abrirDetalle(nombre, datos) {
 function pintarDetalle(r) {
   detalleAlumno = r.alumno; detalleMovs = r.movimientos || [];
   $('detalleNombre').textContent = r.alumno;
-  $('detalleSaldo').innerHTML = `Le quedan <b>${tiempo(r.saldo)}</b> · compradas ${tiempo(r.compradas)} · voladas ${tiempo(r.voladas)}`;
+  $('detalleSaldo').innerHTML = `Le quedan <b>${tiempo(r.saldo)}</b> · compradas ${tiempo(r.compradas)} · voladas ${tiempo(r.voladas)}` +
+    (r.ultimoVuelo ? `<br>Último vuelo: ${esc(r.ultimoVuelo)}${r.diasSinVolar > 30 ? ` <span class="txt-rojo">(hace ${r.diasSinVolar} días)</span>` : ''}` : '') +
+    (r.caducadas > 0 || r.caducanPronto > 0 ? `<div class="cad-caja ${r.caducadas > 0 ? 'roja' : 'naranja'}">${r.caducadas > 0 ? `<b>${tiempo(r.caducadas)} han pasado su plazo</b> de ${r.mesesValidez || 3} meses (desde el ${esc(r.caducadasDesde)}).` : ''}${r.caducanPronto > 0 ? ` <b>${tiempo(r.caducanPronto)} vencen el ${esc(r.caducanEl)}</b>.` : ''} No se quita nada: es solo un aviso.</div>` : '');
   $('detalleLista').innerHTML = detalleMovs.length ? detalleMovs.map((m, i) => {
     const mas = m.signo > 0;
     let lineas;
@@ -1412,7 +1457,14 @@ function pintarDetalle(r) {
     else if (m.tipo === 'VUELO') lineas = [`Vuelo · parte ${esc(m.numero || '¿?')}`,
       `<b>Fecha:</b> ${esc(m.fecha || '—')}`, `<b>Aparato:</b> <span style="white-space:nowrap">${esc(m.matricula || '—')}</span>`,
       `<b>Horómetro:</b> ${m.hi !== null && m.hf !== null ? aTextoNumero(m.hi.toFixed(1)) + ' → ' + aTextoNumero(m.hf.toFixed(1)) : '—'}`];
-    else if (m.tipo === 'COMPRA') lineas = [`Compra · pagado el ${esc(m.fecha || '—')}`];
+    else if (m.tipo === 'COMPRA') {
+      const v = m.validez;
+      lineas = [`Compra · pagado el ${esc(m.fecha || '—')}`];
+      if (v && v.hasta) lineas.push(v.estado === 'gastada' ? `<span class="txt-verde">Gastada · valía hasta el ${esc(v.hasta)}</span>`
+        : v.estado === 'caducada' ? `<span class="cad roja">⚠ Quedan ${tiempo(v.quedan)} · plazo acabado el ${esc(v.hasta)}</span>`
+        : v.estado === 'pronto' ? `<span class="cad naranja">⏳ Quedan ${tiempo(v.quedan)} · vence el ${esc(v.hasta)}</span>`
+        : `Quedan ${tiempo(v.quedan)} · válida hasta el ${esc(v.hasta)}`);
+    }
     else lineas = [`Ajuste${m.fecha ? ' · ' + esc(m.fecha) : ''}`];
     if (m.comentario) lineas.push(esc(m.comentario));
     return `<div class="mov${sinParte ? ' sin-parte' : ''}" id="mov${i}">
@@ -1586,7 +1638,7 @@ async function descontarParteCliente(i) {
 }
 
 // ---------- clientes: ficha (añadir y modificar) ----------
-const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', cuotaBarco:'nCuotaBarco', trato:'nTrato' };
+const CAMPOS_CLIENTE = { nombre:'nNombre', cif:'nCif', telefono:'nTelefono', correo:'nCorreo', calle:'nCalle', cp:'nCp', ciudad:'nCiudad', provincia:'nProvincia', pais:'nPais', socio:'nSocio', cuota:'nCuota', cuotaBarco:'nCuotaBarco', cursoUlm:'nCursoUlm', trato:'nTrato' };
 const NOMBRE_SOCIO = { Si:'Socio autogiro', Autogiro:'Socio autogiro', Barco:'Socio barco', Ambos:'Socio autogiro y barco' };
 const DOCS = { fichaAlumno:'Ficha de alumno piloto', dniDelante:'DNI delante', dniDetras:'DNI detrás', licencia:'Licencia', medico:'Certificado médico' };
 let forzarCliente = false, fichaNombre = '', fichaDocs = {}, fichaFotos = {}, fichaBorrar = new Set(), fichaVolverA = null;
@@ -1641,6 +1693,7 @@ function rellenarFicha(c) {
   if (!c || !c.pais) $('nPais').value = c ? '' : 'España';
   $('nSocio').value = c ? (c.socio === 'Si' ? 'Autogiro' : (['Autogiro', 'Barco', 'Ambos'].includes(c.socio) ? c.socio : 'No')) : 'No';
   camposCuota();
+  $('nCursoUlm').value = c && /^s/i.test(c.cursoUlm || '') ? 'Si' : 'No';
   $('nTratoAuto').textContent = c && c.tratoAuto && !c.trato ? 'Ahora: ' + c.tratoAuto : '';
   fichaDocs = c ? Object.assign({}, c.docs) : {}; fichaFotos = {}; fichaBorrar = new Set();
   pintarDocs();
@@ -2162,6 +2215,10 @@ function abrirEdicionMensual(i) {
 }
 function textoGenerar() {
   const n = mensualesSel.size;
+  const sel = mensualesInfo ? mensualesInfo.socios.filter(s => !s.facturada && mensualesSel.has(s.nombre)) : [];
+  const base = r2(sel.reduce((t, s) => t + r2(lineasDe(s).reduce((x, l) => x + r2((l.cantidad ?? 1) * (Number(l.precio) || 0)), 0)), 0));
+  const total = r2(sel.reduce((t, s) => t + totalMensual(s), 0));
+  $('mTotal').innerHTML = n ? `<span>Total de ${mensualesInfo.nombreMes}</span><b>${euros(total)}</b><small>${n} factura${n > 1 ? 's' : ''} · ${euros(base)} + IVA ${euros(r2(total - base))}</small>` : '';
   $('mGenerar').textContent = n ? `Generar ${n} factura${n > 1 ? 's' : ''}` : 'No hay facturas por generar';
   $('mGenerar').disabled = !n;
   $('mSelTodo').textContent = n ? 'Deseleccionar todo' : 'Seleccionar todo';
@@ -2196,6 +2253,7 @@ const CAMPOS_AJUSTES = [
   ['Datos de contacto', [['empresaTelefono', 'Teléfono'], ['empresaCorreo', 'Correo']]],
   ['Datos bancarios', [['banco', 'Banco'], ['iban', 'IBAN'], ['swift', 'SWIFT / BIC']]],
   ['Facturas', [['ivaDefecto', 'IVA por defecto de las facturas (%)', 1], ['conceptoMensual', 'Concepto cuota socio autogiro ({mes} y {año} se rellenan solos)'], ['conceptoBarco', 'Concepto cuota socio barco'], ['numeracionPrevia', 'Facturas ya hechas con la app anterior (mes:cantidad, separadas por comas)']]],
+  ['Horas de vuelo', [['mesesHoras', 'Meses que valen las horas compradas, contando el del pago (solo es un aviso, no se quita nada)', 1]]],
   ['Correo de las facturas', [['correoAsunto', 'Asunto'], ['correoTexto', 'Texto. {saludo} pone Estimado/Estimada/Estimados según la ficha; {nombre}, {concepto}, {numero} y {total} se rellenan solos', 0, 1]]],
   ['Cámaras', [['enlaceCamaras', 'Enlace del botón Cámaras (la app Tapo o un Atajo de iPhone, ver abajo)']]],
 ];
@@ -2280,12 +2338,24 @@ async function abrirClientes() {
     pintarClientes();
   } catch (e) { if (!e.silencioso) $('clientesInfo').textContent = e.message; }
 }
+// Filtros de la lista de clientes (los de autogiro y barco salen en Autogiro y en Barco)
+const FILTROS_CLIENTES = [
+  ['', 'Todos', () => true],
+  ['auto', 'Autogiro', c => c.socio === 'Autogiro' || c.socio === 'Ambos' || c.socio === 'Si'],
+  ['barco', 'Barco', c => c.socio === 'Barco' || c.socio === 'Ambos'],
+  ['ambos', 'Autogiro y barco', c => c.socio === 'Ambos'],
+  ['sueltos', 'Sueltos', c => !c.socio || c.socio === 'No'],
+  ['ulm', 'Curso ULM', c => /^s/i.test(c.cursoUlm || '')],
+];
+let filtroClientes = '';
 function pintarClientes() {
   const q = quitarAcentosJs($('clientesBuscar').value);
-  $('clientesLista').innerHTML = listaClientesFichas.filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
+  $('clientesFiltro').innerHTML = FILTROS_CLIENTES.map(([k, t, f]) => `<button type="button" class="${filtroClientes === k ? 'activo' : ''}" onclick="filtroClientes='${k}';pintarClientes()">${t} (${listaClientesFichas.filter(f).length})</button>`).join('');
+  const pasa = FILTROS_CLIENTES.find(x => x[0] === filtroClientes)[2];
+  $('clientesLista').innerHTML = listaClientesFichas.filter(pasa).filter(c => !q || quitarAcentosJs([c.nombre, c.cif, c.telefono, c.correo].join(' ')).includes(q)).map(c => {
     const docs = Object.values(c.docs || {}).filter(Boolean).length;
-    const chapa = c.socio && c.socio !== 'No' ? `<span class="chapa socio">${NOMBRE_SOCIO[c.socio] || 'Socio'}</span>` : '';
-    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 5 ? 'txt-rojo' : 'txt-verde'}">${docs}/5 documentos</span></small></span>${chapa}</button>`;
+    const chapas = (c.socio && c.socio !== 'No' ? `<span class="chapa socio">${NOMBRE_SOCIO[c.socio] || 'Socio'}</span>` : '') + (/^s/i.test(c.cursoUlm || '') ? '<span class="chapa ulm">Curso ULM</span>' : '');
+    return `<button class="fila-alumno" data-cliente="${esc(c.nombre)}"><span><b>${esc(c.nombre)}</b><small>${[c.cif, c.telefono].filter(Boolean).map(esc).join(' · ') || 'Sin datos de contacto'} · <span class="${docs < 5 ? 'txt-rojo' : 'txt-verde'}">${docs}/5 documentos</span></small></span><span class="chapas">${chapas}</span></button>`;
   }).join('') || '<p class="info">No hay clientes que coincidan.</p>';
   document.querySelectorAll('[data-cliente]').forEach(b => b.addEventListener('click', () => abrirFichaCliente(b.dataset.cliente)));
 }
@@ -2421,7 +2491,7 @@ async function demo(c) {
     { fila: 2050, numero:'77', fecha:'29/10/2026', matricula:'EC-HD6', delante:'JUAN PRUEBA', detras:'INSTRUCTOR DEMO', tipo:'PRIVADO', horometro_inicial:310.2, horometro_final:311.0, minutos:48, foto:'' }].filter(p => !c.q || JSON.stringify(p).toLowerCase().includes(c.q.toLowerCase())) };
   if (c.accion === 'correoFactura') return { ok:true, para:'cliente@ejemplo.com', asunto:'Factura 2026-11_03 · Airía Privé', cuerpo:'Estimados, Empresa Ejemplo S.L:\n\nTe hago envío de la factura de cesión de espacio de hangar.\n\nUn cordial saludo,\n\nNombre Ejemplo', enlace:'https://mail.google.com/' };
   if (c.accion === 'miniatura') { const cv = document.createElement('canvas'); cv.width = 240; cv.height = 150; const g = cv.getContext('2d'); g.fillStyle = '#dfe7f2'; g.fillRect(0, 0, 240, 150); g.fillStyle = '#334'; g.font = '18px sans-serif'; g.fillText('Foto (demo)', 70, 80); return { ok:true, tipo:'image/jpeg', datos: cv.toDataURL('image/jpeg').split(',')[1] }; }
-  if (c.accion === 'config') return { ok:true, version: 4, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
+  if (c.accion === 'config') return { ok:true, version: 5, espacio: { usado: 6.2e9, limite: 15e9 }, carpetas: { raiz:'https://drive.google.com/', partes:'https://drive.google.com/', facturas:'https://drive.google.com/', clientes:'https://drive.google.com/', hojaPartes:'https://docs.google.com/', gestion:'https://docs.google.com/' }, matriculas:['EC-HA4','EC-HD6','EC-HF6','EC-HF7'], clientes:['Mario Ejemplo Ruiz','JUAN PRUEBA LÓPEZ','Instructor Demo Uno'] };
   if (c.accion === 'leer') return { ok:true, partes:[
     { datos:{ numero_parte:'000050', fecha:'25/09/2026', matricula:'EC-HF7', delante_nombre:'Mario Ejemplo Ruiz', tipo_vuelo:'PRIVADO', delante_funcion:'PILOTO', aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'19:00', hora_regreso:'20:00', tiempo_total_min:60, horometro_inicial:476.8, horometro_final:477.8, total_horometro:1, tomas:1, forma_pago:'ENLACE' }, avisos:{ fecha:'Letra dudosa, compruébalo.' } },
     { datos:{ numero_parte:'000051', fecha:'09/10/2026', matricula:'EC-HF7', delante_nombre:'JUAN PRUEBA LÓPEZ', tipo_vuelo:null, aerodromo_salida:'LEMT', aerodromo_llegada:'LEMT', hora_salida:'11:00', hora_regreso:'11:36', tiempo_total_min:36, horometro_inicial:477.8, horometro_final:478.4, total_horometro:0.6, tomas:1 }, avisos:{} },
@@ -2433,7 +2503,7 @@ async function demo(c) {
   if (c.accion === 'guardar') return { ok:true, filas:c.partes.map((p, i) => ({ fila:2054 + i, numero:p.numero_parte, revisar:0 })),
     descuentos: c.partes.map(p => Object.assign(res('Mario Ejemplo Ruiz'), { numero: p.numero_parte, fecha: p.fecha, matricula: p.matricula, horometro_inicial: numero(p.horometro_inicial), horometro_final: numero(p.horometro_final), horometro: Math.round((numero(p.horometro_final) - numero(p.horometro_inicial)) * 10) / 10, minutos: Math.round((numero(p.horometro_final) - numero(p.horometro_inicial)) * 60), yaDescontado: false })) };
   if (c.accion === 'saldo') return res(c.alumno);
-  if (c.accion === 'alumnos') return { ok:true, alumnos: Object.keys(D).map(res).concat([Object.assign(res('x'), { alumno:'Ana Demo Gil', tieneHoras:true, saldo:45, compradas:300, voladas:255, fechaPago:'01/10/2026' })]), urlArchivo:'https://docs.google.com/' };
+  if (c.accion === 'alumnos') return { ok:true, alumnos: Object.keys(D).map(res).concat([Object.assign(res('x'), { alumno:'Ana Demo Gil', tieneHoras:true, saldo:45, compradas:300, voladas:255, fechaPago:'01/07/2026', ultimoVuelo:'02/08/2026', diasSinVolar:104, caducadas:45, caducadasDesde:'30/09/2026', mesesValidez:3 }), Object.assign(res('x'), { alumno:'Socio Ejemplo Dos', tieneHoras:true, saldo:120, compradas:600, voladas:480, fechaPago:'03/09/2026', ultimoVuelo:'20/10/2026', diasSinVolar:25, caducanPronto:120, caducanEl:'30/11/2026', mesesValidez:3 })]), urlArchivo:'https://docs.google.com/' };
   if (c.accion === 'movimientos') return res(c.alumno);
   if (!window.__demoFact) window.__demoFact = { lista: [{ id:'d1', numero:'2026-11_03', mes:'2026-11', fecha:'13/11/2026', tipo:'MANUAL', cliente:'Empresa Ejemplo S.L', correo:'demo@example.com', lineas:[{ descripcion:'Cesión de espacio de hangar', cantidad:1, precio:500, total:500 }], base:500, ivaPct:21, iva:105, irpfPct:0, irpf:0, total:605, formaPago:'', vencimiento:'', notas:'', carpeta:'https://drive.google.com/' }],
     ajustes: { empresaNombre:'Empresa de ejemplo S.L', empresaCif:'B00000000', empresaCalle:'Calle de Ejemplo 1', empresaCp:'28000', empresaCiudad:'Madrid', empresaProvincia:'Madrid', empresaPais:'España', empresaTelefono:'600 000 000', empresaCorreo:'correo@ejemplo.com', banco:'Banco de ejemplo', iban:'ES00 0000 0000 0000 0000 0000', swift:'XXXXESXX', ivaDefecto:'21', conceptoMensual:'Cuota mensual de socio · {mes} {año}', numeracionPrevia:'2026-11:2' }, papelera: [] };
